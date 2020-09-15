@@ -32,7 +32,7 @@
 <body>
 <section>
     <h2>Cargo List</h2>
-    <a href="/add-cargo">Add cargo</a>
+    <a href="/cargo/add">Add cargo</a>
     <br>
     <br>
     <table class="table">
@@ -52,14 +52,14 @@
                 <td>${cargo.weight}</td>
                 <td>${cargo.status}</td>
                 <td>
-                    <a href="/edit-cargo/${cargo.id}">Edit</a>
-                    <a href="/delete-cargo/${cargo.id}">Delete</a>
+                    <a href="/cargo/edit/${cargo.id}">Edit</a>
+                    <a href="/cargo/delete/${cargo.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
 
-    <a href="/add-cargo">Add cargo</a>
+    <a href="/cargo/add">Add cargo</a>
 </section>
 </body>
 </html>

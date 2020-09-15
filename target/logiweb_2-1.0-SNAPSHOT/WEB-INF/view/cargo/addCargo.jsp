@@ -29,7 +29,7 @@
 <section>
     <h2>Add cargo</h2>
 
-    <form action="/add-cargo" method="post">
+    <form action="/cargo/add" method="post">
         <%--        <input type="hidden" name="id" value="${cargo.id}">--%>
         <div class="form-group">
             <label for="name" class="control-label">Name</label>

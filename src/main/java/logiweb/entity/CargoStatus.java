@@ -1,4 +1,4 @@
-package logiweb.model;
+package logiweb.entity;
 
 public enum CargoStatus {
     PREPARED,

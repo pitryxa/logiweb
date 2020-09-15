@@ -1,16 +1,21 @@
 package logiweb.service;
 
+import logiweb.converter.CargoConverter;
 import logiweb.dao.CargoDao;
-import logiweb.dao.CargoDaoImpl;
-import logiweb.model.Cargo;
+import logiweb.dto.CargoDTO;
+import logiweb.entity.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CargoServiceImpl implements CargoService{
+
     private CargoDao cargoDao;
 
     @Autowired
@@ -20,31 +25,48 @@ public class CargoServiceImpl implements CargoService{
 
     @Override
     @Transactional
-    public List<Cargo> allCargo() {
-        return cargoDao.allCargo();
+    public List<CargoDTO> allCargo() {
+        return createCargoDtoListFromCargoList(cargoDao.getAll());
     }
 
     @Override
     @Transactional
-    public void add(Cargo cargo) {
-        cargoDao.add(cargo);
+    public void add(CargoDTO cargoDTO) throws UnsupportedEncodingException {
+        convertCharset(cargoDTO);
+        cargoDao.create(CargoConverter.toEntity(cargoDTO));
+        System.out.println(cargoDTO.getName());
     }
 
     @Override
     @Transactional
-    public void delete(Cargo cargo) {
-        cargoDao.delete(cargo);
+    public void delete(CargoDTO cargoDTO) {
+        cargoDao.delete(CargoConverter.toEntity(cargoDTO));
     }
 
     @Override
     @Transactional
-    public void edit(Cargo cargo) {
-        cargoDao.edit(cargo);
+    public void edit(CargoDTO cargoDTO) throws UnsupportedEncodingException {
+        convertCharset(cargoDTO);
+        cargoDao.update(CargoConverter.toEntity(cargoDTO));
     }
 
     @Override
     @Transactional
-    public Cargo getById(int id) {
-        return cargoDao.getById(id);
+    public CargoDTO getById(int id) {
+        return CargoConverter.toDto(cargoDao.getById(id));
+    }
+
+    public static List<CargoDTO> createCargoDtoListFromCargoList(List<Cargo> cargoList) {
+        List<CargoDTO> cargoDTOList = new ArrayList<>();
+
+        for (Cargo cargo : cargoList) {
+            cargoDTOList.add(CargoConverter.toDto(cargo));
+        }
+
+        return cargoDTOList;
+    }
+
+    public static void convertCharset(CargoDTO cargoDTO) throws UnsupportedEncodingException {
+        cargoDTO.setName(new String(cargoDTO.getName().getBytes("ISO-8859-1"), Charset.forName("UTF-8")));
     }
 }

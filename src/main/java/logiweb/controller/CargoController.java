@@ -1,16 +1,16 @@
 package logiweb.controller;
 
-import logiweb.model.Cargo;
+import logiweb.dto.CargoDTO;
 import logiweb.service.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
+
 @Controller
+@RequestMapping("/cargo")
 public class CargoController {
     private CargoService cargoService;
 
@@ -19,22 +19,18 @@ public class CargoController {
         this.cargoService = cargoService;
     }
 
-    @GetMapping("/")
-    public ModelAndView getHelloPage() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("hello");
-        return model;
-    }
-
-    @GetMapping("/cargo")
+    @GetMapping("")
     public ModelAndView allCargo() {
         ModelAndView model = new ModelAndView();
         model.setViewName("cargo/cargoList");
+
+
+
         model.addObject("cargoList", cargoService.allCargo());
         return model;
     }
 
-    @GetMapping("/edit-cargo/{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView editCargo(@PathVariable("id") int id) {
         ModelAndView model = new ModelAndView();
         model.setViewName("cargo/editCargo");
@@ -42,31 +38,30 @@ public class CargoController {
         return model;
     }
 
-    @PostMapping("/edit-cargo")
-    public ModelAndView editCargo(@ModelAttribute Cargo cargo) {
+    @PostMapping("/edit")
+    public ModelAndView editCargo(@ModelAttribute CargoDTO cargoDTO) throws UnsupportedEncodingException {
         ModelAndView model = new ModelAndView();
         model.setViewName("redirect:/cargo");
-        cargoService.edit(cargo);
+        cargoService.edit(cargoDTO);
         return model;
     }
 
-    @GetMapping("/add-cargo")
+    @GetMapping("/add")
     public ModelAndView addCargo() {
         ModelAndView model = new ModelAndView();
         model.setViewName("cargo/addCargo");
-        //model.addObject("cargo", cargoService.getById(id));
         return model;
     }
 
-    @PostMapping("/add-cargo")
-    public ModelAndView addCargo(@ModelAttribute Cargo cargo) {
+    @PostMapping("/add")
+    public ModelAndView addCargo(@ModelAttribute CargoDTO cargoDTO) throws UnsupportedEncodingException {
         ModelAndView model = new ModelAndView();
         model.setViewName("redirect:/cargo");
-        cargoService.add(cargo);
+        cargoService.add(cargoDTO);
         return model;
     }
 
-    @GetMapping("/delete-cargo/{id}")
+    @GetMapping("/delete/{id}")
     public ModelAndView deleteCargo(@PathVariable("id") int id) {
         ModelAndView model = new ModelAndView();
         model.setViewName("cargo/deleteCargo");
@@ -74,11 +69,11 @@ public class CargoController {
         return model;
     }
 
-    @PostMapping("/delete-cargo")
-    public ModelAndView deleteCargo(@ModelAttribute Cargo cargo) {
+    @PostMapping("/delete")
+    public ModelAndView deleteCargo(@ModelAttribute CargoDTO cargoDTO) {
         ModelAndView model = new ModelAndView();
         model.setViewName("redirect:/cargo");
-        cargoService.delete(cargo);
+        cargoService.delete(cargoDTO);
         return model;
     }
 }

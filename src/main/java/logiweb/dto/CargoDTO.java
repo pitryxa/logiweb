@@ -1,20 +1,11 @@
-package logiweb.model;
+package logiweb.dto;
 
-import javax.persistence.*;
+import logiweb.entity.CargoStatus;
 
-@Entity
-@Table(name = "Cargo")
-public class Cargo {
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CargoDTO {
     private int id;
-
     private String name;
-
     private int weight;
-
-    @Enumerated(EnumType.STRING)
     private CargoStatus status;
 
     public int getId() {
@@ -47,15 +38,5 @@ public class Cargo {
 
     public void setStatus(CargoStatus status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Cargo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", weight=" + weight +
-                ", status=" + status +
-                '}';
     }
 }

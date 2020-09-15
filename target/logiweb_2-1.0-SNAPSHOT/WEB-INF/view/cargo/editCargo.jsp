@@ -28,7 +28,7 @@
 <section>
     <h2>Edit cargo #${cargo.id}</h2>
 
-    <form action="/edit-cargo" method="post">
+    <form action="/cargo/edit" method="post">
         <input type="hidden" name="id" value="${cargo.id}">
         <div class="form-group">
             <label for="name" class="control-label">Name</label>

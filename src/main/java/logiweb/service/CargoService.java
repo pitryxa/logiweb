@@ -1,18 +1,18 @@
 package logiweb.service;
 
-import logiweb.dao.CargoDao;
-import logiweb.model.Cargo;
+import logiweb.dto.CargoDTO;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface CargoService {
-    List<Cargo> allCargo();
+    List<CargoDTO> allCargo();
 
-    void add(Cargo cargo);
+    void add(CargoDTO cargoDTO) throws UnsupportedEncodingException;
 
-    void delete(Cargo cargo);
+    void delete(CargoDTO cargoDTO);
 
-    void edit(Cargo cargo);
+    void edit(CargoDTO cargoDTO) throws UnsupportedEncodingException;
 
-    Cargo getById(int id);
+    CargoDTO getById(int id);
 }

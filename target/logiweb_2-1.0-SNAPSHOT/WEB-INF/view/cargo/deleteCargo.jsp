@@ -30,7 +30,7 @@
     <h2>Delete cargo #${cargo.id}</h2>
     <p>Confirm deleting cargo</p>
 
-    <form action="/delete-cargo" method="post">
+    <form action="/cargo/delete" method="post">
         <input type="hidden" name="id" value="${cargo.id}">
         <input type="hidden" name="name" value="${cargo.name}">
         <input type="hidden" name="weight" value="${cargo.weight}">

@@ -1,23 +1,18 @@
 package logiweb.dao;
 
-import logiweb.model.Cargo;
-import logiweb.model.CargoStatus;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import logiweb.entity.Cargo;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Repository
-public class CargoDaoImpl implements CargoDao {
-    private static final AtomicInteger AUTO_ID = new AtomicInteger(0);
-    private SessionFactory sessionFactory;
-    private static Map<Integer, Cargo> cargoMap = new HashMap<>();
+public class CargoDaoImpl extends GenericDAOImpl<Cargo> implements CargoDao {
+
+
+//    private static final AtomicInteger AUTO_ID = new AtomicInteger(0);
+//    private SessionFactory sessionFactory;
+//    private static final EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("logiweb-pu");
+//    private final EntityManager entityManager = emFactory.createEntityManager();
+
+//    private static Map<Integer, Cargo> cargoMap = new HashMap<>();
 //    private static CargoDao cargoDao = null;
 
 //    static {
@@ -53,40 +48,73 @@ public class CargoDaoImpl implements CargoDao {
 ////        return cargoDao;
 ////    }
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+//    @Autowired
+//    public void setSessionFactory(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
 
-    @Override
-    public List<Cargo> allCargo() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Cargo").list();
 
-        //return new ArrayList<>(cargoMap.values());
-    }
-
-    @Override
-    public void add(Cargo cargo) {
-//        cargo.setId(AUTO_ID.getAndIncrement());
-//        cargoMap.put(cargo.getId(), cargo);
-        sessionFactory.getCurrentSession().persist(cargo);
-    }
-
-    @Override
-    public void delete(Cargo cargo) {
-//        cargoMap.remove(cargo.getId());
-        sessionFactory.getCurrentSession().delete(cargo);
-    }
-
-    @Override
-    public void edit(Cargo cargo) {
-        //cargoMap.put(cargo.getId(), cargo);
-        sessionFactory.getCurrentSession().update(cargo);
-    }
-
-    @Override
-    public Cargo getById(int id) {
-        return sessionFactory.getCurrentSession().get(Cargo.class, id);
-    }
+//    @Override
+//    public void create(Cargo cargo) {
+//        super.create(cargo);
+//    }
+//
+//    @Override
+//    public void update(Cargo cargo) {
+//        super.update(cargo);
+//    }
+//
+//    @Override
+//    public Cargo getById(Integer id) {
+//        return super.getById(id);
+//    }
+//
+//    @Override
+//    public List<Cargo> getAll() {
+//        return super.getAll();
+//    }
+//
+//    @Override
+//    public List<Cargo> allCargo() {
+//        Query query = entityManager.createQuery("select e from Cargo e");
+//
+//        List<Cargo> list = entityManager.createQuery("select e from Cargo e").getResultList();
+//
+//        return list.isEmpty() ? new ArrayList<>() : list;
+//
+//
+////        Session session = sessionFactory.getCurrentSession();
+////        return session.createQuery("from Cargo").list();
+//
+//        //return new ArrayList<>(cargoMap.values());
+//    }
+//
+//    @Override
+//    public void add(Cargo cargo) {
+//        entityManager.persist(cargo);
+//
+////        cargo.setId(AUTO_ID.getAndIncrement());
+////        cargoMap.put(cargo.getId(), cargo);
+////        sessionFactory.getCurrentSession().persist(cargo);
+//    }
+//
+//    @Override
+//    public void delete(Cargo cargo) {
+//        entityManager.remove(cargo);
+////        cargoMap.remove(cargo.getId());
+////        sessionFactory.getCurrentSession().delete(cargo);
+//    }
+//
+//    @Override
+//    public void edit(Cargo cargo) {
+//        entityManager.merge(cargo);
+//        //cargoMap.put(cargo.getId(), cargo);
+////        sessionFactory.getCurrentSession().update(cargo);
+//    }
+//
+//    @Override
+//    public Cargo getById(int id) {
+//        return entityManager.find(Cargo.class, id);
+////        return sessionFactory.getCurrentSession().get(Cargo.class, id);
+//    }
 }
