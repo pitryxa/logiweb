@@ -257,10 +257,10 @@ false Antarctica/Davis
 false Antarctica/DumontDUrville
 false Antarctica/Macquarie
 false Antarctica/Mawson
-false Antarctica/McMurdo
+true Antarctica/McMurdo
 false Antarctica/Palmer
 false Antarctica/Rothera
-false Antarctica/South_Pole
+true Antarctica/South_Pole
 false Antarctica/Syowa
 true Antarctica/Troll
 false Antarctica/Vostok
@@ -347,7 +347,7 @@ false Asia/Srednekolymsk
 false Asia/Taipei
 false Asia/Tashkent
 false Asia/Tbilisi
-true Asia/Tehran
+false Asia/Tehran
 true Asia/Tel_Aviv
 false Asia/Thimbu
 false Asia/Thimphu
@@ -598,7 +598,7 @@ false Indian/Maldives
 false Indian/Mauritius
 false Indian/Mayotte
 false Indian/Reunion
-true Iran
+false Iran
 true Israel
 false JAYT
 false JST
@@ -649,8 +649,8 @@ false NOVT
 false NPT
 false NST
 false NUT
-false NZ
-false NZ-CHAT
+true NZ
+true NZ-CHAT
 true NZDT
 false NZST
 false NZT
@@ -675,10 +675,10 @@ true PST8PDT
 false PWT
 true PYST
 false PYT
-false Pacific/Apia
-false Pacific/Auckland
+true Pacific/Apia
+true Pacific/Auckland
 false Pacific/Bougainville
-false Pacific/Chatham
+true Pacific/Chatham
 false Pacific/Chuuk
 true Pacific/Easter
 false Pacific/Efate
@@ -785,23 +785,24 @@ false Z
 false Zulu
 true posixrules
 </TimeZones>
-      <StartupTime>1599330100</StartupTime>
+      <StartupTime>1601282270</StartupTime>
     </root>
     <database id="2" parent="1" name="logiweb">
       <ObjectId>16393</ObjectId>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>514</IntrospectionStateNumber>
+      <IntrospectionStateNumber>709</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|16412|16414|1
+sequence|table|16429|16431|1
+sequence|table|16450|16452|1
+sequence|table|16461|16463|1
+sequence|table|16472|16474|1
 </Relations>
     </database>
     <database id="3" parent="1" name="postgres">
       <ObjectId>13318</ObjectId>
       <Comment>default administrative connection database</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>500</IntrospectionStateNumber>
-      <Relations>sequence|table|16394|16396|1
-</Relations>
     </database>
     <role id="4" parent="1" name="pg_execute_server_program">
       <ObjectId>4571</ObjectId>
@@ -852,7 +853,7 @@ true posixrules
       <Comment>standard public schema</Comment>
       <StateNumber>276</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>515</IntrospectionStateNumber>
+      <IntrospectionStateNumber>710</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="16" parent="2" name="heap">
@@ -922,52 +923,62 @@ true posixrules
     <language id="25" parent="2" name="internal"/>
     <language id="26" parent="2" name="plpgsql"/>
     <language id="27" parent="2" name="sql"/>
-    <schema id="28" parent="3" name="information_schema">
-      <ObjectId>13018</ObjectId>
-      <StateNumber>282</StateNumber>
-      <Owner>postgres</Owner>
-    </schema>
-    <schema id="29" parent="3" name="pg_catalog">
-      <ObjectId>11</ObjectId>
-      <Comment>system catalog schema</Comment>
-      <StateNumber>275</StateNumber>
-      <Owner>postgres</Owner>
-    </schema>
-    <schema id="30" parent="3" name="public">
-      <ObjectId>2200</ObjectId>
-      <Comment>standard public schema</Comment>
-      <StateNumber>276</StateNumber>
-      <Owner>postgres</Owner>
-      <IntrospectionStateNumber>501</IntrospectionStateNumber>
-      <Current>1</Current>
-    </schema>
-    <language id="31" parent="3" name="c"/>
-    <language id="32" parent="3" name="internal"/>
-    <language id="33" parent="3" name="plpgsql"/>
-    <language id="34" parent="3" name="sql"/>
-    <sequence id="35" parent="15" name="cargo_id_seq">
+    <sequence id="28" parent="15" name="cargo_id_seq">
       <ObjectId>16412</ObjectId>
       <Owner>postgres</Owner>
       <StateNumber>512</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <table id="36" parent="15" name="cargo">
-      <ObjectId>16414</ObjectId>
+    <sequence id="29" parent="15" name="city_id_seq">
+      <ObjectId>16429</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>512</StateNumber>
-    </table>
-    <sequence id="37" parent="30" name="cargo_id_seq">
-      <ObjectId>16394</ObjectId>
-      <Owner>postgres</Owner>
-      <StateNumber>494</StateNumber>
+      <StateNumber>561</StateNumber>
       <DataType>integer|0s</DataType>
     </sequence>
-    <table id="38" parent="30" name="cargo">
-      <ObjectId>16396</ObjectId>
+    <sequence id="30" parent="15" name="driver_id_seq">
+      <ObjectId>16450</ObjectId>
       <Owner>postgres</Owner>
-      <StateNumber>494</StateNumber>
+      <StateNumber>581</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="31" parent="15" name="truck_id_seq">
+      <ObjectId>16461</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>584</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="32" parent="15" name="users_id_seq">
+      <ObjectId>16472</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>607</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <table id="33" parent="15" name="cargo">
+      <ObjectId>16414</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>610</StateNumber>
     </table>
-    <column id="39" parent="36" name="id">
+    <table id="34" parent="15" name="city">
+      <ObjectId>16431</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>610</StateNumber>
+    </table>
+    <table id="35" parent="15" name="driver">
+      <ObjectId>16452</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>708</StateNumber>
+    </table>
+    <table id="36" parent="15" name="truck">
+      <ObjectId>16463</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>664</StateNumber>
+    </table>
+    <table id="37" parent="15" name="users">
+      <ObjectId>16474</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>665</StateNumber>
+    </table>
+    <column id="38" parent="33" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -975,83 +986,326 @@ true posixrules
       <DefaultExpression>nextval(&apos;cargo_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="40" parent="36" name="name">
+    <column id="39" parent="33" name="name">
       <Position>2</Position>
       <DataType>varchar(256)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>512</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="41" parent="36" name="weight">
+    <column id="40" parent="33" name="weight">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>512</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="42" parent="36" name="status">
+    <column id="41" parent="33" name="status">
       <Position>4</Position>
       <DataType>varchar(50)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>512</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="43" parent="36" name="cargo_pkey">
+    <column id="42" parent="33" name="city_id_from">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>593</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="43" parent="33" name="city_id_to">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>594</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="44" parent="33" name="cargo_pkey">
       <ObjectId>16418</ObjectId>
       <StateNumber>512</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="44" parent="36" name="cargo_pkey">
+    <key id="45" parent="33" name="cargo_pkey">
       <ObjectId>16419</ObjectId>
       <StateNumber>512</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>cargo_pkey</UnderlyingIndexName>
     </key>
-    <column id="45" parent="38" name="id">
+    <foreign-key id="46" parent="33" name="cargoFrom___fk">
+      <ObjectId>16483</ObjectId>
+      <StateNumber>610</StateNumber>
+      <ColNames>city_id_from</ColNames>
+      <RefTableId>16431</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>city</RefTableName>
+      <RefKeyName>city_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="47" parent="33" name="cargoTo___fk">
+      <ObjectId>16488</ObjectId>
+      <StateNumber>611</StateNumber>
+      <ColNames>city_id_to</ColNames>
+      <RefTableId>16431</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>city</RefTableName>
+      <RefKeyName>city_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="48" parent="34" name="id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>494</StateNumber>
-      <DefaultExpression>nextval(&apos;cargo_id_seq&apos;::regclass)</DefaultExpression>
+      <StateNumber>561</StateNumber>
+      <DefaultExpression>nextval(&apos;city_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="46" parent="38" name="name">
+    <column id="49" parent="34" name="name">
       <Position>2</Position>
-      <DataType>varchar(256)|0s</DataType>
+      <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>494</StateNumber>
-      <TypeId>1043</TypeId>
+      <StateNumber>561</StateNumber>
+      <TypeId>25</TypeId>
     </column>
-    <column id="47" parent="38" name="weight">
-      <Position>3</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>494</StateNumber>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="48" parent="38" name="status">
-      <Position>4</Position>
-      <DataType>varchar(50)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>494</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <index id="49" parent="38" name="cargo_pkey">
-      <ObjectId>16400</ObjectId>
-      <StateNumber>494</StateNumber>
+    <index id="50" parent="34" name="city_pk">
+      <ObjectId>16438</ObjectId>
+      <StateNumber>561</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="50" parent="38" name="cargo_pkey">
-      <ObjectId>16401</ObjectId>
-      <StateNumber>494</StateNumber>
+    <key id="51" parent="34" name="city_pk">
+      <ObjectId>16439</ObjectId>
+      <StateNumber>561</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
-      <UnderlyingIndexName>cargo_pkey</UnderlyingIndexName>
+      <UnderlyingIndexName>city_pk</UnderlyingIndexName>
+    </key>
+    <column id="52" parent="35" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>581</StateNumber>
+      <DefaultExpression>nextval(&apos;driver_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="53" parent="35" name="hours">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>683</StateNumber>
+      <DefaultExpression>0</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="54" parent="35" name="status">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>684</StateNumber>
+      <DefaultExpression>&apos;RECREATION&apos;::text</DefaultExpression>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="55" parent="35" name="truck_id">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>602</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="56" parent="35" name="city_id">
+      <Position>7</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>581</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="57" parent="35" name="user_id">
+      <Position>8</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>672</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="58" parent="35" name="time_last_change_status">
+      <Position>9</Position>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>705</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="59" parent="35" name="order_id">
+      <Position>10</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>708</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="60" parent="35" name="driver_pk">
+      <ObjectId>16459</ObjectId>
+      <StateNumber>581</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="61" parent="35" name="driver_pk">
+      <ObjectId>16460</ObjectId>
+      <StateNumber>581</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>driver_pk</UnderlyingIndexName>
+    </key>
+    <foreign-key id="62" parent="35" name="truck___fk">
+      <ObjectId>16498</ObjectId>
+      <StateNumber>664</StateNumber>
+      <ColNames>truck_id</ColNames>
+      <RefTableId>16463</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>truck</RefTableName>
+      <RefKeyName>truck_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="63" parent="35" name="city___fk">
+      <ObjectId>16493</ObjectId>
+      <StateNumber>663</StateNumber>
+      <ColNames>city_id</ColNames>
+      <RefTableId>16431</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>city</RefTableName>
+      <RefKeyName>city_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="64" parent="35" name="user___fk">
+      <ObjectId>16503</ObjectId>
+      <StateNumber>665</StateNumber>
+      <ColNames>user_id</ColNames>
+      <RefTableId>16474</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>users</RefTableName>
+      <RefKeyName>users_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="65" parent="36" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>584</StateNumber>
+      <DefaultExpression>nextval(&apos;truck_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="66" parent="36" name="reg_number">
+      <Position>2</Position>
+      <DataType>varchar(7)|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>584</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="67" parent="36" name="shift_size">
+      <Position>3</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>584</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="68" parent="36" name="capacity">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>584</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="69" parent="36" name="status">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>589</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="70" parent="36" name="city_id">
+      <Position>6</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>584</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="71" parent="36" name="truck_pk">
+      <ObjectId>16470</ObjectId>
+      <StateNumber>584</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="72" parent="36" name="truck_pk">
+      <ObjectId>16471</ObjectId>
+      <StateNumber>584</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>truck_pk</UnderlyingIndexName>
+    </key>
+    <foreign-key id="73" parent="36" name="city___fk">
+      <ObjectId>16508</ObjectId>
+      <StateNumber>668</StateNumber>
+      <ColNames>city_id</ColNames>
+      <RefTableId>16431</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>city</RefTableName>
+      <RefKeyName>city_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="74" parent="37" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>607</StateNumber>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="75" parent="37" name="firstname">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>607</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="76" parent="37" name="lastname">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>607</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="77" parent="37" name="role">
+      <Position>4</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>607</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="78" parent="37" name="email">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>607</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="79" parent="37" name="password">
+      <Position>6</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>607</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="80" parent="37" name="users_pk">
+      <ObjectId>16481</ObjectId>
+      <StateNumber>607</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+    </index>
+    <key id="81" parent="37" name="users_pk">
+      <ObjectId>16482</ObjectId>
+      <StateNumber>607</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>users_pk</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

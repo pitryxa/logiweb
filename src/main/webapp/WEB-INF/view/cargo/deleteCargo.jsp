@@ -1,46 +1,50 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: boldarev
-  Date: 07.09.2020
-  Time: 13:06
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-            crossorigin="anonymous"></script>
-    <style>
-        section {
-            margin: 20px;
-        }
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="title" value="Delete cargo"/>
 
-        h2 {
-            margin-bottom: 20px;
-        }
-    </style>
-    <title>Add Cargo</title>
-</head>
-<body>
-<section>
-    <h2>Delete cargo #${cargo.id}</h2>
-    <p>Confirm deleting cargo</p>
+<jsp:include page="../common/header.jsp">
+    <jsp:param name="title" value="${title}"/>
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>
 
-    <form action="/cargo/delete" method="post">
-        <input type="hidden" name="id" value="${cargo.id}">
-        <input type="hidden" name="name" value="${cargo.name}">
-        <input type="hidden" name="weight" value="${cargo.weight}">
-        <input type="hidden" name="status" value="${cargo.status}">
+<main class="flex-shrink-0">
+    <section class="container form-content" id="content">
+        <div class="row" id="nameSection">
+            <div class="col">
+                <h4 class="text-center text-cadetblue">${title} #${cargo.id}</h4>
+            </div>
+        </div>
 
-        <button type="submit" class="btn btn-success">Delete cargo</button>
-        <button type="button" onclick="history.back();" class="btn btn-light">Cancel</button>
-    </form>
-</section>
+        <form action="/cargo/delete" method="post">
+            <input type="hidden" name="id" value="${cargo.id}">
+            <div class="form-group row">
+                <label for="name" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Name</label>
+                <input type="text" name="name" id="name" value="${cargo.name}" class="form-control-plaintext col-sm-10" readonly>
+            </div>
+            <div class="form-group row">
+                <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight</label>
+                <input type="text" name="weight" id="weight" value="${cargo.weight}" class="form-control-plaintext col-sm-10" readonly>
+            </div>
+            <div class="form-group row">
+                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
+                <input type="text" name="status" id="status" value="${cargo.status}" class="form-control-plaintext col-sm-10" readonly>
+            </div>
+            <div class="form-group row">
+                <label for="city-from" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">From</label>
+                <input type="text" name="cityFrom" id="city-from" value="${cargo.cityFrom}" class="form-control-plaintext col-sm-10" readonly>
+            </div>
+            <div class="form-group row">
+                <label for="city-to" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">To</label>
+                <input type="text" name="cityTo" id="city-to" value="${cargo.cityTo}" class="form-control-plaintext col-sm-10" readonly>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success mlr10">${title}</button>
+                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
+            </div>
+        </form>
+    </section>
+</main>
 
-
-</body>
-</html>
+<jsp:include page="../common/footer.jsp"/>

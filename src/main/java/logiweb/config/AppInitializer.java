@@ -1,11 +1,13 @@
 package logiweb.config;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+@Order(1)
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {DataSourceConfig.class};
+        return new Class[] {DataSourceConfig.class, WebSecurityConfig.class};
     }
 
     @Override

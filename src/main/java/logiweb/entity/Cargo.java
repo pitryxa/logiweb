@@ -1,63 +1,34 @@
 package logiweb.entity;
 
+import logiweb.entity.enums.CargoStatus;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "cargo")
-public class Cargo {
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class Cargo extends BaseEntity {
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
-    private int weight;
+    @Column(name = "weight")
+    private Integer weight;
 
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private CargoStatus status;
 
-    public int getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "city_id_from")
+    private City cityFrom;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public CargoStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(CargoStatus status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Cargo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", weight=" + weight +
-                ", status=" + status +
-                '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "city_id_to")
+    private City cityTo;
 }

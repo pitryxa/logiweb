@@ -1,7 +1,88 @@
 body {
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #eee;
+    background-color: floralwhite;
+}
+
+#logo{
+    color: gold;
+    text-shadow: black 0 0 3px;
+    font-size: 2em;
+    line-height: 1em;
+    font-weight: 600;
+}
+
+#header{
+    padding: 40px 20px;
+    /*background-color: dimgray;*/
+    background: url("../image/bg_header.jpg") 50% 76% dimgray;
+    background-size: cover;
+}
+
+footer {
+    background-color: dimgray;
+}
+
+.mlr10{
+    margin: 0 10px;
+}
+
+.btn-signin {
+    margin: 0 0 10px 0;
+}
+
+.lnk-color{
+    color: #17a2b8;
+}
+
+#menu > ul > li > a{
+    font-size: 1.25em;
+    color: white;
+    text-shadow: black 0 0 3px;
+}
+
+#menu > ul > li > a:hover{
+    color: gold;
+    /*text-decoration: underline;*/
+}
+
+#content{
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-content{
+    max-width: 768px;
+}
+
+.text-cadetblue{
+    /*color: cadetblue;*/
+    color: #17a2b8;
+}
+
+#nameSection{
+    padding-bottom: 10px;
+}
+
+.action{
+    font-size: 1em;
+}
+
+#login{
+    padding-top: 12px;
+}
+
+#login>p{
+    font-size: 1.25em;
+}
+
+#login>a{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+#login>a:hover{
+    color: gold;
 }
 
 .form-signin {
