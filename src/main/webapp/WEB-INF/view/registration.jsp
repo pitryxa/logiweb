@@ -14,7 +14,7 @@
 
 <div class="container">
 
-    <form:form method="POST" modelAttribute="userForm" class="form-signin">
+    <form:form method="POST" modelAttribute="user" class="form-signin">
         <h2 class="text-center text-cadetblue">Registration</h2>
 
         <spring:bind path="firstName">

@@ -1,18 +1,13 @@
 package logiweb.controller;
 
-import logiweb.dto.CargoDto;
 import logiweb.dto.TruckDto;
-import logiweb.entity.enums.CargoStatus;
 import logiweb.entity.enums.TruckStatus;
-import logiweb.service.api.CargoService;
 import logiweb.service.api.CityService;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/officer/trucks")
@@ -24,53 +19,53 @@ public class TruckController {
     private CityService cityService;
 
     @GetMapping
-    public ModelAndView allTrucks() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("trucks/truckList");
-
-        model.addObject("trucks", truckService.getAll());
-        return model;
+    public String allTrucks(Model model) {
+        model.addAttribute("trucks", truckService.getAll());
+        return "trucks/truckList";
     }
 
     @GetMapping("/{id}")
-    public ModelAndView truckInfo(@PathVariable("id") Integer id) {
-        ModelAndView model = new ModelAndView("trucks/truckInfo");
-        model.addObject("truck", truckService.getById(id));
-        return model;
+    public String truckInfo(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("truck", truckService.getById(id));
+        return "trucks/truckInfo";
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView editTruck(@PathVariable("id") int id) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("trucks/editTruck");
-        model.addObject("truck", truckService.getById(id));
-        model.addObject("cityList", cityService.getAll());
-        model.addObject("statusArray", TruckStatus.values());
-        return model;
+    public String editTruck(@PathVariable("id") int id, Model model) {
+        model.addAttribute("truck", truckService.getById(id));
+        model.addAttribute("cityList", cityService.getAll());
+        model.addAttribute("statusArray", TruckStatus.values());
+        return "trucks/editTruck";
     }
 
     @PostMapping("/edit")
-    public ModelAndView editTruck(@ModelAttribute TruckDto truckDto) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/officer/trucks");
+    public String editTruck(@ModelAttribute TruckDto truckDto) {
         truckService.edit(truckDto);
-        return model;
+        return "redirect:/officer/trucks";
     }
 
     @GetMapping("/add")
-    public ModelAndView addTruck() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("trucks/addTruck");
-        model.addObject("cityList", cityService.getAll());
-        model.addObject("statusArray", TruckStatus.values());
-        return model;
+    public String addTruck(Model model) {
+        model.addAttribute("cityList", cityService.getAll());
+        model.addAttribute("statusArray", TruckStatus.values());
+        return "trucks/addTruck";
     }
 
     @PostMapping("/add")
-    public ModelAndView addTruck(@ModelAttribute TruckDto truckDto) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/officer/trucks");
+    public String addTruck(@ModelAttribute TruckDto truckDto) {
         truckService.add(truckDto);
-        return model;
+        return "redirect:/officer/trucks";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTruck(@PathVariable("id") int id, Model model) {
+        model.addAttribute("truck", truckService.getById(id));
+        return "trucks/deleteTruck";
+    }
+
+    @PostMapping("/delete")
+    public String deleteTruck(@ModelAttribute TruckDto truckDto) {
+        truckService.delete(truckDto);
+        return "redirect:/officer/trucks";
     }
 }

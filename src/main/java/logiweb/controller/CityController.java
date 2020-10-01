@@ -4,8 +4,8 @@ import logiweb.dto.CityDto;
 import logiweb.service.api.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/admin/city")
@@ -14,26 +14,20 @@ public class CityController {
     private CityService cityService;
 
     @GetMapping
-    public ModelAndView allCities() {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("city/cityList");
-        model.addObject("cityList", cityService.getAll());
-        return model;
+    public String allCities(Model model) {
+        model.addAttribute("cityList", cityService.getAll());
+        return "city/cityList";
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteCity(@PathVariable("id") int id) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("city/deleteCity");
-        model.addObject("city", cityService.getById(id));
-        return model;
+    public String deleteCity(@PathVariable("id") int id, Model model) {
+        model.addAttribute("city", cityService.getById(id));
+        return "city/deleteCity";
     }
 
     @PostMapping("/delete")
-    public ModelAndView deleteCity(@ModelAttribute CityDto cityDTO) {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/city");
+    public String deleteCity(@ModelAttribute CityDto cityDTO) {
         cityService.delete(cityDTO);
-        return model;
+        return "redirect:/admin/city";
     }
 }

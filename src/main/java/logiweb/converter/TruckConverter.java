@@ -1,17 +1,13 @@
 package logiweb.converter;
 
-import logiweb.dto.DriverDto;
 import logiweb.dto.TruckDto;
 import logiweb.dto.simple.SimpleTruckDto;
-import logiweb.entity.Driver;
 import logiweb.entity.Truck;
 import logiweb.service.api.CityService;
-import logiweb.service.api.DriverService;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,9 +21,6 @@ public class TruckConverter {
 
     @Autowired
     private CityConverter cityConverter;
-
-    @Autowired
-    private DriverService driverService;
 
     @Autowired
     private DriverConverter driverConverter;
@@ -64,14 +57,14 @@ public class TruckConverter {
         return truckDto;
     }
 
-    public SimpleTruckDto toSimpleDto(TruckDto truck) {
-        SimpleTruckDto truckDto = new SimpleTruckDto();
-
-        truckDto.setId(truck.getId());
-        truckDto.setRegNumber(truck.getRegNumber());
-
-        return truckDto;
-    }
+//    public SimpleTruckDto toSimpleDto(TruckDto truck) {
+//        SimpleTruckDto truckDto = new SimpleTruckDto();
+//
+//        truckDto.setId(truck.getId());
+//        truckDto.setRegNumber(truck.getRegNumber());
+//
+//        return truckDto;
+//    }
 
     public Truck toEntity(TruckDto truckDto) {
         Truck truck = new Truck();
@@ -93,9 +86,9 @@ public class TruckConverter {
         return truck;
     }
 
-//    public Truck toEntity(SimpleTruckDto truckDto) {
-//        return toEntity(truckService.getById(truckDto.getId()));
-//    }
+    public Truck toEntity(SimpleTruckDto truckDto) {
+        return toEntity(toDto(truckDto));
+    }
 
     public List<TruckDto> toListDto(List<Truck> trucks) {
         return trucks.stream().map(this::toDto).collect(Collectors.toList());

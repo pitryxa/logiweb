@@ -1,22 +1,15 @@
 package logiweb.service;
 
 import logiweb.converter.DriverConverter;
-import logiweb.converter.TruckConverter;
 import logiweb.dao.api.DriverDao;
-import logiweb.dao.api.TruckDao;
 import logiweb.dto.DriverDto;
-import logiweb.dto.TruckDto;
-import logiweb.entity.Driver;
-import logiweb.entity.Truck;
 import logiweb.service.api.DriverService;
-import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -28,7 +21,6 @@ public class DriverServiceImpl implements DriverService {
     private DriverConverter driverConverter;
 
     @Override
-    @Transactional
     public List<DriverDto> getAll() {
         return driverConverter.toListDto(driverDao.getAllSorted());
     }
@@ -52,8 +44,12 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    @Transactional
     public DriverDto getById(int id) {
         return driverConverter.toDto(driverDao.getById(id));
+    }
+
+    @Override
+    public LocalDateTime getTimeLastChangeStatusById(int id) {
+        return null;
     }
 }

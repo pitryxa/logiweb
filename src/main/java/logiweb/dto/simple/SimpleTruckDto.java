@@ -9,6 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SimpleTruckDto {
     private Integer id;
-
     private String regNumber;
 }

@@ -3,13 +3,11 @@ package logiweb.service;
 import logiweb.converter.TruckConverter;
 import logiweb.dao.api.TruckDao;
 import logiweb.dto.TruckDto;
-import logiweb.entity.Truck;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +20,6 @@ public class TruckServiceImpl implements TruckService {
     private TruckConverter truckConverter;
 
     @Override
-    @Transactional
     public List<TruckDto> getAll() {
         return truckConverter.toListDto(truckDao.getAllSorted());
     }
@@ -46,7 +43,6 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    @Transactional
     public TruckDto getById(int id) {
         return truckConverter.toDto(truckDao.getById(id));
     }

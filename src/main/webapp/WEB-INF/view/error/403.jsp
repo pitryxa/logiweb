@@ -16,13 +16,13 @@
                 <h1><span class="color">Access denied</span><br><span class="color">You don't have enough rights </span><br/>
                 </h1>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <h3><a href="<c:url value="/admin/users"/>">Back to ----> the list of users</a></h3>
+                    <h3><a href="<c:url value="/admin/users"/>">Jump to the list of users</a></h3>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_MANAGER')">
-                    <h3><a href="<c:url value="/manager/orders"/>">Back to ----> the list of orders</a></h3>
+                    <h3><a href="<c:url value="/officer/orders"/>">Jump to the list of orders</a></h3>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_DRIVER')">
-                    <h3><a href="<c:url value="/driver"/>">Back to ----> the your account page</a></h3>
+                    <h3><a href="<c:url value="/driver"/>">Jump to the your account page</a></h3>
                 </sec:authorize>
             </div>
         </div>

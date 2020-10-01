@@ -1,8 +1,13 @@
 package logiweb.converter;
 
+import logiweb.dto.CargoDto;
 import logiweb.dto.CityDto;
+import logiweb.entity.Cargo;
 import logiweb.entity.City;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CityConverter {
@@ -23,5 +28,12 @@ public class CityConverter {
         city.setName(cityDTO.getName());
 
         return city;
+    }
+
+    public List<CityDto> toListDto(List<City> cityList) {
+        return cityList
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 }

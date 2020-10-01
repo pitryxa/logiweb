@@ -1,16 +1,13 @@
 package logiweb.converter;
 
-import logiweb.dao.CityDaoImpl;
-import logiweb.dao.api.CityDao;
 import logiweb.dto.CargoDto;
-import logiweb.dto.CityDto;
 import logiweb.entity.Cargo;
-import logiweb.entity.City;
-import logiweb.service.CityServiceImpl;
 import logiweb.service.api.CityService;
-import logiweb.temp.Temp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CargoConverter {
@@ -45,5 +42,12 @@ public class CargoConverter {
         cargo.setCityTo(cityConverter.toEntity(cityService.getByName(cargoDTO.getCityTo())));
 
         return cargo;
+    }
+
+    public List<CargoDto> toListDto(List<Cargo> cargoList) {
+        return cargoList
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 }

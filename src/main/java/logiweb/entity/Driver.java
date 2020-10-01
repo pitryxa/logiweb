@@ -41,7 +41,6 @@ public class Driver extends BaseEntity {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @Column
-    @JoinColumn(name = "time_last_change_status")
+    @Column(name = "time_last_change_status")
     private LocalDateTime timeLastChangeStatus;
 }

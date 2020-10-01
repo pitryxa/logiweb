@@ -1,16 +1,12 @@
 package logiweb.converter;
 
 import logiweb.dto.DriverDto;
-import logiweb.dto.TruckDto;
 import logiweb.dto.UserDto;
 import logiweb.dto.simple.SimpleDriverDto;
 import logiweb.entity.Driver;
-import logiweb.entity.Truck;
 import logiweb.entity.User;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DriverService;
-import logiweb.service.api.TruckService;
-import logiweb.service.api.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,12 +18,6 @@ import java.util.stream.Collectors;
 public class DriverConverter {
     @Autowired
     private CityService cityService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private TruckService truckService;
 
     @Autowired
     private DriverService driverService;
@@ -57,6 +47,8 @@ public class DriverConverter {
 
         driverDto.setCity(driver.getCity().getName());
 
+        driverDto.setTimeLastChangeStatus(driver.getTimeLastChangeStatus());
+
         return driverDto;
     }
 
@@ -80,12 +72,11 @@ public class DriverConverter {
         driver.setTruck(
                 driverDto.getTruck() == null
                         ? null
-                        : truckConverter.toEntity(truckConverter.toDto(driverDto.getTruck()))
+                        : truckConverter.toEntity(driverDto.getTruck())
         );
 
-//        driver.setTruck(null);
-
         driver.setCity(cityConverter.toEntity(cityService.getByName(driverDto.getCity())));
+        driver.setTimeLastChangeStatus(driverDto.getTimeLastChangeStatus());
 
         return driver;
     }
