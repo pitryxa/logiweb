@@ -1,7 +1,9 @@
 package logiweb.service.api;
 
+import logiweb.calculating.Route;
+import logiweb.dto.CargoDto;
 import logiweb.dto.DriverDto;
-import logiweb.entity.Driver;
+import logiweb.dto.TruckDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,4 +20,6 @@ public interface DriverService {
     DriverDto getById(int id);
 
     LocalDateTime getTimeLastChangeStatusById(int id);
+
+    List<DriverDto> getDriversForOrder(TruckDto truck, Route route);
 }

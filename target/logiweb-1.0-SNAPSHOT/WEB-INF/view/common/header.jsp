@@ -13,11 +13,11 @@
 <body class="d-flex flex-column h-100">
 <header class="container-fluid" id="header">
     <div class="row">
-        <div class="col-3" id="logo">
+        <div class="col-4" id="logo">
             <a href="/">Logistic company</a>
         </div>
 
-        <div class="col-7" id="menu">
+        <div class="col-6" id="menu">
             <ul class="nav justify-content-center">
 
                 <sec:authorize access="hasRole('ADMIN')">
@@ -41,6 +41,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/officer/cargo">Cargo</a>
+                    </li>
+                </sec:authorize>
+
+                <sec:authorize access="hasRole('DRIVER')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/driver">Cabinet</a>
                     </li>
                 </sec:authorize>
 

@@ -78,4 +78,12 @@ public class UserServiceImpl implements UserService {
                 .map(user -> mapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserDto> getUsersWithRoleDriverWhoAreNotInListDrivers() {
+        return userDao.getUsersWithRoleDriverWhoAreNotInListDrivers()
+                .stream()
+                .map(user -> mapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
+    }
 }

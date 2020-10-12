@@ -55,7 +55,7 @@ public class DriverController {
     @GetMapping("/add")
     public String addDriver(Model model) {
         model.addAttribute("cityList", cityService.getAll());
-        model.addAttribute("users", userService.getByRole(Role.ROLE_DRIVER));
+        model.addAttribute("users", userService.getUsersWithRoleDriverWhoAreNotInListDrivers());
         return "drivers/addDriver";
     }
 
@@ -66,7 +66,7 @@ public class DriverController {
         driverDto.setWorkHours(0);
         driverDto.setStatus(DriverStatus.RECREATION);
         driverDto.setTruck(null);
-        //driverDto.setTimeLastChangeStatus(driverService.getById(driverDto.getId()).getTimeLastChangeStatus());
+        driverDto.setTimeLastChangeStatus(LocalDateTime.now());
 
         driverService.add(driverDto);
         return "redirect:/officer/drivers";

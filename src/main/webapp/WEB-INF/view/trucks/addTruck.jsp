@@ -33,14 +33,14 @@
                 <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>
                 <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">
             </div>
-            <div class="form-group row">
-                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                <select name="status" id="status" class="form-control col-sm-10">
-                    <c:forEach var="status" items="${statusArray}">
-                        <option value="${status}">${status}</option>
-                    </c:forEach>
-                </select>
-            </div>
+<%--            <div class="form-group row">--%>
+<%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
+<%--                <select name="status" id="status" class="form-control col-sm-10">--%>
+<%--                    <c:forEach var="status" items="${statusArray}">--%>
+<%--                        <option value="${status}">${status}</option>--%>
+<%--                    </c:forEach>--%>
+<%--                </select>--%>
+<%--            </div>--%>
             <div class="form-group row">
                 <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
                 <select name="city" id="city" class="form-control col-sm-10">

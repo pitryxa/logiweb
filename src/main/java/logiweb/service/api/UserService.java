@@ -20,4 +20,6 @@ public interface UserService {
     UserDto getByEmail(String email);
 
     List<UserDto> getByRole(Role role);
+
+    List<UserDto> getUsersWithRoleDriverWhoAreNotInListDrivers();
 }

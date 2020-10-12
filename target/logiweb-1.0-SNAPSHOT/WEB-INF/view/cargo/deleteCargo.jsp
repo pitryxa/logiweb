@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/cargo/delete" method="post">
+        <form action="${contextPath}/officer/cargo/delete" method="post">
             <input type="hidden" name="id" value="${cargo.id}">
             <div class="form-group row">
                 <label for="name" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Name</label>

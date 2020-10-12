@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin/city")
 public class CityController {
@@ -15,7 +17,13 @@ public class CityController {
 
     @GetMapping
     public String allCities(Model model) {
-        model.addAttribute("cityList", cityService.getAll());
+        List<CityDto> cities = cityService.getAll();
+        model.addAttribute("cityList", cities);
+
+        //Long count = cityService.countOfCities();
+
+        //Route route = cityService.minRoute(cities.get(0), cities.get(18));
+
         return "city/cityList";
     }
 

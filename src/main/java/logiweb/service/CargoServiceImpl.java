@@ -45,4 +45,14 @@ public class CargoServiceImpl implements CargoService {
     public CargoDto getById(int id) {
         return cargoConverter.toDto(cargoDao.getById(id));
     }
+
+    @Override
+    public List<CargoDto> getPreparedCargo() {
+        return cargoConverter.toListDto(cargoDao.getPreparedCargo());
+    }
+
+    @Override
+    public List<CargoDto> getByListId(List<Integer> ids) {
+        return cargoConverter.toListDto(cargoDao.getByListId(ids));
+    }
 }

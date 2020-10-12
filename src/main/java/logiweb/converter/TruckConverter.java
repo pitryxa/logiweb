@@ -1,5 +1,6 @@
 package logiweb.converter;
 
+import logiweb.dao.api.CityDao;
 import logiweb.dto.TruckDto;
 import logiweb.dto.simple.SimpleTruckDto;
 import logiweb.entity.Truck;
@@ -13,17 +14,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class TruckConverter {
-    @Autowired
-    private CityService cityService;
 
     @Autowired
     private TruckService truckService;
 
     @Autowired
-    private CityConverter cityConverter;
+    private DriverConverter driverConverter;
 
     @Autowired
-    private DriverConverter driverConverter;
+    private CityDao cityDao;
 
     public TruckDto toDto(Truck truck) {
         TruckDto truckDto = new TruckDto();
@@ -32,7 +31,8 @@ public class TruckConverter {
         truckDto.setRegNumber(truck.getRegNumber());
         truckDto.setShiftSize(truck.getShiftSize());
         truckDto.setCapacity(truck.getCapacity());
-        truckDto.setStatus(truck.getStatus());
+        truckDto.setConditionStatus(truck.getConditionStatus());
+        truckDto.setWorkStatus(truck.getWorkStatus());
         truckDto.setCity(truck.getCity().getName());
 
         truckDto.setDrivers(
@@ -57,15 +57,6 @@ public class TruckConverter {
         return truckDto;
     }
 
-//    public SimpleTruckDto toSimpleDto(TruckDto truck) {
-//        SimpleTruckDto truckDto = new SimpleTruckDto();
-//
-//        truckDto.setId(truck.getId());
-//        truckDto.setRegNumber(truck.getRegNumber());
-//
-//        return truckDto;
-//    }
-
     public Truck toEntity(TruckDto truckDto) {
         Truck truck = new Truck();
 
@@ -73,7 +64,8 @@ public class TruckConverter {
         truck.setRegNumber(truckDto.getRegNumber());
         truck.setShiftSize(truckDto.getShiftSize());
         truck.setCapacity(truckDto.getCapacity());
-        truck.setStatus(truckDto.getStatus());
+        truck.setConditionStatus(truckDto.getConditionStatus());
+        truck.setWorkStatus(truckDto.getWorkStatus());
 
         truck.setDrivers(
                 truckDto.getDrivers() == null
@@ -81,16 +73,19 @@ public class TruckConverter {
                 : driverConverter.toListEntity(truckDto.getDrivers())
         );
 
-        truck.setCity(cityConverter.toEntity(cityService.getByName(truckDto.getCity())));
+        truck.setCity(cityDao.getByName(truckDto.getCity()));
 
         return truck;
     }
 
-    public Truck toEntity(SimpleTruckDto truckDto) {
-        return toEntity(toDto(truckDto));
+    public Truck toEntity(SimpleTruckDto simpleTruckDto) {
+        return toEntity(toDto(simpleTruckDto));
     }
 
     public List<TruckDto> toListDto(List<Truck> trucks) {
-        return trucks.stream().map(this::toDto).collect(Collectors.toList());
+        return trucks
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 }

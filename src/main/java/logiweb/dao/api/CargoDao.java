@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface CargoDao extends GenericDAO<Cargo> {
     List<Cargo> getAllSorted();
+
+    List<Cargo> getPreparedCargo();
+
+    List<Cargo> getByListId(List<Integer> ids);
 }

@@ -19,6 +19,7 @@
 
         <form action="/officer/trucks/delete" method="post">
             <input type="hidden" name="id" value="${truck.id}">
+            <input type="hidden" name="workStatus" value="${truck.workStatus}">
             <div class="form-group row">
                 <label for="regNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Reg. number</label>
                 <input type="text" name="regNumber" id="regNumber" value="${truck.regNumber}" class="form-control col-sm-10" readonly>
@@ -32,8 +33,8 @@
                 <input type="text" name="capacity" id="capacity" value="${truck.capacity}" class="form-control col-sm-10" readonly>
             </div>
             <div class="form-group row">
-                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                <input type="text" name="status" id="status" value="${truck.status}" class="form-control col-sm-10" readonly>
+                <label for="conditionStatus" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
+                <input type="text" name="conditionStatus" id="conditionStatus" value="${truck.conditionStatus}" class="form-control col-sm-10" readonly>
             </div>
             <div class="form-group row">
                 <label for="drivers" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Drivers</label>

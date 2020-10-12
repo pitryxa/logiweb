@@ -82,14 +82,23 @@ public class DriverConverter {
     }
 
     public List<DriverDto> toListDto(List<Driver> drivers) {
-        return drivers.stream().map(this::toDto).collect(Collectors.toList());
+        return drivers
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     public List<SimpleDriverDto> toListSimpleDto(List<Driver> drivers) {
-        return drivers.stream().map(this::toSimpleDto).collect(Collectors.toList());
+        return drivers
+                .stream()
+                .map(this::toSimpleDto)
+                .collect(Collectors.toList());
     }
 
     public List<Driver> toListEntity(List<SimpleDriverDto> drivers) {
-        return drivers.stream().map(driver -> toEntity(driverService.getById(driver.getId()))).collect(Collectors.toList());
+        return drivers
+                .stream()
+                .map(driver -> toEntity(driverService.getById(driver.getId())))
+                .collect(Collectors.toList());
     }
 }

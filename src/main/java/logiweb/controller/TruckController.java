@@ -1,7 +1,8 @@
 package logiweb.controller;
 
 import logiweb.dto.TruckDto;
-import logiweb.entity.enums.TruckStatus;
+import logiweb.entity.enums.TruckConditionStatus;
+import logiweb.entity.enums.TruckWorkStatus;
 import logiweb.service.api.CityService;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class TruckController {
     public String editTruck(@PathVariable("id") int id, Model model) {
         model.addAttribute("truck", truckService.getById(id));
         model.addAttribute("cityList", cityService.getAll());
-        model.addAttribute("statusArray", TruckStatus.values());
+        model.addAttribute("statusArray", TruckConditionStatus.values());
         return "trucks/editTruck";
     }
 
@@ -47,12 +48,13 @@ public class TruckController {
     @GetMapping("/add")
     public String addTruck(Model model) {
         model.addAttribute("cityList", cityService.getAll());
-        model.addAttribute("statusArray", TruckStatus.values());
         return "trucks/addTruck";
     }
 
     @PostMapping("/add")
     public String addTruck(@ModelAttribute TruckDto truckDto) {
+        truckDto.setWorkStatus(TruckWorkStatus.FREE);
+        truckDto.setConditionStatus(TruckConditionStatus.OK);
         truckService.add(truckDto);
         return "redirect:/officer/trucks";
     }
@@ -65,7 +67,9 @@ public class TruckController {
 
     @PostMapping("/delete")
     public String deleteTruck(@ModelAttribute TruckDto truckDto) {
-        truckService.delete(truckDto);
+        truckDto.setConditionStatus(TruckConditionStatus.DISABLED);
+        truckService.edit(truckDto);
+        //truckService.delete(truckDto);
         return "redirect:/officer/trucks";
     }
 }

@@ -17,4 +17,12 @@ public interface CityService {
     CityDto getById(int id);
 
     CityDto getByName(String name);
+
+    Long countOfCities();
+
+    Integer[][] getMatrixOfDistances();
+
+    CityDto getCityByNameFromList(List<CityDto> cities, String cityName);
+
+
 }

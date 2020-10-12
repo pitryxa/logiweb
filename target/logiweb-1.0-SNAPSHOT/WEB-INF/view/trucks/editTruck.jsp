@@ -19,6 +19,8 @@
 
         <form action="/officer/trucks/edit" method="post">
             <input type="hidden" name="id" value="${truck.id}">
+            <input type="hidden" name="workStatus" value="${truck.workStatus}">
+
             <div class="form-group row">
                 <label for="regNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Reg. number</label>
                 <input type="text" name="regNumber" id="regNumber" value="${truck.regNumber}" class="form-control col-sm-10">
@@ -41,13 +43,15 @@
                 <input type="text" name="capacity" id="capacity" value="${truck.capacity}" class="form-control col-sm-10">
             </div>
             <div class="form-group row">
-                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                <select name="status" id="status" class="form-control col-sm-10">
+                <label for="conditionStatus" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
+                <select name="conditionStatus" id="conditionStatus" class="form-control col-sm-10">
                     <c:forEach var="status" items="${statusArray}">
-                        <option value="${status}"
-                                <c:if test="${status == truck.status}"><c:out value="selected"/></c:if>>
-                                ${status}
-                        </option>
+                        <c:if test="${status != 'DISABLED'}">
+                            <option value="${status}"
+                                    <c:if test="${status == truck.conditionStatus}"><c:out value="selected"/></c:if>>
+                                    ${status}
+                            </option>
+                        </c:if>
                     </c:forEach>
                 </select>
             </div>

@@ -1,10 +1,10 @@
 package logiweb.entity;
 
-import logiweb.entity.enums.TruckStatus;
+import logiweb.entity.enums.TruckConditionStatus;
+import logiweb.entity.enums.TruckWorkStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,15 +24,19 @@ public class Truck extends BaseEntity {
     @Column(name = "capacity")
     private Integer capacity;
 
-    @Column(name = "status")
+    @Column(name = "condition_status")
     @Enumerated(EnumType.STRING)
-    private TruckStatus status;
+    private TruckConditionStatus conditionStatus;
+
+    @Column(name = "work_status")
+    @Enumerated(EnumType.STRING)
+    private TruckWorkStatus workStatus;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "truck", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "truck", fetch = FetchType.EAGER)
     private List<Driver> drivers;
 
     @Override
@@ -41,7 +45,7 @@ public class Truck extends BaseEntity {
                 "regNumber='" + regNumber + '\'' +
                 ", shiftSize=" + shiftSize +
                 ", capacity=" + capacity +
-                ", status=" + status +
+                ", conditionStatus=" + conditionStatus +
                 '}';
     }
 }

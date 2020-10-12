@@ -15,4 +15,8 @@ public interface CargoService {
     void edit(CargoDto cargoDTO);
 
     CargoDto getById(int id);
+
+    List<CargoDto> getPreparedCargo();
+
+    List<CargoDto> getByListId(List<Integer> ids);
 }

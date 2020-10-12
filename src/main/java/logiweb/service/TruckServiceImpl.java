@@ -1,14 +1,18 @@
 package logiweb.service;
 
+import logiweb.converter.CargoConverter;
 import logiweb.converter.TruckConverter;
 import logiweb.dao.api.TruckDao;
+import logiweb.dto.CargoDto;
 import logiweb.dto.TruckDto;
+import logiweb.entity.Cargo;
+import logiweb.entity.City;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TruckServiceImpl implements TruckService {
@@ -18,6 +22,9 @@ public class TruckServiceImpl implements TruckService {
 
     @Autowired
     private TruckConverter truckConverter;
+
+    @Autowired
+    private CargoConverter cargoConverter;
 
     @Override
     public List<TruckDto> getAll() {
@@ -45,5 +52,38 @@ public class TruckServiceImpl implements TruckService {
     @Override
     public TruckDto getById(int id) {
         return truckConverter.toDto(truckDao.getById(id));
+    }
+
+    @Override
+    public List<TruckDto> getAllFreeTrucksInCity(City city) {
+        return truckConverter.toListDto(truckDao.getAllFreeTrucksInCity(city));
+    }
+
+    @Override
+    public List<TruckDto> getFreeTrucksByCityfromAndCapacityInCargoList(List<CargoDto> cargoes) {
+        Map<City, Integer> cities = getCityfromAndSummaryWeightFromCargoes(cargoes);
+
+        int maxWeight = Collections.max(cities.values());
+
+        return truckConverter.toListDto(truckDao.getAllFreeTrucksInCities(cities.keySet(), maxWeight));
+    }
+
+    private Map<City, Integer> getCityfromAndSummaryWeightFromCargoes(List<CargoDto> cargoes){
+        Map<City, Integer> cities = new HashMap<>();
+        List<Cargo> cargoList = cargoConverter.toListEntity(cargoes);
+
+        for (Cargo cargo : cargoList) {
+            City city = cargo.getCityFrom();
+            int cargoWeight = cargo.getWeight();
+
+            if (cities.containsKey(city)) {
+                int curWeight = cities.get(city);
+                cities.put(city, curWeight + cargoWeight);
+            } else {
+                cities.put(city, cargoWeight);
+            }
+        }
+
+        return cities;
     }
 }

@@ -13,4 +13,6 @@ public interface UserDao extends GenericDAO<User> {
     User getByEmail(String email);
 
     List<User> getByRole(Role role);
+
+    List<User> getUsersWithRoleDriverWhoAreNotInListDrivers();
 }

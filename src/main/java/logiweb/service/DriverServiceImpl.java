@@ -1,8 +1,11 @@
 package logiweb.service;
 
+import logiweb.calculating.Route;
 import logiweb.converter.DriverConverter;
 import logiweb.dao.api.DriverDao;
+import logiweb.dto.CargoDto;
 import logiweb.dto.DriverDto;
+import logiweb.dto.TruckDto;
 import logiweb.service.api.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,4 +55,14 @@ public class DriverServiceImpl implements DriverService {
     public LocalDateTime getTimeLastChangeStatusById(int id) {
         return null;
     }
+
+    @Override
+    public List<DriverDto> getDriversForOrder(TruckDto truck, Route route) {
+        
+
+
+        return null;
+    }
+
+
 }

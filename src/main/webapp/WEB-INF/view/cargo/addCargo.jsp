@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/cargo/add" method="post">
+        <form action="${contextPath}/officer/cargo/add" method="post">
             <div class="form-group row">
                 <label for="name" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Name</label>
                 <input type="text" name="name" id="name" class="form-control col-sm-10">

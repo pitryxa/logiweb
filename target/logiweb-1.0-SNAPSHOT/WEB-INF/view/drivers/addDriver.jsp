@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/officer/drivers/add" method="post">
+        <form action="${contextPath}/officer/drivers/add" method="post">
             <div class="form-group row">
                 <label for="user" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">User</label>
                 <select name="user-id" id="user" class="form-control col-sm-10">

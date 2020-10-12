@@ -16,7 +16,7 @@
                 <h4 class="text-cadetblue">${title}</h4>
             </div>
         </div>
-        <a href="/officer/trucks/add" class="lnk-color">Add truck</a>
+        <a href="${contextPath}/officer/trucks/add" class="lnk-color">Add truck</a>
         <br>
         <br>
         <table class="table table-striped">
@@ -27,7 +27,8 @@
                 <th>Reg. number</th>
                 <th>Shift size</th>
                 <th>Capacity</th>
-                <th>Status</th>
+                <th>Condition status</th>
+                <th>Work status</th>
                 <th>City</th>
                 <th>Drivers</th>
                 <th>Action</th>
@@ -40,7 +41,8 @@
                     <td>${truck.regNumber}</td>
                     <td>${truck.shiftSize}</td>
                     <td>${truck.capacity}</td>
-                    <td>${truck.status}</td>
+                    <td>${truck.conditionStatus}</td>
+                    <td>${truck.workStatus}</td>
                     <td>${truck.city}</td>
                     
                     <td>
@@ -75,7 +77,7 @@
             </c:forEach>
         </table>
 
-        <a href="/officer/trucks/add" class="lnk-color">Add truck</a>
+        <a href="${contextPath}/officer/trucks/add" class="lnk-color">Add truck</a>
     </section>
 </main>
 

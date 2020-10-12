@@ -1,7 +1,8 @@
 package logiweb.dto;
 
 import logiweb.dto.simple.SimpleDriverDto;
-import logiweb.entity.enums.TruckStatus;
+import logiweb.entity.enums.TruckConditionStatus;
+import logiweb.entity.enums.TruckWorkStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,9 @@ public class TruckDto {
 
     private Integer capacity;
 
-    private TruckStatus status;
+    private TruckConditionStatus conditionStatus;
+
+    private TruckWorkStatus workStatus;
 
     private String city;
 

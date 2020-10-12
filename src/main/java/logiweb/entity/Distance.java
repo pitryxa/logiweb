@@ -10,18 +10,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-//@Entity
-//@Table(name = "distance")
-public class Distance {
+@Entity
+@Table(name = "distance")
+public class Distance extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "city_id_a")
-    private City cityA;
+    @JoinColumn(name = "city_id_from")
+    private City cityFrom;
 
     @ManyToOne
-    @JoinColumn(name = "city_id_b")
-    private City cityB;
+    @JoinColumn(name = "city_id_to")
+    private City cityTo;
 
-    @Column
+    @Column(name = "distance")
     private int distance;
 }
