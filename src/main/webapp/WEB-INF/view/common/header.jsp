@@ -1,11 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html lang="en" class="h-100">
 <head>
-<%--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"--%>
-<%--          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">--%>
-<%--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"--%>
-<%--            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"--%>
-<%--            crossorigin="anonymous"></script>--%>
     <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="${param.contextPath}/resources/css/common.css" type="text/css">
     <title>${param.title}</title>
