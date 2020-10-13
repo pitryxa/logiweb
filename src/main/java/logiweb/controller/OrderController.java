@@ -1,9 +1,7 @@
 package logiweb.controller;
 
 import logiweb.calculating.Route;
-import logiweb.calculating.Waypoint;
 import logiweb.dto.CargoDto;
-import logiweb.dto.CityDto;
 import logiweb.dto.DriverDto;
 import logiweb.dto.TruckDto;
 import logiweb.service.api.*;
@@ -31,12 +29,6 @@ public class OrderController {
     private TruckService truckService;
 
     @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private DistanceService distanceService;
-
-    @Autowired
     private DriverService driverService;
 
     @Autowired
@@ -51,7 +43,6 @@ public class OrderController {
     @GetMapping("/add-cargo")
     public String addCargoToOrder(Model model) {
         model.addAttribute("cargoes", cargoService.getPreparedCargo());
-        //model.addAttribute("trucks", truckService.getAll());
         return "orders/addCargoToOrder";
     }
 
@@ -62,12 +53,10 @@ public class OrderController {
 
         session.setAttribute("cargoListForOrder", cargoes);
 
-        List<CityDto> allCities = cityService.getAll();
-        Route route = waypointService.minRouteBetweenTwoCities(allCities, distanceService.getAll(), cityService.getByName("Moscow"), cityService.getByName("Ufa"));
-
-        List<Waypoint> waypoints = waypointService.getUnorderedWaypointsFromCargoes(cargoes, allCities);
-
-
+//        List<CityDto> allCities = cityService.getAll();
+//        Route route = waypointService.minRouteBetweenTwoCities(allCities, distanceService.getAll(), cityService.getByName("Moscow"), cityService.getByName("Ufa"));
+//
+//        List<Waypoint> waypoints = waypointService.getUnorderedWaypointsFromCargoes(cargoes, allCities);
 
         return "redirect:/officer/orders/add-truck";
     }
@@ -116,7 +105,8 @@ public class OrderController {
 
         model.addAttribute("cargoes", cargoes);
         model.addAttribute("truck", truckDto);
-
+        model.addAttribute("route", route);
+        model.addAttribute("drivers", drivers);
 
         return "orders/addDriversToOrder";
     }

@@ -18,10 +18,6 @@ public interface WaypointService {
 
     WaypointDto getById(int id);
 
-    List<Waypoint> getUnorderedWaypointsFromCargoes(List<CargoDto> cargoes, List<CityDto> allCities);
-
-    Route minRouteBetweenTwoCities(List<CityDto> allCities, List<DistanceDto> allDistances, CityDto cityFrom, CityDto cityTo);
-
     Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck);
 
 }

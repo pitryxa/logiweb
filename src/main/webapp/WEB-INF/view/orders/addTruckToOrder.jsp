@@ -21,11 +21,7 @@
             <div class="form-group row">
                 <label class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Cargoes</label>
                 <div class="col-sm-10 p-0">
-                    <c:forEach var="cargo" items="${cargoes}">
-                        <input type="text"
-                               value="${cargo.name} (${cargo.weight} kg) from ${cargo.cityFrom} to ${cargo.cityTo}"
-                               class="form-control" readonly>
-                    </c:forEach>
+                    <textarea class="form-control" rows="7" style="width: 100%; background-color: white;" readonly><c:forEach var="cargo" items="${cargoes}">${cargo.name} (${cargo.weight} kg) from ${cargo.cityFrom} to ${cargo.cityTo}&#013;&#010;</c:forEach></textarea>
                 </div>
             </div>
 
@@ -37,40 +33,6 @@
                     </c:forEach>
                 </select>
             </div>
-
-
-            <%--            <div class="form-group row">--%>
-            <%--                <label for="regNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Reg. number</label>--%>
-            <%--                <input type="text" name="regNumber" id="regNumber" class="form-control col-sm-10">--%>
-            <%--            </div>--%>
-            <%--            <div class="form-group row">--%>
-            <%--                <label for="shiftSize" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Shift size</label>--%>
-            <%--                <select name="shiftSize" id="shiftSize" class="form-control col-sm-10">--%>
-            <%--                    <option value="2" selected>2</option>--%>
-            <%--                    <option value="3">3</option>--%>
-            <%--                </select>--%>
-            <%--            </div>--%>
-            <%--            <div class="form-group row">--%>
-            <%--                <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>--%>
-            <%--                <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">--%>
-            <%--            </div>--%>
-            <%--            <div class="form-group row">--%>
-            <%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
-            <%--                <select name="status" id="status" class="form-control col-sm-10">--%>
-            <%--                    <c:forEach var="status" items="${statusArray}">--%>
-            <%--                        <option value="${status}">${status}</option>--%>
-            <%--                    </c:forEach>--%>
-            <%--                </select>--%>
-            <%--            </div>--%>
-            <%--            <div class="form-group row">--%>
-            <%--                <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>--%>
-            <%--                <select name="city" id="city" class="form-control col-sm-10">--%>
-            <%--                    <c:forEach var="city" items="${cityList}">--%>
-            <%--                        <option value="${city.name}">${city.name}</option>--%>
-            <%--                    </c:forEach>--%>
-            <%--                </select>--%>
-            <%--            </div>--%>
-
 
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-success mlr10">${title}</button>

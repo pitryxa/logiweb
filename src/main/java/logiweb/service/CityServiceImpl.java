@@ -1,6 +1,5 @@
 package logiweb.service;
 
-import logiweb.calculating.*;
 import logiweb.converter.CityConverter;
 import logiweb.dao.api.CityDao;
 import logiweb.dto.CityDto;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -24,7 +22,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public List<CityDto> getAll() {
-        return cityConverter.toListDto(cityDao.getAllSortedById());
+        return cityConverter.toListDto(cityDao.getAllSortedByName());
     }
 
     @Override

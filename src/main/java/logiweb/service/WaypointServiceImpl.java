@@ -33,6 +33,10 @@ public class WaypointServiceImpl implements WaypointService {
     @Autowired
     private DistanceService distanceService;
 
+    private List<CityDto> allCities = new ArrayList<>();
+
+    private List<DistanceDto> allDistances = new ArrayList<>();
+
     @Override
     public List<WaypointDto> getAll() {
         return waypointConverter.toListDto(waypointDao.getAll());
@@ -62,7 +66,21 @@ public class WaypointServiceImpl implements WaypointService {
     }
 
     @Override
-    public List<Waypoint> getUnorderedWaypointsFromCargoes(List<CargoDto> cargoes, List<CityDto> allCities) {
+    public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
+        allCities = cityService.getAll();
+        allDistances = distanceService.getAll();
+
+        List<Waypoint> unorderedWaypoints = getUnorderedWaypointsFromCargoes(cargoes);
+        Deque<Waypoint> orderedWaypoints = new LinkedList<>();
+
+        if (!initStartWaypoint(unorderedWaypoints, orderedWaypoints, cityService.getCityByNameFromList(allCities, truck.getCity()))) {
+            return null;
+        }
+
+        return findBestRoute(orderedWaypoints, unorderedWaypoints, truck.getCapacity() * 1000);
+    }
+
+    private List<Waypoint> getUnorderedWaypointsFromCargoes(List<CargoDto> cargoes) {
         Map<CityDto, Waypoint> waypoints = new HashMap<>();
 
         for (CargoDto cargo : cargoes) {
@@ -102,8 +120,7 @@ public class WaypointServiceImpl implements WaypointService {
         return waypointList;
     }
 
-    @Override
-    public Route minRouteBetweenTwoCities(List<CityDto> allCities, List<DistanceDto> allDistances, CityDto cityFrom, CityDto cityTo) {
+    private Route minRouteBetweenTwoCities(CityDto cityFrom, CityDto cityTo) {
         Dijkstra.initGraph(allCities, allDistances);
         Dijkstra.calculateShortestPathFromSource(cityFrom);
 
@@ -120,58 +137,13 @@ public class WaypointServiceImpl implements WaypointService {
         return route;
     }
 
-    private List<Route> minRoutesBetweenCityAndCities(List<CityDto> allCities,
-                                                      List<DistanceDto> allDistances,
-                                                      CityDto startCity,
-                                                      List<CityDto> endCities) {
-        Dijkstra.initGraph(allCities, allDistances);
-        Dijkstra.calculateShortestPathFromSource(startCity);
-
-        List<Route> routes = new ArrayList<>();
-
-        for (CityDto endCity : endCities) {
-            Node targetNode = Dijkstra.getGraph().getNodeByCity(endCity);
-
-            Route route = new Route();
-            route.setDistance(targetNode.getDistance());
-
-            for (Node intermediateNode : targetNode.getShortestPath()) {
-                route.addWaypoint(new Waypoint(intermediateNode.getCity()));
-            }
-            route.addWaypoint(new Waypoint(endCity));
-
-            routes.add(route);
-        }
-
-        return routes;
-    }
-
-    @Override
-    public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
-        List<CityDto> cityList = cityService.getAll();
-        List<DistanceDto> distanceList = distanceService.getAll();
-
-        List<Waypoint> unorderedWaypoints = getUnorderedWaypointsFromCargoes(cargoes, cityList);
-        Deque<Waypoint> orderedWaypoints = new LinkedList<>();
-
-        if (!initStartWaypoint(unorderedWaypoints, orderedWaypoints, cityService.getCityByNameFromList(cityList, truck.getCity()))) {
-            return null;
-        }
-
-        return findBestRoute(orderedWaypoints, unorderedWaypoints, truck.getCapacity() * 1000, cityList, distanceList);
-
-        //return getRoute(orderedWaypoints, cityList, distanceList);
-    }
 
     private Route depthFirstSearch(Deque<Waypoint> orderedWaypoints,
                                   List<Waypoint> unorderedWaypoints,
                                   Integer maxCapacity,
-                                  Route bestRoute,
-                                  List<CityDto> cityList,
-                                  List<DistanceDto> distanceList) {
+                                  Route bestRoute) {
 
-
-        Set<Waypoint> nextPotentialWaypoints = getPotentialNextWaypoints(unorderedWaypoints, orderedWaypoints, maxCapacity, cityList);
+        Set<Waypoint> nextPotentialWaypoints = getPotentialNextWaypoints(unorderedWaypoints, orderedWaypoints, maxCapacity);
 
         if (nextPotentialWaypoints.isEmpty()) {
             return bestRoute;
@@ -185,13 +157,18 @@ public class WaypointServiceImpl implements WaypointService {
             Waypoint prevWaypoint = tmpOrderedWaypoints.getLast();
             tmpOrderedWaypoints.add(nextWaypoint);
             Waypoint lastWaypoint = tmpOrderedWaypoints.getLast();
-            lastWaypoint.setSumWeight(getCurrentWeight(tmpOrderedWaypoints, cityList));
-            lastWaypoint.setDistanceFromPrevWaypoint(minRouteBetweenTwoCities(cityList, distanceList, prevWaypoint.getCity(), lastWaypoint.getCity()).getDistance());
+            lastWaypoint.setSumWeight(getCurrentWeight(tmpOrderedWaypoints));
+            lastWaypoint.setDistanceFromPrevWaypoint(
+                    minRouteBetweenTwoCities(
+                                prevWaypoint.getCity(),
+                                lastWaypoint.getCity()
+                    ).getDistance()
+            );
 
             modifyUnorderedWaypoints(newNextWaypoint, tmpUnorderedWaypoints, tmpOrderedWaypoints);
 
             if (tmpUnorderedWaypoints.isEmpty()) {
-                Route route = getRoute(tmpOrderedWaypoints, cityList, distanceList);
+                Route route = getRoute(tmpOrderedWaypoints);
                 Integer distance = route.getDistance();
 
                 if (distance < bestRoute.getDistance()) {
@@ -201,7 +178,7 @@ public class WaypointServiceImpl implements WaypointService {
                 return bestRoute;
             }
 
-            bestRoute = depthFirstSearch(tmpOrderedWaypoints, tmpUnorderedWaypoints, maxCapacity, bestRoute, cityList, distanceList);
+            bestRoute = depthFirstSearch(tmpOrderedWaypoints, tmpUnorderedWaypoints, maxCapacity, bestRoute);
         }
 
         return bestRoute;
@@ -219,70 +196,20 @@ public class WaypointServiceImpl implements WaypointService {
 
     private Route findBestRoute(Deque<Waypoint> orderedWaypoints,
                                   List<Waypoint> unorderedWaypoints,
-                                  Integer maxCapacity,
-                                  List<CityDto> cityList,
-                                  List<DistanceDto> distanceList) {
+                                  Integer maxCapacity) {
         Route bestRoute = new Route();
 
         bestRoute = depthFirstSearch(
                 orderedWaypoints,
                 unorderedWaypoints,
                 maxCapacity,
-                bestRoute,
-                cityList,
-                distanceList
+                bestRoute
         );
-
-
-        /*while (true) {
-            List<Waypoint> tmpUnorderedWaypoints = new ArrayList<>(unorderedWaypoints);
-            Deque<Waypoint> tmpOrderedWaypoints = new LinkedList<>(orderedWaypoints);
-
-
-        }
-
-
-        for (Waypoint unorderedWaypoint : unorderedWaypoints) {
-            List<Waypoint> tmpUnorderedWaypoints = new ArrayList<>(unorderedWaypoints);
-            Deque<Waypoint> tmpOrderedWaypoints = new LinkedList<>(orderedWaypoints);
-
-            while (tmpUnorderedWaypoints.size() > 0) {
-                Set<Waypoint> nextPotentialWaypoints = getPotentialNextWaypoints(tmpUnorderedWaypoints, tmpOrderedWaypoints, maxCapacity cityList);
-
-//                Waypoint nextWaypoint = getWaypointWithMinDistanceToCity(
-//                        cityList,
-//                        distanceList,
-//                        nextPotentialWaypoints,
-//                        orderedWaypoints.getLast().getCity()
-//                );
-
-                for (Waypoint nextWaypoint : nextPotentialWaypoints) {
-                    tmpOrderedWaypoints.add(new Waypoint(nextWaypoint));
-                    tmpOrderedWaypoints.getLast().setSumWeight(getCurrentWeight(tmpOrderedWaypoints, cityList));
-
-
-                    modifyUnorderedWaypoints(nextWaypoint, tmpUnorderedWaypoints, tmpOrderedWaypoints);
-                }
-
-
-                //Waypoint nextWaypoint = unorderedWaypoint;
-
-
-            }
-
-            Route route = getRoute(tmpOrderedWaypoints, cityList, distanceList);
-            Integer distance = route.getDistance();
-
-            if (distance < bestDistance) {
-                bestDistance = distance;
-                bestRoute = route;
-            }
-        }*/
 
         return bestRoute;
     }
 
-    private Route getRoute(Deque<Waypoint> orderedWaypoints, List<CityDto> cityList, List<DistanceDto> distanceList) {
+    private Route getRoute(Deque<Waypoint> orderedWaypoints) {
         Route route = new Route();
 
         Waypoint prevWaypoint = orderedWaypoints.getLast();
@@ -290,8 +217,6 @@ public class WaypointServiceImpl implements WaypointService {
 
         if (!prevWaypoint.equals(lastWaypoint)) {
             lastWaypoint.setDistanceFromPrevWaypoint(minRouteBetweenTwoCities(
-                    cityList,
-                    distanceList,
                     prevWaypoint.getCity(),
                     lastWaypoint.getCity()
             ).getDistance());
@@ -333,7 +258,6 @@ public class WaypointServiceImpl implements WaypointService {
 
             if (cargoMap.isEmpty()) {
                 unorderedWaypoints.remove(nextWaypoint);
-                //unorderedWaypoints.
             }
         }
     }
@@ -373,8 +297,7 @@ public class WaypointServiceImpl implements WaypointService {
 
     private Set<Waypoint> getPotentialNextWaypoints(List<Waypoint> unorderedWaypoints,
                                                     Deque<Waypoint> orderedWaypoints,
-                                                    Integer maxCapacity,
-                                                    List<CityDto> allCities) {
+                                                    Integer maxCapacity) {
         Set<Waypoint> nextPotentialWaypoints = new HashSet<>();
 
         for (Waypoint unorderedWaypoint : unorderedWaypoints) {
@@ -382,7 +305,7 @@ public class WaypointServiceImpl implements WaypointService {
             currentWaypointList.add(unorderedWaypoint);
 
             if (unorderedWaypoint.getCargoes().containsValue(OperationTypeOnWaypoint.LOAD) &&
-                    getCurrentWeight(currentWaypointList, allCities) <= maxCapacity) {
+                    getCurrentWeight(currentWaypointList) <= maxCapacity) {
 
                 nextPotentialWaypoints.add(unorderedWaypoint);
             }
@@ -407,7 +330,7 @@ public class WaypointServiceImpl implements WaypointService {
                         getWaypointByCity(
                                 new LinkedList<>(orderedWaypoints).subList(count, orderedWaypoints.size()),
                                 targetCity) == null &&
-                        getCurrentWeight(currentWaypointList, allCities) <= maxCapacity) {
+                        getCurrentWeight(currentWaypointList) <= maxCapacity) {
 
                     nextPotentialWaypoints.add(potentialWaypoint);
                 }
@@ -419,7 +342,7 @@ public class WaypointServiceImpl implements WaypointService {
         return nextPotentialWaypoints;
     }
 
-    private Integer getCurrentWeight(Deque<Waypoint> waypoints, List<CityDto> allCities) {
+    private Integer getCurrentWeight(Deque<Waypoint> waypoints) {
         Integer sumWeight = 0;
         int count = 1;
 
@@ -450,16 +373,53 @@ public class WaypointServiceImpl implements WaypointService {
                 .sum();
     }
 
-    private Waypoint getWaypointWithMinDistanceToCity(List<CityDto> allCities,
-                                                      List<DistanceDto> allDistances,
-                                                      Set<Waypoint> waypoints,
+    private Waypoint getWaypointByCity(List<Waypoint> waypoints, CityDto city) {
+        if (city == null || waypoints == null) {
+            return null;
+        }
+
+        Waypoint findWaypoint = null;
+
+        for (Waypoint waypoint : waypoints) {
+            if (waypoint.getCity().getId().equals(city.getId())) {
+                findWaypoint = waypoint;
+                break;
+            }
+        }
+
+        return findWaypoint;
+    }
+
+    private List<Route> minRoutesBetweenCityAndCities(CityDto startCity,
+                                                      List<CityDto> endCities) {
+        Dijkstra.initGraph(allCities, allDistances);
+        Dijkstra.calculateShortestPathFromSource(startCity);
+
+        List<Route> routes = new ArrayList<>();
+
+        for (CityDto endCity : endCities) {
+            Node targetNode = Dijkstra.getGraph().getNodeByCity(endCity);
+
+            Route route = new Route();
+            route.setDistance(targetNode.getDistance());
+
+            for (Node intermediateNode : targetNode.getShortestPath()) {
+                route.addWaypoint(new Waypoint(intermediateNode.getCity()));
+            }
+            route.addWaypoint(new Waypoint(endCity));
+
+            routes.add(route);
+        }
+
+        return routes;
+    }
+
+    private Waypoint getWaypointWithMinDistanceToCity(Set<Waypoint> waypoints,
                                                       CityDto cityDto) {
         Integer minDistance = Integer.MAX_VALUE;
         Waypoint waypoint = null;
 
         List<Route> routes = minRoutesBetweenCityAndCities(
-                allCities,
-                allDistances,
                 cityDto,
                 waypoints
                         .stream()
@@ -480,22 +440,5 @@ public class WaypointServiceImpl implements WaypointService {
         }
 
         return waypoint;
-    }
-
-    private Waypoint getWaypointByCity(List<Waypoint> waypoints, CityDto city) {
-        if (city == null || waypoints == null) {
-            return null;
-        }
-
-        Waypoint findWaypoint = null;
-
-        for (Waypoint waypoint : waypoints) {
-            if (waypoint.getCity().getId().equals(city.getId())) {
-                findWaypoint = waypoint;
-                break;
-            }
-        }
-
-        return findWaypoint;
     }
 }
