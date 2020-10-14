@@ -1,6 +1,7 @@
 package logiweb.controller;
 
 import logiweb.calculating.Route;
+import logiweb.calculating.Routes;
 import logiweb.dto.CargoDto;
 import logiweb.dto.DriverDto;
 import logiweb.dto.TruckDto;
@@ -76,7 +77,7 @@ public class OrderController {
         session.setAttribute("truckForOrder", truck);
 
         List<CargoDto> cargoes = ((List<CargoDto>) session.getAttribute("cargoListForOrder"));
-        Route route = waypointService.minRouteByCargoes(cargoes, truck);
+        Route route = Routes.minRouteByCargoes(cargoes, truck);
         session.setAttribute("routeForOrder", route);
 
         return "redirect:/officer/orders/add-drivers";

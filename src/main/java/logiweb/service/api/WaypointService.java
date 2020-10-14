@@ -17,7 +17,4 @@ public interface WaypointService {
     void edit(WaypointDto waypointDto);
 
     WaypointDto getById(int id);
-
-    Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck);
-
 }
