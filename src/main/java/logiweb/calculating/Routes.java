@@ -8,22 +8,24 @@ import logiweb.entity.enums.OperationTypeOnWaypoint;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DistanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class Routes {
     @Autowired
-    private static CityService cityService;
+    private CityService cityService;
 
     @Autowired
-    private static DistanceService distanceService;
+    private DistanceService distanceService;
 
-    private static List<CityDto> allCities = new ArrayList<>();
+    private List<CityDto> allCities = new ArrayList<>();
 
-    private static List<DistanceDto> allDistances = new ArrayList<>();
+    private List<DistanceDto> allDistances = new ArrayList<>();
 
-    public static Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
+    public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
         allCities = cityService.getAll();
         allDistances = distanceService.getAll();
 
@@ -38,7 +40,7 @@ public class Routes {
         return findBestRoute(orderedWaypoints, unorderedWaypoints, truck.getCapacity() * 1000);
     }
 
-    private static List<Waypoint> getUnorderedWaypointsFromCargoes(List<CargoDto> cargoes) {
+    private List<Waypoint> getUnorderedWaypointsFromCargoes(List<CargoDto> cargoes) {
         Map<CityDto, Waypoint> waypoints = new HashMap<>();
 
         for (CargoDto cargo : cargoes) {
@@ -78,7 +80,7 @@ public class Routes {
         return waypointList;
     }
 
-    private static Route minRouteBetweenTwoCities(CityDto cityFrom, CityDto cityTo) {
+    private Route minRouteBetweenTwoCities(CityDto cityFrom, CityDto cityTo) {
         Dijkstra.initGraph(allCities, allDistances);
         Dijkstra.calculateShortestPathFromSource(cityFrom);
 
@@ -96,8 +98,8 @@ public class Routes {
     }
 
 
-    private static Route depthFirstSearch(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
-                                   Integer maxCapacity, Route bestRoute) {
+    private Route depthFirstSearch(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
+                                          Integer maxCapacity, Route bestRoute) {
 
         Set<Waypoint> nextPotentialWaypoints =
                 getPotentialNextWaypoints(unorderedWaypoints, orderedWaypoints, maxCapacity);
@@ -137,7 +139,7 @@ public class Routes {
         return bestRoute;
     }
 
-    private static LinkedList<Waypoint> getNewWaypointList(LinkedList<Waypoint> waypoints) {
+    private LinkedList<Waypoint> getNewWaypointList(LinkedList<Waypoint> waypoints) {
         LinkedList<Waypoint> collection = new LinkedList<>();
 
         for (Waypoint waypoint : waypoints) {
@@ -147,8 +149,8 @@ public class Routes {
         return collection;
     }
 
-    private static Route findBestRoute(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
-                                Integer maxCapacity) {
+    private Route findBestRoute(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
+                                       Integer maxCapacity) {
         Route bestRoute = new Route();
 
         bestRoute = depthFirstSearch(orderedWaypoints, unorderedWaypoints, maxCapacity, bestRoute);
@@ -156,7 +158,7 @@ public class Routes {
         return bestRoute;
     }
 
-    private static Route getRoute(Deque<Waypoint> orderedWaypoints) {
+    private Route getRoute(Deque<Waypoint> orderedWaypoints) {
         Route route = new Route();
 
         Waypoint prevWaypoint = orderedWaypoints.getLast();
@@ -174,8 +176,8 @@ public class Routes {
         return route;
     }
 
-    private static void modifyUnorderedWaypoints(Waypoint nextWaypoint, List<Waypoint> unorderedWaypoints,
-                                          Deque<Waypoint> orderedWaypoints) {
+    private void modifyUnorderedWaypoints(Waypoint nextWaypoint, List<Waypoint> unorderedWaypoints,
+                                                 Deque<Waypoint> orderedWaypoints) {
         if (!nextWaypoint.getCargoes().containsValue(OperationTypeOnWaypoint.UNLOAD)) {
             unorderedWaypoints.remove(nextWaypoint);
         } else {
@@ -207,8 +209,8 @@ public class Routes {
         }
     }
 
-    private static boolean initStartWaypoint(List<Waypoint> unorderedWaypoints, Deque<Waypoint> orderedWaypoints,
-                                      CityDto startCity) {
+    private boolean initStartWaypoint(List<Waypoint> unorderedWaypoints, Deque<Waypoint> orderedWaypoints,
+                                             CityDto startCity) {
         Waypoint nextWaypoint = getWaypointByCity(unorderedWaypoints, startCity);
         if (nextWaypoint != null) {
             Integer sumWeight = sumWeightLoadCargoes(nextWaypoint.getCargoes());
@@ -226,7 +228,7 @@ public class Routes {
         return true;
     }
 
-    private static Integer sumWeightLoadCargoes(Map<CargoDto, OperationTypeOnWaypoint> cargoes) {
+    private Integer sumWeightLoadCargoes(Map<CargoDto, OperationTypeOnWaypoint> cargoes) {
         Integer sumWeight = 0;
 
         for (Map.Entry<CargoDto, OperationTypeOnWaypoint> entry : cargoes.entrySet()) {
@@ -238,8 +240,8 @@ public class Routes {
         return sumWeight;
     }
 
-    private static Set<Waypoint> getPotentialNextWaypoints(List<Waypoint> unorderedWaypoints, Deque<Waypoint> orderedWaypoints,
-                                                    Integer maxCapacity) {
+    private Set<Waypoint> getPotentialNextWaypoints(List<Waypoint> unorderedWaypoints,
+                                                           Deque<Waypoint> orderedWaypoints, Integer maxCapacity) {
         Set<Waypoint> nextPotentialWaypoints = new HashSet<>();
 
         for (Waypoint unorderedWaypoint : unorderedWaypoints) {
@@ -282,7 +284,7 @@ public class Routes {
         return nextPotentialWaypoints;
     }
 
-    private static Integer getCurrentWeight(Deque<Waypoint> waypoints) {
+    private Integer getCurrentWeight(Deque<Waypoint> waypoints) {
         Integer sumWeight = 0;
         int count = 1;
 
@@ -307,11 +309,11 @@ public class Routes {
         return sumWeight;
     }
 
-    private static Integer getFullDistance(Deque<Waypoint> waypoints) {
+    private Integer getFullDistance(Deque<Waypoint> waypoints) {
         return waypoints.stream().map(Waypoint::getDistanceFromPrevWaypoint).mapToInt(Integer::intValue).sum();
     }
 
-    private static Waypoint getWaypointByCity(List<Waypoint> waypoints, CityDto city) {
+    private Waypoint getWaypointByCity(List<Waypoint> waypoints, CityDto city) {
         if (city == null || waypoints == null) {
             return null;
         }
@@ -328,7 +330,7 @@ public class Routes {
         return findWaypoint;
     }
 
-    private static List<Route> minRoutesBetweenCityAndCities(CityDto startCity, List<CityDto> endCities) {
+    private List<Route> minRoutesBetweenCityAndCities(CityDto startCity, List<CityDto> endCities) {
         Dijkstra.initGraph(allCities, allDistances);
         Dijkstra.calculateShortestPathFromSource(startCity);
 
@@ -351,7 +353,7 @@ public class Routes {
         return routes;
     }
 
-    private static Waypoint getWaypointWithMinDistanceToCity(Set<Waypoint> waypoints, CityDto cityDto) {
+    private Waypoint getWaypointWithMinDistanceToCity(Set<Waypoint> waypoints, CityDto cityDto) {
         Integer minDistance = Integer.MAX_VALUE;
         Waypoint waypoint = null;
 

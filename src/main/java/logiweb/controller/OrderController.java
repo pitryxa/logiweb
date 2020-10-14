@@ -33,7 +33,7 @@ public class OrderController {
     private DriverService driverService;
 
     @Autowired
-    private WaypointService waypointService;
+    private Routes routes;
 
     @GetMapping
     public String allOrders(Model model) {
@@ -77,7 +77,7 @@ public class OrderController {
         session.setAttribute("truckForOrder", truck);
 
         List<CargoDto> cargoes = ((List<CargoDto>) session.getAttribute("cargoListForOrder"));
-        Route route = Routes.minRouteByCargoes(cargoes, truck);
+        Route route = routes.minRouteByCargoes(cargoes, truck);
         session.setAttribute("routeForOrder", route);
 
         return "redirect:/officer/orders/add-drivers";
