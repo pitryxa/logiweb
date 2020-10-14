@@ -47,16 +47,10 @@ public class OrderController {
     }
 
     @PostMapping("/add-cargo")
-    public String addCargoToOrder(@RequestParam("cargoes") List<Integer> cargoIds,
-                                  HttpSession session) {
+    public String addCargoToOrder(@RequestParam("cargoes") List<Integer> cargoIds, HttpSession session) {
         List<CargoDto> cargoes = cargoService.getByListId(cargoIds);
 
         session.setAttribute("cargoListForOrder", cargoes);
-
-//        List<CityDto> allCities = cityService.getAll();
-//        Route route = waypointService.minRouteBetweenTwoCities(allCities, distanceService.getAll(), cityService.getByName("Moscow"), cityService.getByName("Ufa"));
-//
-//        List<Waypoint> waypoints = waypointService.getUnorderedWaypointsFromCargoes(cargoes, allCities);
 
         return "redirect:/officer/orders/add-truck";
     }
@@ -76,8 +70,7 @@ public class OrderController {
     }
 
     @PostMapping("/add-truck")
-    public String addTruckToOrder(@RequestParam("truck") int truckId,
-                                  HttpSession session) {
+    public String addTruckToOrder(@RequestParam("truck") int truckId, HttpSession session) {
         TruckDto truck = truckService.getById(truckId);
 
         session.setAttribute("truckForOrder", truck);
@@ -103,12 +96,32 @@ public class OrderController {
 
         List<DriverDto> drivers = driverService.getDriversForOrder(truckDto, route);
 
+        if (driverService.isNotEnoughDrivers(drivers, truckDto.getShiftSize())) {
+            return "orders/notEnoughDrivers";
+        }
+
+        session.setAttribute("driversForOrder", drivers);
+
         model.addAttribute("cargoes", cargoes);
         model.addAttribute("truck", truckDto);
         model.addAttribute("route", route);
         model.addAttribute("drivers", drivers);
 
         return "orders/addDriversToOrder";
+    }
+
+    @PostMapping("/add-drivers")
+    public String addDriversToOrder(@RequestParam("drivers") List<Integer> driversIds, HttpSession session, Model model) {
+        List<DriverDto> drivers = (List<DriverDto>) session.getAttribute("driversForOrder");
+        TruckDto truck = (TruckDto) session.getAttribute("truckForOrder");
+        drivers = driverService.getByIdFromList(drivers, driversIds);
+
+        if (driverService.isWrongAmountDrivers(drivers, truck.getShiftSize())) {
+            model.addAttribute("shiftSize", truck.getShiftSize());
+            return "orders/wrongAmountDrivers";
+        }
+
+        return "redirect:/officer/orders";
     }
 
 }

@@ -22,4 +22,10 @@ public interface DriverService {
     LocalDateTime getTimeLastChangeStatusById(int id);
 
     List<DriverDto> getDriversForOrder(TruckDto truck, Route route);
+
+    boolean isNotEnoughDrivers(List<DriverDto> drivers, int shiftSize);
+
+    boolean isWrongAmountDrivers(List<DriverDto> drivers, int shiftSize);
+
+    List<DriverDto> getByIdFromList(List<DriverDto> drivers, List<Integer> ids);
 }

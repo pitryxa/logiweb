@@ -1,9 +1,11 @@
 package logiweb.config;
 
 import logiweb.service.UserDetailsServiceImpl;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.ViewResolver;
@@ -35,6 +37,14 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public MessageSource messageSource() {
+        ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
+        reloadableResourceBundleMessageSource.setBasenames(new String[]{"classpath:messages_en"});
+        reloadableResourceBundleMessageSource.setDefaultEncoding("UTF-8");
+        return reloadableResourceBundleMessageSource;
     }
 
 //    @Override

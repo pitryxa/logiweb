@@ -29,14 +29,15 @@
                 <label for="truck" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>
                 <select name="truck" id="truck" class="form-control col-sm-10">
                     <c:forEach var="truck" items="${trucks}">
-                        <option value="${truck.id}">${truck.regNumber} (${truck.capacity} t) from ${truck.city}</option>
+                        <option value="${truck.id}">${truck.regNumber} (${truck.capacity} t, ${truck.shiftSize} drivers) from ${truck.city}</option>
                     </c:forEach>
                 </select>
             </div>
 
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-success mlr10">${title}</button>
-                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
+                <a href="${contextPath}/officer/orders/add-cargo" class="btn btn-danger mlr10">Cancel</a>
+<%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
             </div>
 
 

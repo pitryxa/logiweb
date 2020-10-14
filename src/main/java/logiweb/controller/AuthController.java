@@ -44,13 +44,9 @@ public class AuthController {
     }
 
     @GetMapping(value = "/login")
-    public String login(Model model, String error, String logout) {
+    public String login(Model model, String error) {
         if (error != null) {
             model.addAttribute("error", "Email or password is incorrect.");
-        }
-
-        if (logout != null) {
-            model.addAttribute("message", "Logged out successfully.");
         }
 
         return "login";

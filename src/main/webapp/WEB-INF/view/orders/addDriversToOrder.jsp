@@ -33,7 +33,7 @@
                 <label class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>
                 <div class="col-sm-10 p-0">
                     <input type="text"
-                           value="${truck.regNumber} (${truck.capacity} t) from ${truck.city}"
+                           value="${truck.regNumber} (${truck.capacity} t, ${truck.shiftSize} drivers) from ${truck.city}"
                            class="form-control"
                            readonly
                            style="background-color: white">
@@ -51,9 +51,20 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                <label for="drivers" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Drivers</label>
+                <select name="drivers" id="drivers" multiple size="5" class="form-control col-sm-10">
+                    <c:forEach var="driver" items="${drivers}">
+                        <option value="${driver.id}">${driver.user.firstName} ${driver.user.lastName} (${driver.id})
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mlr10" disabled>${title}</button>
-                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
+                <button type="submit" class="btn btn-success mlr10">${title}</button>
+                <a href="${contextPath}/officer/orders/add-truck" class="btn btn-danger mlr10">Cancel</a>
+                <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
             </div>
 
         </form>

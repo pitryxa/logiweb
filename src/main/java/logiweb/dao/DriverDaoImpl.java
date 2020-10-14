@@ -1,10 +1,9 @@
 package logiweb.dao;
 
 import logiweb.dao.api.DriverDao;
-import logiweb.dao.api.TruckDao;
 import logiweb.dao.generic.GenericDAOImpl;
 import logiweb.entity.Driver;
-import logiweb.entity.Truck;
+import logiweb.entity.enums.DriverStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,9 +13,21 @@ import java.util.List;
 public class DriverDaoImpl extends GenericDAOImpl<Driver> implements DriverDao {
     @Override
     public List<Driver> getAllSorted() {
-        List<Driver> list = entityManager.createQuery("SELECT e FROM Driver e ORDER BY e.id").getResultList();
+        List<Driver> list = entityManager.createQuery("FROM Driver e ORDER BY e.id").getResultList();
         return list.isEmpty() ? new ArrayList<>() : list;
     }
 
+    @Override
+    public List<Driver> getDriversByCityAndWorkTimeAndStatus(String city, double timeWorkForEveryDriver) {
+        String query = "FROM Driver e where e.city.name = :city and (176.0 - e.workHours) >= :timeExecOrder " +
+                       "and e.status = :status";
 
+        List<Driver> list = entityManager.createQuery(query)
+                                         .setParameter("city", city)
+                                         .setParameter("timeExecOrder", timeWorkForEveryDriver)
+                                         .setParameter("status", DriverStatus.RECREATION)
+                                         .getResultList();
+
+        return list.isEmpty() ? new ArrayList<>() : list;
+    }
 }

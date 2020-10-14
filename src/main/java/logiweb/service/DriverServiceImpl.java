@@ -1,15 +1,11 @@
 package logiweb.service;
 
 import logiweb.calculating.Route;
-import logiweb.calculating.Waypoint;
 import logiweb.converter.DriverConverter;
+import logiweb.dao.api.CityDao;
 import logiweb.dao.api.DriverDao;
-import logiweb.dto.CargoDto;
-import logiweb.dto.CityDto;
 import logiweb.dto.DriverDto;
 import logiweb.dto.TruckDto;
-import logiweb.entity.enums.OperationTypeOnWaypoint;
-import logiweb.service.api.CityService;
 import logiweb.service.api.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class DriverServiceImpl implements DriverService {
+
+    static final int MINUTES_IN_HOUR = 60;
+    static final int SECONDS_IN_MINUTE = 60;
+    static final int WORK_HOURS_PER_DAY_FOR_ONE_DRIVER = 8;
+    static final int HOURS_IN_DAY = 24;
+    static final int HOURS_FOR_LOAD_UNLOAD = 4;
+    static final int AVERAGE_SPEED = 60;
 
     @Autowired
     private DriverDao driverDao;
@@ -33,7 +36,7 @@ public class DriverServiceImpl implements DriverService {
     private DriverConverter driverConverter;
 
     @Autowired
-    private CityService cityService;
+    private CityDao cityDao;
 
     @Override
     public List<DriverDto> getAll() {
@@ -69,52 +72,117 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public List<DriverDto> getDriversForOrder(TruckDto truck, Route route) {
-        CityDto homeCity = cityService.getByName(truck.getCity());
+    public boolean isNotEnoughDrivers(List<DriverDto> drivers, int shiftSize) {
+        return drivers.size() < shiftSize;
+    }
 
-        final int workHoursPerDayForOneDriver = 8;
+    @Override
+    public boolean isWrongAmountDrivers(List<DriverDto> drivers, int shiftSize) {
+        return drivers.size() != shiftSize;
+    }
+
+    @Override
+    public List<DriverDto> getDriversForOrder(TruckDto truck, Route route) {
         final int shiftSize = truck.getShiftSize();
 
         double timeExecOrderInHours = getExecTimeForOrder(route);
 
-        LocalDateTime now = LocalDateTime.now();
-        Month monthBeforeOrder = now.getMonth();
-        Month monthAfterOrder = now.plusMinutes((long) (timeExecOrderInHours * 60)).getMonth();
+        double workHoursForEveryDriver = getWorkHoursForEveryDriver(shiftSize, timeExecOrderInHours);
 
-        if (!monthBeforeOrder.equals(monthAfterOrder)) {
-            LocalDateTime firstDayOfNextMonth = now.with(TemporalAdjusters.firstDayOfNextMonth());
+        return driverConverter.toListDto(
+                driverDao.getDriversByCityAndWorkTimeAndStatus(truck.getCity(), workHoursForEveryDriver));
+    }
 
-            double minutesForNextMonth = (double) Duration.between(now, firstDayOfNextMonth).getSeconds() / 60;
+    @Override
+    public List<DriverDto> getByIdFromList(List<DriverDto> drivers, List<Integer> ids) {
+        return drivers
+                .stream()
+                .filter(d -> ids.contains(d.getId()))
+                .collect(Collectors.toList());
+    }
 
-//            double timeExecOrderInCurrentMonth = minutesForNextMonth / 60;
+    private double getWorkHoursForEveryDriver(int shiftSize, double timeExecOrderInHours) {
+        if (shiftSize < 3) {
+            timeExecOrderInHours = getExecOrderInHoursDependShiftSize(shiftSize, timeExecOrderInHours);
         }
 
+        timeExecOrderInHours = getTimeExecOrderInCurrentMonth(timeExecOrderInHours);
 
+        double workHoursInTimeExecOrder = timeExecOrderInHours;
+        if (shiftSize < 3) {
+            workHoursInTimeExecOrder = getWorkHoursFromTimeExecOrder(timeExecOrderInHours, shiftSize);
+        }
+        return workHoursInTimeExecOrder / shiftSize;
+    }
 
-        //double timeWorkForEveryDriver = timeExecOrder / shiftSize;
+    private double getTimeExecOrderInCurrentMonth(double timeExecOrderInHours) {
+        double timeExecOrderInMinutes = timeExecOrderInHours * MINUTES_IN_HOUR;
 
+        LocalDateTime now = LocalDateTime.now();
+        //now = LocalDateTime.of(2020, Month.OCTOBER, 30, 10, 0);
 
+        Month monthBeforeOrder = now.getMonth();
+        Month monthAfterOrder = now.plusMinutes((long) (timeExecOrderInMinutes)).getMonth();
 
+        if (!monthBeforeOrder.equals(monthAfterOrder)) {
+            LocalDateTime firstDayOfNextMonth = now.with(TemporalAdjusters.firstDayOfNextMonth()).with(LocalTime.MIN);
+            timeExecOrderInMinutes =
+                    (double) Duration.between(now, firstDayOfNextMonth).getSeconds() / SECONDS_IN_MINUTE;
+            timeExecOrderInHours = timeExecOrderInMinutes / MINUTES_IN_HOUR;
+        }
 
+        return timeExecOrderInHours;
+    }
 
+    private double getWorkHoursFromTimeExecOrder(double timeExecOrderInHours, int shiftSize) {
+        int workDays = (int) (timeExecOrderInHours / HOURS_IN_DAY);
+        double remainderHours = timeExecOrderInHours % HOURS_IN_DAY;
+        int workHoursPerDay = WORK_HOURS_PER_DAY_FOR_ONE_DRIVER * shiftSize;
 
+        if (remainderHours >= workHoursPerDay) {
+            workDays++;
+            remainderHours -= workHoursPerDay;
+        }
 
-        return null;
+        return workDays * workHoursPerDay + remainderHours;
+    }
+
+    private double getExecOrderInHoursDependShiftSize(int shiftSize, double timeExecOrderInHours) {
+        int workHoursPerDay = WORK_HOURS_PER_DAY_FOR_ONE_DRIVER * shiftSize;
+
+        int timeExecOrderInDays = (int) (timeExecOrderInHours / workHoursPerDay);
+        double remainderHours = timeExecOrderInHours % workHoursPerDay;
+
+        if (remainderHours >= workHoursPerDay) {
+            timeExecOrderInDays++;
+            remainderHours -= workHoursPerDay;
+        }
+
+        return timeExecOrderInDays * HOURS_IN_DAY + remainderHours;
     }
 
     private double getExecTimeForOrder(Route route) {
-        final int averageSpeed = 60;
-        final int hoursForLoadUnload = 4;
 
-        double fullTime = route.getDistance().doubleValue() / averageSpeed;
+        final int NUMBER_WAYPOINTS_WITH_CARGO = route.getWaypoints().size() - 1;
 
-        for (Waypoint w : route.getWaypoints()) {
-            for (Map.Entry<CargoDto, OperationTypeOnWaypoint> entry : w.getCargoes().entrySet()) {
-                fullTime += hoursForLoadUnload;
-            }
-        }
+        double currentTime = route.getDistance().doubleValue() / AVERAGE_SPEED;
+        final double[] fullTime = {currentTime};
 
-        return fullTime;
+        return route.getWaypoints()
+                    .stream()
+                    .limit(NUMBER_WAYPOINTS_WITH_CARGO)
+                    .map(w -> w.getCargoes()
+                               .entrySet()
+                               .stream()
+                               .map(o -> fullTime[0] = addTimeForLoadUnload(fullTime[0]))
+                               .reduce((first, last) -> last)
+                               .orElse(currentTime))
+                    .reduce((first, last) -> last)
+                    .orElse(currentTime);
+    }
+
+    private Double addTimeForLoadUnload(double fullTime) {
+        return fullTime + HOURS_FOR_LOAD_UNLOAD;
     }
 
 

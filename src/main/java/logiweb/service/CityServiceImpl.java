@@ -49,7 +49,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public CityDto getByName(String name){
+    public CityDto getByName(String name) {
         return cityConverter.toDto(cityDao.getByName(name));
     }
 

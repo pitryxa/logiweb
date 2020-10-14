@@ -14,17 +14,19 @@ import java.util.Set;
 @Configuration
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                        Authentication authentication) throws IOException, ServletException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
-        if (roles.contains("ROLE_NONE"))
+        if (roles.contains("ROLE_NONE")) {
             httpServletResponse.sendRedirect("/hello");
-        else if (roles.contains("ROLE_ADMIN"))
+        } else if (roles.contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/admin/users");
-        else if (roles.contains("ROLE_MANAGER"))
+        } else if (roles.contains("ROLE_MANAGER")) {
             httpServletResponse.sendRedirect("/officer/trucks");
-        else if (roles.contains("ROLE_DRIVER"))
+        } else if (roles.contains("ROLE_DRIVER")) {
             httpServletResponse.sendRedirect("/driver");
+        }
 
     }
 

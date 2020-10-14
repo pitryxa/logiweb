@@ -25,8 +25,7 @@ public class UserValidator implements Validator {
         UserDto userDto = (UserDto) o;
 
         if (!userDto.getConfirmPassword().equals(userDto.getPassword())) {
-            errors.rejectValue("confirmPassword", "Different.userForm.password");
-            //errors.
+            errors.rejectValue("confirmPassword", "Different.user.confirmPassword");
         }
 
         List<UserDto> userDtoList = userService.getAll();
@@ -37,8 +36,8 @@ public class UserValidator implements Validator {
                 break;
             }
         }
-        if (!isValid){
-            errors.rejectValue("email", "Equals.userForm.email");
+        if (!isValid) {
+            errors.rejectValue("email", "Equals.user.email");
         }
     }
 }
