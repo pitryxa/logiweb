@@ -57,7 +57,6 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() throws NamingException {
         InitialContext cxt = new InitialContext();
-//        cxt.
         DataSource dataSource = (DataSource) cxt.lookup("java:/comp/env/jdbc/logiweb");
 
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();

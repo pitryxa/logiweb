@@ -1,7 +1,7 @@
 package logiweb.controller;
 
 import logiweb.calculating.Route;
-import logiweb.calculating.Routes;
+import logiweb.calculating.RoutesCalc;
 import logiweb.dto.CargoDto;
 import logiweb.dto.DriverDto;
 import logiweb.dto.TruckDto;
@@ -33,7 +33,7 @@ public class OrderController {
     private DriverService driverService;
 
     @Autowired
-    private Routes routes;
+    private RoutesCalc routesCalc;
 
     @GetMapping
     public String allOrders(Model model) {
@@ -77,7 +77,7 @@ public class OrderController {
         session.setAttribute("truckForOrder", truck);
 
         List<CargoDto> cargoes = ((List<CargoDto>) session.getAttribute("cargoListForOrder"));
-        Route route = routes.minRouteByCargoes(cargoes, truck);
+        Route route = routesCalc.minRouteByCargoes(cargoes, truck);
         if (route == null) {
             return "redirect:/officer/orders";
         }

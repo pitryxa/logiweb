@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class Routes {
+public class RoutesCalc {
     @Autowired
     private CityService cityService;
 
