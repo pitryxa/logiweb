@@ -11,6 +11,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -21,19 +23,22 @@ public class DataSourceConfig {
 
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManager() {
+    public LocalContainerEntityManagerFactoryBean entityManager() throws NamingException {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource());
 
+//        InitialContext cxt = new InitialContext();
+//        HibernateJpaVendorAdapter adapter = (HibernateJpaVendorAdapter) cxt.lookup("java:/comp/env/jpa/adapter");
+
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setShowSql(true);
-        adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+//        adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
 
         factoryBean.setJpaVendorAdapter(adapter);
         factoryBean.setPackagesToScan("logiweb.*");
 
         Properties jpaProp = new Properties();
-        jpaProp.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        //jpaProp.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         jpaProp.put("hibernate.connection.CharSet", "utf8");
         jpaProp.put("hibernate.connection.characterEncoding", "utf8");
         jpaProp.put("hibernate.connection.useUnicode", "true");
@@ -43,19 +48,24 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
+    public PlatformTransactionManager transactionManager() throws NamingException {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManager().getObject());
         return transactionManager;
     }
 
     @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/logiweb?charSet=UTF8");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("root");
+    public DataSource dataSource() throws NamingException {
+        InitialContext cxt = new InitialContext();
+//        cxt.
+        DataSource dataSource = (DataSource) cxt.lookup("java:/comp/env/jdbc/logiweb");
+
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("org.postgresql.Driver");
+//        dataSource.setUrl("jdbc:postgresql://localhost:5432/logiweb?charSet=UTF8");
+//        dataSource.setUsername("postgres");
+//        dataSource.setPassword("root");
+
         return dataSource;
     }
 

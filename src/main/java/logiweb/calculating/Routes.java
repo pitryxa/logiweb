@@ -4,7 +4,6 @@ import logiweb.dto.CargoDto;
 import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
 import logiweb.dto.TruckDto;
-import logiweb.entity.Distance;
 import logiweb.entity.enums.OperationTypeOnWaypoint;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DistanceService;

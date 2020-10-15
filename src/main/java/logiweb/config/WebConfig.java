@@ -46,14 +46,4 @@ public class WebConfig implements WebMvcConfigurer {
         reloadableResourceBundleMessageSource.setDefaultEncoding("UTF-8");
         return reloadableResourceBundleMessageSource;
     }
-
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/notFound").setViewName("forward:/hello");
-//    }
-//
-//    @Bean
-//    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> webServerFactoryCustomizer() {
-//        return (factory) -> factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/notFound"));
-//    }
 }
