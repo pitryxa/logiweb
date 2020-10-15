@@ -1,12 +1,10 @@
 package logiweb.calculating;
 
-import logiweb.dto.CityDto;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 
 @Getter
 @Setter
