@@ -14,6 +14,4 @@ public interface CityDao extends GenericDAO<City> {
     City getByName(String name);
 
     Long countOfCities();
-
-    List<Distance> getDistanceList();
 }

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -54,34 +54,9 @@
             </div>
         </spring:bind>
 
-        <%--<spring:bind path="identKey">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" id="IdentKey" path="identKey" class="form-control"
-                            placeholder="Identification key"></form:input>
-                <form:errors path="identKey"></form:errors>
-            </div>
-        </spring:bind>--%>
         <button class="btn btn-lg btn-info btn-block btn-signin" type="submit">Registration</button>
         <h4 class="text-center lnk-color"><a href="${contextPath}/login">Sign In</a></h4>
     </form:form>
-
-<%--    <form:--%>
-
-<%--    <form method="POST" action="${contextPath}/login" class="form-signin">--%>
-<%--        <h2 class="text-center text-cadetblue">Sign In</h2>--%>
-
-<%--        <div class="form-group ${error != null ? 'has-error' : ''}">--%>
-<%--            <span>${message}</span>--%>
-<%--            <input name="email" type="email" class="form-control" placeholder="Email"--%>
-<%--                   autofocus="true"/>--%>
-<%--            <input name="password" type="password" class="form-control" placeholder="Password"/>--%>
-<%--            <span>${error}</span>--%>
-
-<%--            <button class="btn btn-lg btn-info btn-block btn-signin" type="submit">Sign In</button>--%>
-<%--            <h3 class="text-center"><a href="${contextPath}/registration" class="lnk-color">Sign Up</a></h3>--%>
-<%--        </div>--%>
-
-<%--    </form>--%>
 
 </div>
 

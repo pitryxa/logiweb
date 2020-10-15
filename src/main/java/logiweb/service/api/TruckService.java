@@ -1,7 +1,6 @@
 package logiweb.service.api;
 
 import logiweb.dto.CargoDto;
-import logiweb.dto.CityDto;
 import logiweb.dto.TruckDto;
 import logiweb.entity.City;
 
@@ -20,6 +19,6 @@ public interface TruckService {
 
     List<TruckDto> getAllFreeTrucksInCity(City city);
 
-    List<TruckDto> getFreeTrucksByCityfromAndCapacityInCargoList(List<CargoDto> cargoes);
+    List<TruckDto> getFreeTrucksByStartCityAndCapacityInCargoList(List<CargoDto> cargoes);
 
 }

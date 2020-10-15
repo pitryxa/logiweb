@@ -103,7 +103,7 @@ public class DriverServiceImpl implements DriverService {
 
     private double getWorkHoursForEveryDriver(int shiftSize, double timeExecOrderInHours) {
         if (shiftSize < 3) {
-            timeExecOrderInHours = getExecOrderInHoursDependShiftSize(shiftSize, timeExecOrderInHours);
+            timeExecOrderInHours = getTimeExecOrderInHoursDependShiftSize(shiftSize, timeExecOrderInHours);
         }
 
         timeExecOrderInHours = getTimeExecOrderInCurrentMonth(timeExecOrderInHours);
@@ -147,7 +147,7 @@ public class DriverServiceImpl implements DriverService {
         return workDays * workHoursPerDay + remainderHours;
     }
 
-    private double getExecOrderInHoursDependShiftSize(int shiftSize, double timeExecOrderInHours) {
+    private double getTimeExecOrderInHoursDependShiftSize(int shiftSize, double timeExecOrderInHours) {
         int workHoursPerDay = WORK_HOURS_PER_DAY_FOR_ONE_DRIVER * shiftSize;
 
         int timeExecOrderInDays = (int) (timeExecOrderInHours / workHoursPerDay);
@@ -184,6 +184,4 @@ public class DriverServiceImpl implements DriverService {
     private Double addTimeForLoadUnload(double fullTime) {
         return fullTime + HOURS_FOR_LOAD_UNLOAD;
     }
-
-
 }

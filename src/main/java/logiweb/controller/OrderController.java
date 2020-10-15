@@ -65,7 +65,7 @@ public class OrderController {
         List<CargoDto> cargoes = (List<CargoDto>) o;
 
         model.addAttribute("cargoes", cargoes);
-        model.addAttribute("trucks", truckService.getFreeTrucksByCityfromAndCapacityInCargoList(cargoes));
+        model.addAttribute("trucks", truckService.getFreeTrucksByStartCityAndCapacityInCargoList(cargoes));
 
         return "orders/addTruckToOrder";
     }
@@ -78,6 +78,9 @@ public class OrderController {
 
         List<CargoDto> cargoes = ((List<CargoDto>) session.getAttribute("cargoListForOrder"));
         Route route = routes.minRouteByCargoes(cargoes, truck);
+        if (route == null) {
+            return "redirect:/officer/orders";
+        }
         session.setAttribute("routeForOrder", route);
 
         return "redirect:/officer/orders/add-drivers";

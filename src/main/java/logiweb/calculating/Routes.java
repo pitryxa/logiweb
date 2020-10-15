@@ -4,6 +4,7 @@ import logiweb.dto.CargoDto;
 import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
 import logiweb.dto.TruckDto;
+import logiweb.entity.Distance;
 import logiweb.entity.enums.OperationTypeOnWaypoint;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DistanceService;
@@ -24,6 +25,30 @@ public class Routes {
     private List<CityDto> allCities = new ArrayList<>();
 
     private List<DistanceDto> allDistances = new ArrayList<>();
+
+    public Integer[][] getMatrixOfDistances() {
+        int size = cityService.countOfCities().intValue();
+        Integer[][] distances = new Integer[size][size];
+
+        List<DistanceDto> distanceList = distanceService.getAll();
+
+        for (DistanceDto dist : distanceList) {
+            int from = dist.getCityFrom().getId();
+            int to = dist.getCityTo().getId();
+
+            distances[from - 1][to - 1] = dist.getDistance();
+        }
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (distances[i][j] == null) {
+                    distances[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+
+        return distances;
+    }
 
     public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
         allCities = cityService.getAll();

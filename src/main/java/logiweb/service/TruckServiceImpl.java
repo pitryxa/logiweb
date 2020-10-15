@@ -60,15 +60,15 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    public List<TruckDto> getFreeTrucksByCityfromAndCapacityInCargoList(List<CargoDto> cargoes) {
-        Map<City, Integer> cities = getCityfromAndSummaryWeightFromCargoes(cargoes);
+    public List<TruckDto> getFreeTrucksByStartCityAndCapacityInCargoList(List<CargoDto> cargoes) {
+        Map<City, Integer> cities = getStartCityAndSummaryWeightFromCargoes(cargoes);
 
         int maxWeight = Collections.max(cities.values());
 
         return truckConverter.toListDto(truckDao.getAllFreeTrucksInCities(cities.keySet(), maxWeight));
     }
 
-    private Map<City, Integer> getCityfromAndSummaryWeightFromCargoes(List<CargoDto> cargoes){
+    private Map<City, Integer> getStartCityAndSummaryWeightFromCargoes(List<CargoDto> cargoes){
         Map<City, Integer> cities = new HashMap<>();
         List<Cargo> cargoList = cargoConverter.toListEntity(cargoes);
 

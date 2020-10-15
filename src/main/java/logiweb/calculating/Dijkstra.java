@@ -2,7 +2,6 @@ package logiweb.calculating;
 
 import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
-import logiweb.entity.Distance;
 
 import java.util.*;
 

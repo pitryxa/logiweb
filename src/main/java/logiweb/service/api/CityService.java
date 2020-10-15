@@ -20,9 +20,5 @@ public interface CityService {
 
     Long countOfCities();
 
-    Integer[][] getMatrixOfDistances();
-
     CityDto getCityByNameFromList(List<CityDto> cities, String cityName);
-
-
 }

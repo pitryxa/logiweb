@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CityServiceImpl implements CityService {
@@ -59,37 +60,10 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public Integer[][] getMatrixOfDistances() {
-        int size = countOfCities().intValue();
-        Integer[][] distances = new Integer[size][size];
-
-        List<Distance> distanceList = cityDao.getDistanceList();
-
-        for (Distance dist : distanceList) {
-            int from = dist.getCityFrom().getId();
-            int to = dist.getCityTo().getId();
-
-            distances[from - 1][to - 1] = dist.getDistance();
-        }
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (distances[i][j] == null) {
-                    distances[i][j] = Integer.MAX_VALUE;
-                }
-            }
-        }
-
-        return distances;
-    }
-
-    @Override
     public CityDto getCityByNameFromList(List<CityDto> cities, String cityName) {
-        for (CityDto city : cities) {
-            if (city.getName().equals(cityName)) {
-                return city;
-            }
-        }
-        return null;
+        List<CityDto> cityDtoList =
+                cities.stream().filter(cityDto -> cityDto.getName().equals(cityName)).collect(Collectors.toList());
+
+        return cityDtoList.isEmpty() ? null : cityDtoList.get(0);
     }
 }
