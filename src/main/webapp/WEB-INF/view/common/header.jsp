@@ -2,6 +2,9 @@
 <html lang="en" class="h-100">
 <head>
     <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap-table.min.css" type="text/css">
+    <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap-table-filter-control.min.css" type="text/css">
     <link rel="stylesheet" href="${param.contextPath}/resources/css/common.css" type="text/css">
     <title>${param.title}</title>
 </head>
@@ -17,31 +20,34 @@
 
                 <sec:authorize access="hasRole('ADMIN')">
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/users">Users</a>
+                        <a class="nav-link" href="${param.contextPath}/admin/users">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/city">Cities</a>
+                        <a class="nav-link" href="${param.contextPath}/admin/city">Cities</a>
                     </li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('MANAGER')">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/officer/orders">Orders</a>
+                        <a class="nav-link active" href="${param.contextPath}/officer/orders">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/officer/trucks">Trucks</a>
+                        <a class="nav-link" href="${param.contextPath}/officer/trucks">Trucks</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/officer/drivers">Drivers</a>
+                        <a class="nav-link" href="${param.contextPath}/officer/drivers">Drivers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/officer/cargo">Cargo</a>
+                        <a class="nav-link" href="${param.contextPath}/officer/cargo">Cargo</a>
                     </li>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('DRIVER')">
                     <li class="nav-item">
-                        <a class="nav-link" href="/driver">Cabinet</a>
+                        <a class="nav-link" href="${param.contextPath}/driver">Personal card</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${param.contextPath}/driver/order">Order</a>
                     </li>
                 </sec:authorize>
 

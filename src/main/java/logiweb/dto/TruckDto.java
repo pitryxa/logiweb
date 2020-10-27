@@ -28,4 +28,6 @@ public class TruckDto {
     private String city;
 
     private List<SimpleDriverDto> drivers;
+
+    private Integer orderId;
 }

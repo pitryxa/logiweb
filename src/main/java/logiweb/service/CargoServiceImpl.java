@@ -1,8 +1,11 @@
 package logiweb.service;
 
 import logiweb.converter.CargoConverter;
+import logiweb.converter.OrderConverter;
 import logiweb.dao.api.CargoDao;
 import logiweb.dto.CargoDto;
+import logiweb.entity.Cargo;
+import logiweb.entity.Order;
 import logiweb.service.api.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ public class CargoServiceImpl implements CargoService {
 
     @Autowired
     private CargoConverter cargoConverter;
+
+    @Autowired
+    private OrderConverter orderConverter;
 
     @Override
     public List<CargoDto> getAll() {
@@ -55,5 +61,12 @@ public class CargoServiceImpl implements CargoService {
     @Override
     public List<CargoDto> getByListId(List<Integer> ids) {
         return cargoConverter.toListDto(cargoDao.getByListId(ids));
+    }
+
+    @Override
+    public Integer getOrderId(Cargo cargo) {
+        Order order = cargoDao.getOrderByCargo(cargo);
+        return order == null ? null : order.getId();
+
     }
 }

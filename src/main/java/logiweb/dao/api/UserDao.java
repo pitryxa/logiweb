@@ -1,7 +1,6 @@
 package logiweb.dao.api;
 
 import logiweb.dao.generic.GenericDAO;
-import logiweb.entity.Cargo;
 import logiweb.entity.User;
 import logiweb.entity.enums.Role;
 
@@ -15,4 +14,6 @@ public interface UserDao extends GenericDAO<User> {
     List<User> getByRole(Role role);
 
     List<User> getUsersWithRoleDriverWhoAreNotInListDrivers();
+
+    Integer getUserIdByEmail(String currentUserName);
 }

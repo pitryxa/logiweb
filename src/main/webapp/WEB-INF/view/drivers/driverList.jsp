@@ -16,52 +16,70 @@
                 <h4 class="text-cadetblue">${title}</h4>
             </div>
         </div>
-        <a href="/officer/drivers/add" class="lnk-color">Add driver</a>
+        <a href="${contextPath}/officer/drivers/add" class="lnk-color">Add driver</a>
         <br>
         <br>
-        <table class="table table-striped">
-            <%--    <caption>Cargo List</caption>--%>
+        <table id="table"
+               data-toggle="table"
+               data-filter-control="true"
+               data-pagination = "true"
+               class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>ID</th>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Hours worked</th>
-                <th>Status</th>
-                <th>Truck</th>
-                <th>City</th>
-                <th>Action</th>
+                <th data-field="count" data-sortable="true">#</th>
+                <th data-field="personalNumber" data-filter-control="input" data-sortable="true">Personal number</th>
+                <th data-field="firstName" data-filter-control="input" data-sortable="true">First name</th>
+                <th data-field="lastName" data-filter-control="input" data-sortable="true">Last name</th>
+                <th data-field="hours" data-filter-control="input" data-sortable="true">Hours worked</th>
+                <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
+                <th data-field="truck" data-filter-control="input" data-sortable="true">Truck</th>
+                <th data-field="order" data-filter-control="input" data-sortable="true">Order</th>
+                <th data-field="city" data-filter-control="input" data-sortable="true">City</th>
+                <th data-field="action">Action</th>
             </tr>
             </thead>
 
-            <c:forEach var="driver" items="${driverList}">
+            <c:forEach var="driver" items="${driverList}" varStatus="counter">
                 <tr>
-                    <td>${driver.id}</td>
+                    <td>${counter.count}</td>
+                    <td>${driver.personalNumber}</td>
                     <td>${driver.user.firstName}</td>
                     <td>${driver.user.lastName}</td>
                     <td>${driver.workHours}</td>
                     <td>${driver.status}</td>
                     <td>
                         <c:if test="${driver.truck == null}">
-                            NONE
+                            <c:out value="NONE"/>
                         </c:if>
                         <c:if test="${driver.truck != null}">
-                                <a href="/officer/trucks/${driver.truck.id}" class="m-0">
-                                        ${driver.truck.regNumber} (${driver.truck.id})
-                                </a>
+                            <a href="/officer/trucks/${driver.truck.id}" class="m-0">
+                                <c:out value="${driver.truck.regNumber}"/>
+                            </a>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${driver.orderId == null}">
+                            <c:out value="NONE"/>
+                        </c:if>
+                        <c:if test="${driver.orderId != null}">
+                            <a href="/officer/orders/${driver.orderId}" class="m-0">
+                                <c:out value="${driver.orderId}"/>
+                            </a>
                         </c:if>
                     </td>
 
                     <td>${driver.city}</td>
                     <td class="action">
-<%--                        <a href="/officer/drivers/edit/${driver.id}" class="text-decoration-none" title="edit">--%>
-<%--                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square"--%>
-<%--                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">--%>
-<%--                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>--%>
-<%--                                <path fill-rule="evenodd"--%>
-<%--                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>--%>
-<%--                            </svg>--%>
-<%--                        </a>--%>
+                        <a href="/officer/drivers/edit/${driver.id}"
+                           class="text-decoration-none" title="edit">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                 class="bi bi-pencil-square"
+                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd"
+                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </a>
                         <a href="/officer/drivers/delete/${driver.id}" class="text-decoration-none" title="delete">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
                                  xmlns="http://www.w3.org/2000/svg">

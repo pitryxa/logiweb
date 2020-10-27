@@ -1,22 +1,26 @@
 package logiweb.service;
 
-import logiweb.calculating.Dijkstra;
-import logiweb.calculating.Node;
-import logiweb.calculating.Route;
-import logiweb.calculating.Waypoint;
 import logiweb.converter.WaypointConverter;
+import logiweb.dao.api.CargoDao;
+import logiweb.dao.api.OrderDao;
+import logiweb.dao.api.TruckDao;
 import logiweb.dao.api.WaypointDao;
 import logiweb.dto.*;
-import logiweb.entity.enums.OperationTypeOnWaypoint;
-import logiweb.service.api.CityService;
-import logiweb.service.api.DistanceService;
+import logiweb.entity.Cargo;
+import logiweb.entity.Driver;
+import logiweb.entity.Truck;
+import logiweb.entity.enums.CargoStatus;
+import logiweb.entity.enums.DriverStatus;
+import logiweb.entity.enums.OrderStatus;
+import logiweb.entity.enums.TruckWorkStatus;
+import logiweb.service.api.DriverService;
+import logiweb.service.api.TruckService;
 import logiweb.service.api.WaypointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class WaypointServiceImpl implements WaypointService {
@@ -26,6 +30,18 @@ public class WaypointServiceImpl implements WaypointService {
 
     @Autowired
     private WaypointConverter waypointConverter;
+
+    @Autowired
+    private DriverService driverService;
+
+    @Autowired
+    private TruckDao truckDao;
+
+    @Autowired
+    private OrderDao orderDao;
+
+    @Autowired
+    private CargoDao cargoDao;
 
     @Override
     public List<WaypointDto> getAll() {
@@ -53,5 +69,30 @@ public class WaypointServiceImpl implements WaypointService {
     @Override
     public WaypointDto getById(int id) {
         return waypointConverter.toDto(waypointDao.getById(id));
+    }
+
+    @Override
+    @Transactional
+    public void doneWaypoint(int id, int orderId) {
+        waypointDao.doneWaypoint(id);
+
+        if (waypointDao.isUnloadWaypoint(id)) {
+            Cargo cargo = waypointDao.getCargoByWaypointId(id);
+            cargo.setStatus(CargoStatus.DELIVERED);
+            cargoDao.update(cargo);
+        }
+
+        if (waypointDao.isAllWaypointsDone(orderId)) {
+            orderDao.setStatus(orderId, OrderStatus.DONE);
+
+            orderDao.getDrivers(orderId).forEach(d -> {
+                d.setTruck(null);
+                driverService.changeStatus(d, DriverStatus.RECREATION);
+            });
+
+            Truck truck = orderDao.getTruck(orderId);
+            truck.setWorkStatus(TruckWorkStatus.FREE);
+            truckDao.update(truck);
+        }
     }
 }

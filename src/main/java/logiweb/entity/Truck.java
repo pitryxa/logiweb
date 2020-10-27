@@ -5,6 +5,8 @@ import logiweb.entity.enums.TruckWorkStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -36,7 +38,8 @@ public class Truck extends BaseEntity {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "truck", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "truck")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Driver> drivers;
 
     @Override

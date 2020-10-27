@@ -34,11 +34,11 @@ public class UserDto {
     private String email;
 
     @NotNull
-    @Size(min = 8, max = 32, message = "Field must be between 8 and 32 characters.")
+    @Size(min = 8, message = "Field must be over 8 characters.")
     private String password;
 
     @NotNull
-    @Size(min = 8, max = 32, message = "Field must be between 8 and 32 characters.")
+    @Size(min = 8, message = "Field must be over 8 characters.")
     @Transient
     private String confirmPassword;
 }

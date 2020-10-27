@@ -191,13 +191,57 @@ public class RoutesCalc {
         if (!prevWaypoint.equals(lastWaypoint)) {
             lastWaypoint.setDistanceFromPrevWaypoint(
                     minRouteBetweenTwoCities(prevWaypoint.getCity(), lastWaypoint.getCity()).getDistance());
+            lastWaypoint.clearCargoes();
             orderedWaypoints.add(lastWaypoint);
         }
 
+        Deque<Waypoint> waypointsForRoute = getWaypointsForRoute(orderedWaypoints);
+
         route.setDistance(getFullDistance(orderedWaypoints));
-        route.setWaypoints(new LinkedList<>(orderedWaypoints));
+        route.setWaypoints(new LinkedList<>(waypointsForRoute));
+        //route.getWaypoints().stream().peek(Waypoint::sortCargoes);
 
         return route;
+    }
+
+    private Deque<Waypoint> getWaypointsForRoute(Deque<Waypoint> orderedWaypoints) {
+        List<CargoDto> loadCargoes = new ArrayList<>();
+        List<CargoDto> deliveredCargoes = new ArrayList<>();
+
+        Deque<Waypoint> waypointsForRoute = new LinkedList<>(orderedWaypoints);
+
+        for (Waypoint w : waypointsForRoute) {
+            Iterator<Map.Entry<CargoDto, OperationTypeOnWaypoint>> iterator = w.getCargoes().entrySet().iterator();
+
+            while (iterator.hasNext()) {
+                Map.Entry<CargoDto, OperationTypeOnWaypoint> entry = iterator.next();
+
+                OperationTypeOnWaypoint op = entry.getValue();
+
+                if (deliveredCargoes.contains(entry.getKey())) {
+                    iterator.remove();
+                } else {
+                    if (op == OperationTypeOnWaypoint.LOAD) {
+                        loadCargoes.add(entry.getKey());
+                    } else if (op == OperationTypeOnWaypoint.UNLOAD) {
+                        if (loadCargoes.contains(entry.getKey())) {
+                            deliveredCargoes.add(entry.getKey());
+                        } else {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+
+            w.sortCargoes();
+        }
+
+//        waypointsForRoute.stream().peek(w -> {
+//
+//        })
+        return waypointsForRoute;
+
+
     }
 
     private void modifyUnorderedWaypoints(Waypoint nextWaypoint, List<Waypoint> unorderedWaypoints,

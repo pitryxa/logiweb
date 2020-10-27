@@ -2,6 +2,7 @@ package logiweb.dao.api;
 
 import logiweb.dao.generic.GenericDAO;
 import logiweb.entity.City;
+import logiweb.entity.Order;
 import logiweb.entity.Truck;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface TruckDao extends GenericDAO<Truck> {
     List<Truck> getAllFreeTrucksInCity(City city);
 
     List<Truck> getAllFreeTrucksInCities(Set<City> cities, int weight);
+
+    Order getOrderByTruck(Truck truck);
 }

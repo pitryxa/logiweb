@@ -7,6 +7,8 @@ import logiweb.dto.CargoDto;
 import logiweb.dto.TruckDto;
 import logiweb.entity.Cargo;
 import logiweb.entity.City;
+import logiweb.entity.Order;
+import logiweb.entity.Truck;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +68,13 @@ public class TruckServiceImpl implements TruckService {
         int maxWeight = Collections.max(cities.values());
 
         return truckConverter.toListDto(truckDao.getAllFreeTrucksInCities(cities.keySet(), maxWeight));
+    }
+
+    @Override
+    public Integer getOrderByTruck(Truck truck) {
+        Order order = truckDao.getOrderByTruck(truck);
+        return order == null ? null : order.getId();
+
     }
 
     private Map<City, Integer> getStartCityAndSummaryWeightFromCargoes(List<CargoDto> cargoes){

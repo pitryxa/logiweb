@@ -3,6 +3,7 @@ package logiweb.converter;
 import logiweb.dao.api.CityDao;
 import logiweb.dao.api.OrderDao;
 import logiweb.dto.WaypointDto;
+import logiweb.entity.Cargo;
 import logiweb.entity.WaypointEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,11 +26,15 @@ public class WaypointConverter {
         WaypointDto waypointDto = new WaypointDto();
 
         waypointDto.setId(waypointEntity.getId());
-        waypointDto.setCargo(cargoConverter.toDto(waypointEntity.getCargo()));
         waypointDto.setCity(waypointEntity.getCity().getName());
         waypointDto.setOperation(waypointEntity.getOperation());
         waypointDto.setSequentialNumber(waypointEntity.getSequentialNumber());
         waypointDto.setOrderId(waypointEntity.getOrder().getId());
+        waypointDto.setStatus(waypointEntity.getStatus());
+
+        Cargo cargo = waypointEntity.getCargo();
+        waypointDto.setCargo(cargo == null ? null : cargoConverter.toDto(cargo));
+
 
         return waypointDto;
     }
@@ -43,6 +48,7 @@ public class WaypointConverter {
         waypointEntity.setCity(cityDao.getByName(waypointDto.getCity()));
         waypointEntity.setOperation(waypointDto.getOperation());
         waypointEntity.setSequentialNumber(waypointDto.getSequentialNumber());
+        waypointEntity.setStatus(waypointDto.getStatus());
 
         return waypointEntity;
     }

@@ -1,8 +1,8 @@
 package logiweb.service.api;
 
 import logiweb.dto.CargoDto;
+import logiweb.entity.Cargo;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface CargoService {
@@ -19,4 +19,6 @@ public interface CargoService {
     List<CargoDto> getPreparedCargo();
 
     List<CargoDto> getByListId(List<Integer> ids);
+
+    Integer getOrderId(Cargo cargo);
 }

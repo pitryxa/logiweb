@@ -3,6 +3,7 @@ package logiweb.service.api;
 import logiweb.dto.CargoDto;
 import logiweb.dto.TruckDto;
 import logiweb.entity.City;
+import logiweb.entity.Truck;
 
 import java.util.List;
 
@@ -21,4 +22,5 @@ public interface TruckService {
 
     List<TruckDto> getFreeTrucksByStartCityAndCapacityInCargoList(List<CargoDto> cargoes);
 
+    Integer getOrderByTruck(Truck truck);
 }

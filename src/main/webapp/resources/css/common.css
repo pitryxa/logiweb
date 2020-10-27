@@ -1,3 +1,15 @@
+.fixed-table-body{
+    height: auto!important;
+}
+
+.bootstrap-table{
+    margin-bottom: 1rem;
+}
+
+.swal-button{
+    background-color: #17a2b8;
+}
+
 body {
     background-color: floralwhite;
 }
@@ -131,4 +143,8 @@ svg{
 
 .has-error {
     color: red
+}
+
+.table-nostriped tbody tr:nth-of-type(odd) {
+    background-color:transparent;
 }

@@ -11,49 +11,147 @@
 
 <main class="flex-shrink-0">
     <section class="container form-content" id="content">
-        <div class="row" id="nameSection">
+        <div class="row border-bottom" id="nameSection">
             <div class="col">
-                <h4 class="text-center text-cadetblue">${title} #${driver.id}</h4>
+                <h4 class="text-center text-cadetblue">${title}</h4>
             </div>
         </div>
 
-        <form action="/officer/drivers/delete" method="post">
-            <input type="hidden" name="id" value="${driver.id}">
-            <input type="hidden" name="user-id" value="${driver.user.id}">
-            <div class="form-group row">
-                <label for="firstname" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">First name</label>
-                <input type="text" name="firstName" id="firstname" value="${driver.user.firstName}" class="form-control-plaintext col-sm-10" readonly>
+        <c:if test="${driver.status != 'RECREATION'}">
+            <div class="row">
+                <div class="col">
+                    <h5 class="text-center text-danger">Driver cannot be deleted while he is executing an order!</h5>
+                </div>
             </div>
-            <div class="form-group row">
-                <label for="lastname" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Last name</label>
-                <input type="text" name="lastName" id="lastname" value="${driver.user.lastName}" class="form-control-plaintext col-sm-10" readonly>
-            </div>
-            <div class="form-group row">
-                <label for="workHours" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Hours worked</label>
-                <input type="text" name="workHours" id="workHours" value="${driver.workHours}" class="form-control-plaintext col-sm-10" readonly>
-            </div>
-            <div class="form-group row">
-                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                <input type="text" name="status" id="status" value="${driver.status}" class="form-control-plaintext col-sm-10" readonly>
-            </div>
-            <div class="form-group row">
-                <label for="truck" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>
-                <c:if test="${driver.truck == null}">
-                    <input type="text" id="truck" value="NONE" class="form-control-plaintext col-sm-10" readonly>
-                </c:if>
-                <c:if test="${driver.truck != null}">
-                    <input type="text" id="truck" value="${driver.truck.regNumber} (${driver.truck.id})" class="form-control-plaintext col-sm-10" readonly>
-                </c:if>
-            </div>
-            <div class="form-group row">
-                <label for="city" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
-                <input type="text" name="city" id="city" value="${driver.city}" class="form-control-plaintext col-sm-10" readonly>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mx-2">${title}</button>
-                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Back</button>
-            </div>
-        </form>
+        </c:if>
+
+        <c:if test="${driver.status == 'RECREATION'}">
+            <form action="${contextPath}/officer/drivers/delete" method="post">
+                <input type="hidden" name="id" value="${driver.id}">
+                <input type="hidden" name="userId" value="${driver.user.id}">
+                <input type="hidden" name="truckId" value="${driver.truck.id}">
+
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="personalNumber" class="float-right py-2 pr-2 text-cadetblue my-2">Personal
+                            number</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="personalNumber" id="personalNumber" value="${driver.personalNumber}"
+                               class="form-control-plaintext py-2 my-2" readonly>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="firstname" class="float-right py-2 pr-2 text-cadetblue my-2">First name</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="firstname" id="firstname" value="${driver.user.firstName}"
+                               class="form-control-plaintext py-2 my-2" readonly>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="lastname" class="float-right py-2 pr-2 text-cadetblue my-2">Last name</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="lastname" id="lastname" value="${driver.user.lastName}"
+                               class="form-control-plaintext py-2 my-2" readonly>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="workHours" class="float-right py-2 pr-2 text-cadetblue my-2">Hours worked</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="workHours" id="workHours" value="${driver.workHours}"
+                               class="form-control-plaintext py-2 my-2" readonly>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="status" class="float-right py-2 pr-2 text-cadetblue my-2">Status</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="status" id="status" value="${driver.status}"
+                               class="form-control-plaintext py-2 my-2" readonly>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="truck" class="float-right py-2 pr-2 text-cadetblue my-2">Truck</label>
+                    </div>
+                    <div class="col-6">
+                        <c:if test="${driver.truck == null}">
+                            <input type="text" name="truck" id="truck" value="NONE"
+                                   class="form-control-plaintext py-2 my-2" readonly>
+                        </c:if>
+                        <c:if test="${driver.truck != null}">
+                            <input type="text" name="truck" id="truck" value="${driver.truck.regNumber}"
+                                   class="form-control-plaintext py-2 my-2" readonly>
+                        </c:if>
+                    </div>
+                </div>
+                <div class="form-group row border-bottom">
+                    <div class="col-3 font-weight-bold ml-auto ">
+                        <label for="city" class="float-right py-2 pr-2 text-cadetblue my-2">City</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="city" id="city" value="${driver.city}"
+                               class="form-control-plaintext py-2 my-2" readonly>
+                    </div>
+                </div>
+
+
+                    <%--            <div class="form-group row">--%>
+                    <%--                <label for="firstname" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">First--%>
+                    <%--                    name</label>--%>
+                    <%--                <input type="text" name="firstName" id="firstname" value="${driver.user.firstName}"--%>
+                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
+                    <%--            </div>--%>
+                    <%--            <div class="form-group row">--%>
+                    <%--                <label for="lastname" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Last name</label>--%>
+                    <%--                <input type="text" name="lastName" id="lastname" value="${driver.user.lastName}"--%>
+                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
+                    <%--            </div>--%>
+                    <%--            <div class="form-group row">--%>
+                    <%--                <label for="workHours" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Hours--%>
+                    <%--                    worked</label>--%>
+                    <%--                <input type="text" name="workHours" id="workHours" value="${driver.workHours}"--%>
+                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
+                    <%--            </div>--%>
+                    <%--            <div class="form-group row">--%>
+                    <%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
+                    <%--                <input type="text" name="status" id="status" value="${driver.status}"--%>
+                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
+                    <%--            </div>--%>
+                    <%--            <div class="form-group row">--%>
+                    <%--                <label for="truck" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>--%>
+                    <%--                <c:if test="${driver.truck == null}">--%>
+                    <%--                    <input type="text" id="truck" value="NONE" class="form-control-plaintext col-sm-10" readonly>--%>
+                    <%--                </c:if>--%>
+                    <%--                <c:if test="${driver.truck != null}">--%>
+                    <%--                    <input type="text" id="truck" value="${driver.truck.regNumber} (${driver.truck.id})"--%>
+                    <%--                           class="form-control-plaintext col-sm-10" readonly>--%>
+                    <%--                </c:if>--%>
+                    <%--            </div>--%>
+                    <%--            <div class="form-group row">--%>
+                    <%--                <label for="city" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>--%>
+                    <%--                <input type="text" name="city" id="city" value="${driver.city}" class="form-control-plaintext col-sm-10"--%>
+                    <%--                       readonly>--%>
+                    <%--            </div>--%>
+                    <%--            <div class="d-flex justify-content-center">--%>
+                    <%--                <button type="submit" class="btn btn-success mx-2">${title}</button>--%>
+                    <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Back</button>--%>
+                    <%--            </div>--%>
+
+
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-success mx-2">Delete</button>
+                    <button type="button" onclick="history.back();" class="btn btn-danger mx-2">Cancel</button>
+                </div>
+            </form>
+        </c:if>
     </section>
 </main>
 

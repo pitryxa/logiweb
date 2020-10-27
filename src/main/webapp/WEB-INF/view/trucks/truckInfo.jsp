@@ -43,9 +43,15 @@
         </div>
         <div class="row  border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
-                <p class="text-right py-2 pr-2 text-cadetblue my-2">Status</p>
+                <p class="text-right py-2 pr-2 text-cadetblue my-2">Condition status</p>
             </div>
-            <div class="col-6"><p class="py-2 my-2">${truck.status}</p></div>
+            <div class="col-6"><p class="py-2 my-2">${truck.conditionStatus}</p></div>
+        </div>
+        <div class="row  border-bottom">
+            <div class="col-3 font-weight-bold ml-auto ">
+                <p class="text-right py-2 pr-2 text-cadetblue my-2">Work status</p>
+            </div>
+            <div class="col-6"><p class="py-2 my-2">${truck.workStatus}</p></div>
         </div>
         <div class="row  border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
@@ -55,16 +61,33 @@
         </div>
         <div class="row  border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
+                <p class="text-right py-2 pr-2 text-cadetblue my-2">Order</p>
+            </div>
+            <div class="col-6">
+                <p class="py-2 my-2">
+                    <c:if test="${truck.orderId == null}">NONE</c:if>
+                    <c:if test="${truck.orderId != null}">
+                        <a href="/officer/orders/${truck.orderId}" class="m-0">
+                            <c:out value="${truck.orderId}"/>
+                        </a>
+                    </c:if>
+                </p>
+            </div>
+        </div>
+        <div class="row  border-bottom">
+            <div class="col-3 font-weight-bold ml-auto ">
                 <p class="text-right py-2 pr-2 text-cadetblue my-2">Drivers</p>
             </div>
             <div class="col-6 py-3">
-                <c:if test="${truck.drivers == null}">NONE</c:if>
+                <c:if test="${truck.drivers == null}">
+                    <c:out value="NONE"/>
+                </c:if>
 
                 <c:if test="${truck.drivers != null}">
                     <c:forEach var="driver" items="${truck.drivers}">
                         <p class="m-0">
-                            <a href="/officer/trucks/${driver.id}" class="m-0">
-                                ${driver.user.firstName} ${driver.user.lastName} (${driver.id})
+                            <a href="/officer/drivers/${driver.id}" class="m-0">
+                                <c:out value="${driver.user.firstName} ${driver.user.lastName} (${driver.personalNumber})"/>
                             </a>
                         </p>
                     </c:forEach>
@@ -72,10 +95,10 @@
             </div>
         </div>
 
-
         <div class="d-flex justify-content-center mt-3">
-            <a href="/officer/drivers/edit/${driver.id}" class="btn btn-success mx-2">Edit</a>
-            <a href="/officer/drivers/delete/${driver.id}" class="btn btn-danger mx-2">Delete</a>
+            <a href="${contextPath}/officer/trucks/edit/${truck.id}" class="btn btn-success mx-2">Edit</a>
+            <a href="${contextPath}/officer/trucks/delete/${truck.id}" class="btn btn-danger mx-2">Delete</a>
+            <button type="button" onclick="history.back();" class="btn btn-secondary mx-2">Back</button>
         </div>
     </section>
 </main>

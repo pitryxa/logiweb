@@ -26,14 +26,14 @@
                 <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight</label>
                 <input type="text" name="weight" id="weight" class="form-control col-sm-10">
             </div>
-            <div class="form-group row">
-                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                <select name="status" id="status" class="form-control col-sm-10">
-                    <c:forEach var="status" items="${statusArray}">
-                        <option value="${status}">${status}</option>
-                    </c:forEach>
-                </select>
-            </div>
+<%--            <div class="form-group row">--%>
+<%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
+<%--                <select name="status" id="status" class="form-control col-sm-10">--%>
+<%--                    <c:forEach var="status" items="${statusArray}">--%>
+<%--                        <option value="${status}">${status}</option>--%>
+<%--                    </c:forEach>--%>
+<%--                </select>--%>
+<%--            </div>--%>
             <div class="form-group row">
                 <label for="city-from" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">From</label>
                 <select name="cityFrom" id="city-from" class="form-control col-sm-10">

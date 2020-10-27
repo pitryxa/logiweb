@@ -3,6 +3,7 @@ package logiweb.converter;
 import logiweb.dao.api.CityDao;
 import logiweb.dto.CargoDto;
 import logiweb.entity.Cargo;
+import logiweb.service.api.CargoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,9 @@ public class CargoConverter {
     @Autowired
     private CityDao cityDao;
 
+    @Autowired
+    private CargoService cargoService;
+
     public CargoDto toDto(Cargo cargo) {
         CargoDto cargoDTO = new CargoDto();
 
@@ -24,6 +28,8 @@ public class CargoConverter {
         cargoDTO.setStatus(cargo.getStatus());
         cargoDTO.setCityFrom(cargo.getCityFrom().getName());
         cargoDTO.setCityTo(cargo.getCityTo().getName());
+
+        cargoDTO.setOrderId(cargoService.getOrderId(cargo));
 
         return cargoDTO;
     }

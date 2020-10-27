@@ -14,9 +14,11 @@ import java.time.LocalDateTime;
 public class DriverDto {
     private Integer id;
 
+    private Long personalNumber;
+
     private UserDto user;
 
-    private Integer workHours;
+    private Double workHours;
 
     private DriverStatus status;
 
@@ -25,4 +27,6 @@ public class DriverDto {
     private String city;
 
     private LocalDateTime timeLastChangeStatus;
+
+    private Integer orderId;
 }

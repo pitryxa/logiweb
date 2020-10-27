@@ -20,4 +20,9 @@ public class OrderDto {
     private List<SimpleDriverDto> drivers;
     private OrderStatus status;
     private List<WaypointDto> waypoints;
+
+    @Override
+    public String toString() {
+        return "OrderDto{" + "id=" + id + ", truck=" + truck + ", drivers=" + drivers + ", status=" + status + '}';
+    }
 }

@@ -19,6 +19,10 @@
 
         <form action="${contextPath}/officer/drivers/add" method="post">
             <div class="form-group row">
+                <label for="personalNumber" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Personal number</label>
+                <input type="text" name="personalNumber" id="personalNumber" class="form-control col-sm-10">
+            </div>
+            <div class="form-group row">
                 <label for="user" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">User</label>
                 <select name="user-id" id="user" class="form-control col-sm-10">
                     <c:forEach var="user" items="${users}">

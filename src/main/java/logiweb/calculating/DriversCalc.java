@@ -94,6 +94,12 @@ public class DriversCalc {
         return timeExecOrderInHours;
     }
 
+    public double getWorkTime(LocalDateTime timeLastChange) {
+        LocalDateTime now = LocalDateTime.now();
+        return (double) Duration.between(timeLastChange, now).getSeconds() / (SECONDS_IN_MINUTE * MINUTES_IN_HOUR);
+
+    }
+
     private double getWorkHoursFromTimeExecOrder(double timeExecOrderInHours, int shiftSize) {
         int workDays = (int) (timeExecOrderInHours / HOURS_IN_DAY);
         double remainderHours = timeExecOrderInHours % HOURS_IN_DAY;

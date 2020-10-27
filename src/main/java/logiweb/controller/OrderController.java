@@ -4,15 +4,14 @@ import logiweb.calculating.Route;
 import logiweb.calculating.RoutesCalc;
 import logiweb.dto.CargoDto;
 import logiweb.dto.DriverDto;
+import logiweb.dto.OrderDto;
 import logiweb.dto.TruckDto;
+import logiweb.entity.Order;
 import logiweb.service.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -104,7 +103,7 @@ public class OrderController {
             return "orders/notEnoughDrivers";
         }
 
-        session.setAttribute("driversForOrder", drivers);
+        session.setAttribute("suitableDriversForOrder", drivers);
 
         model.addAttribute("cargoes", cargoes);
         model.addAttribute("truck", truckDto);
@@ -115,17 +114,35 @@ public class OrderController {
     }
 
     @PostMapping("/add-drivers")
-    public String addDriversToOrder(@RequestParam("drivers") List<Integer> driversIds, HttpSession session, Model model) {
-        List<DriverDto> drivers = (List<DriverDto>) session.getAttribute("driversForOrder");
-        TruckDto truck = (TruckDto) session.getAttribute("truckForOrder");
-        drivers = driverService.getByIdFromList(drivers, driversIds);
+    public String addDriversToOrder(@RequestParam("drivers") List<Integer> driversIds, HttpSession session,
+                                    Model model) {
+        Object cargoList = session.getAttribute("cargoListForOrder");
+        Object truckForOrder = session.getAttribute("truckForOrder");
+        Object routeForOrder = session.getAttribute("routeForOrder");
+        Object suitableDrivers = session.getAttribute("suitableDriversForOrder");
+        if (cargoList == null || truckForOrder == null || routeForOrder == null || suitableDrivers == null) {
+            return "redirect:/officer/orders";
+        }
+        List<CargoDto> cargoes = (List<CargoDto>) cargoList;
+        Route route = (Route) routeForOrder;
+        TruckDto truck = (TruckDto) truckForOrder;
+        List<DriverDto> selectedDrivers = driverService.getByIdFromList((List<DriverDto>) suitableDrivers, driversIds);
 
-        if (driverService.isWrongAmountDrivers(drivers, truck.getShiftSize())) {
+        if (driverService.isWrongAmountDrivers(selectedDrivers, truck.getShiftSize())) {
             model.addAttribute("shiftSize", truck.getShiftSize());
             return "orders/wrongAmountDrivers";
         }
 
+        orderService.add(cargoes, truck, route, selectedDrivers);
+
+
         return "redirect:/officer/orders";
+    }
+
+    @GetMapping("/{id}")
+    public String orderInfo(@PathVariable("id") int id, Model model) {
+        model.addAttribute("order", orderService.getById(id));
+        return "orders/orderInfo";
     }
 
 }

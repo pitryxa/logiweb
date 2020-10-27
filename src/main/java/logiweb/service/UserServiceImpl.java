@@ -1,5 +1,6 @@
 package logiweb.service;
 
+import logiweb.dao.api.DriverDao;
 import logiweb.dao.api.UserDao;
 import logiweb.dto.UserDto;
 import logiweb.entity.User;
@@ -18,6 +19,9 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private DriverDao driverDao;
 
     @Autowired
     private ModelMapper mapper;
@@ -49,6 +53,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public void edit(UserDto userDto, Role currentRole) {
+        userDto.setPassword(getById(userDto.getId()).getPassword());
+
+        if (currentRole == Role.ROLE_DRIVER) {
+            driverDao.disableByUserId(userDto.getId());
+        }
+
+        userDao.update(mapper.map(userDto, User.class));
+    }
+
+    @Override
     public void edit(UserDto userDto) {
         userDto.setPassword(getById(userDto.getId()).getPassword());
         userDao.update(mapper.map(userDto, User.class));

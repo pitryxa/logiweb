@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String editUser(@ModelAttribute UserDto userDto) {
-        userService.edit(userDto);
+    public String editUser(@ModelAttribute UserDto userDto, @RequestParam("currentRole") Role currentRole) {
+        userService.edit(userDto, currentRole);
         return "redirect:/admin/users";
     }
 }

@@ -19,9 +19,9 @@
 
         <div class="row  border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
-                <p class="text-right py-2 pr-2 text-cadetblue my-2">Id</p>
+                <p class="text-right py-2 pr-2 text-cadetblue my-2">Personal number</p>
             </div>
-            <div class="col-6"><p class="py-2 my-2">${driver.id}</p></div>
+            <div class="col-6"><p class="py-2 my-2">${driver.personalNumber}</p></div>
         </div>
         <div class="row  border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
@@ -56,7 +56,22 @@
                     <c:if test="${driver.truck == null}">NONE</c:if>
                     <c:if test="${driver.truck != null}">
                         <a href="/officer/trucks/${driver.truck.id}" class="m-0">
-                            ${driver.truck.regNumber} (${driver.truck.id})
+                            <c:out value="${driver.truck.regNumber}"/>
+                        </a>
+                    </c:if>
+                </p>
+            </div>
+        </div>
+        <div class="row  border-bottom">
+            <div class="col-3 font-weight-bold ml-auto ">
+                <p class="text-right py-2 pr-2 text-cadetblue my-2">Order</p>
+            </div>
+            <div class="col-6">
+                <p class="py-2 my-2">
+                    <c:if test="${driver.orderId == null}">NONE</c:if>
+                    <c:if test="${driver.orderId != null}">
+                        <a href="/officer/orders/${driver.orderId}" class="m-0">
+                            <c:out value="${driver.orderId}"/>
                         </a>
                     </c:if>
                 </p>
@@ -70,8 +85,10 @@
         </div>
 
         <div class="d-flex justify-content-center mt-3">
-<%--            <a href="/officer/drivers/edit/${driver.id}" class="btn btn-success mx-2">Edit</a>--%>
-            <a href="/officer/drivers/delete/${driver.id}" class="btn btn-danger mx-2">Delete</a>
+            <a href="${contextPath}/officer/drivers/edit/${driver.id}" class="btn btn-success mx-2">Edit</a>
+            <a href="${contextPath}/officer/drivers/delete/${driver.id}" class="btn btn-danger mx-2">Delete</a>
+            <button type="button" onclick="history.back();" class="btn btn-secondary mx-2">Back</button>
+            <%--            <a href="${contextPath}/officer/drivers" class="btn btn-secondary mx-2">To list</a>--%>
         </div>
     </section>
 </main>

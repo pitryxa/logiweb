@@ -11,68 +11,77 @@
 
 <main class="flex-shrink-0">
     <section class="container form-content" id="content">
-        <div class="row border-bottom" id="nameSection">
+        <div class="row" id="nameSection">
             <div class="col">
                 <h4 class="text-center text-cadetblue">${title}</h4>
             </div>
         </div>
 
-        <form action="/officer/drivers/edit" method="post">
-            <input type="hidden" name="id" value="${driver.id}">
-            <input type="hidden" name="userId" value="${driver.user.id}">
-            <div class="form-group row">
-                <label for="firstName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">First name</label>
-                <input type="text" name="firstName" id="firstName" value="${driver.user.firstName}" class="form-control col-sm-10">
+        <c:if test="${driver.status != 'RECREATION'}">
+            <div class="row">
+                <div class="col">
+                    <h5 class="text-center text-danger">Driver cannot be edited while he is executing an order!</h5>
+                </div>
             </div>
-            <div class="form-group row">
-                <label for="lastName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Last name</label>
-                <input type="text" name="lastName" id="lastName" value="${driver.user.lastName}" class="form-control col-sm-10">
-            </div>
-            <div class="form-group row">
-                <label for="shiftSize" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Shift size</label>
-                <select name="shiftSize" id="shiftSize" class="form-control col-sm-10">
-                    <option value="2"
-                            <c:if test="${2 == truck.shiftSize}"><c:out value="selected"/></c:if>>
-                       2
-                    </option>
-                    <option value="3"
-                            <c:if test="${3 == truck.shiftSize}"><c:out value="selected"/></c:if>>
-                        3
-                    </option>
-                </select>
-            </div>
-            <div class="form-group row">
-                <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>
-                <input type="text" name="capacity" id="capacity" value="${truck.capacity}" class="form-control col-sm-10">
-            </div>
-            <div class="form-group row">
-                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                <select name="status" id="status" class="form-control col-sm-10">
-                    <c:forEach var="status" items="${statusArray}">
-                        <option value="${status}"
-                                <c:if test="${status == truck.status}"><c:out value="selected"/></c:if>>
-                                ${status}
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
+        </c:if>
 
-            <div class="form-group row">
-                <label for="city" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
-                <select name="city" id="city" class="form-control col-sm-10">
-                    <c:forEach var="city" items="${cityList}">
-                        <option value="${city.name}"
-                                <c:if test="${city.name == truck.city}"><c:out value="selected"/></c:if>>
-                                ${city.name}
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mlr10">${title}</button>
-                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
-            </div>
-        </form>
+        <c:if test="${driver.status == 'RECREATION'}">
+            <form action="${contextPath}/officer/drivers/edit" method="post">
+                <input type="hidden" name="id" value="${driver.id}">
+                <input type="hidden" name="userId" value="${driver.user.id}">
+                <input type="hidden" name="truckId" value="${driver.truck.id}">
+                <div class="form-group row">
+                    <label for="personalNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Personal
+                        number</label>
+                    <input type="text" name="personalNumber" id="personalNumber" value="${driver.personalNumber}"
+                           class="form-control col-sm-10">
+                </div>
+                <div class="form-group row">
+                    <label for="firstName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">First
+                        name</label>
+                    <input type="text" name="firstName" id="firstName" value="${driver.user.firstName}"
+                           class="form-control col-sm-10" readonly>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Last
+                        name</label>
+                    <input type="text" name="lastName" id="lastName" value="${driver.user.lastName}"
+                           class="form-control col-sm-10" readonly>
+                </div>
+                <div class="form-group row">
+                    <label for="workHours" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Work
+                        hours</label>
+                    <input type="text" name="workHours" id="workHours" value="${driver.workHours}"
+                           class="form-control col-sm-10">
+                </div>
+                <div class="form-group row">
+                    <label for="truck" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>
+                    <c:if test="${driver.truck == null}">
+                        <input type="text" name="truck" id="truck" value="NONE" class="form-control col-sm-10" readonly>
+                    </c:if>
+                    <c:if test="${driver.truck != null}">
+                        <input type="text" id="truck" value="${driver.truck.regNumber}"
+                               class="form-control col-sm-10" readonly>
+                    </c:if>
+                </div>
+                <div class="form-group row">
+                    <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
+                    <input type="text" name="status" id="status" value="${driver.status}" class="form-control col-sm-10"
+                           readonly>
+                </div>
+                <div class="form-group row">
+                    <label for="city" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
+                    <input type="text" name="city" id="city" value="${driver.city}" class="form-control col-sm-10"
+                           readonly>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success mlr10">${title}</button>
+                    <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
+                </div>
+            </form>
+        </c:if>
+
     </section>
 </main>
 

@@ -3,6 +3,7 @@ package logiweb.dto;
 import logiweb.dto.simple.SimpleTruckDto;
 import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.OperationTypeOnWaypoint;
+import logiweb.entity.enums.WaypointStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,4 +20,11 @@ public class WaypointDto {
     private CargoDto cargo;
     private OperationTypeOnWaypoint operation;
     private Integer sequentialNumber;
+    private WaypointStatus status;
+
+    @Override
+    public String toString() {
+        return "WaypointDto{" + "id=" + id + ", orderId=" + orderId + ", city='" + city + '\'' + ", operation=" +
+               operation + ", sequentialNumber=" + sequentialNumber + ", status=" + status + '}';
+    }
 }

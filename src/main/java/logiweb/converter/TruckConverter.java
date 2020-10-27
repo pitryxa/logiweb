@@ -41,6 +41,8 @@ public class TruckConverter {
                         : driverConverter.toListSimpleDto(truck.getDrivers())
         );
 
+        truckDto.setOrderId(truckService.getOrderByTruck(truck));
+
         return truckDto;
     }
 

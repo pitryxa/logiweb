@@ -20,65 +20,59 @@
         <form action="${contextPath}/officer/orders/add-cargo" method="post">
             <div class="form-group row">
                 <label for="cargo" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Add cargo</label>
-                <select name="cargoes" id="cargo" multiple size="10" class="form-control col-sm-10">
+                <select name="cargoes" id="cargo" multiple size="10" class="form-control col-sm-10"
+                        style="resize: both">
                     <c:forEach var="cargo" items="${cargoes}">
-                        <option value="${cargo.id}">${cargo.name} (${cargo.weight} kg) from ${cargo.cityFrom} to ${cargo.cityTo}</option>
+                        <option value="${cargo.id}">${cargo.name} (${cargo.weight} kg) from ${cargo.cityFrom}
+                            to ${cargo.cityTo}</option>
                     </c:forEach>
                 </select>
-<%--                <div class="col-sm-1">--%>
-<%--                    <button type="button" class="btn btn-info font-weight-bold">+</button>--%>
-<%--                </div>--%>
-
+                <%--                <div class="col-sm-1">--%>
+                <%--                    <button type="button" class="btn btn-info font-weight-bold">+</button>--%>
+                <%--                </div>--%>
 
 
             </div>
 
 
-
-
-<%--            <div class="form-group row">--%>
-<%--                <label for="regNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Reg. number</label>--%>
-<%--                <input type="text" name="regNumber" id="regNumber" class="form-control col-sm-10">--%>
-<%--            </div>--%>
-<%--            <div class="form-group row">--%>
-<%--                <label for="shiftSize" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Shift size</label>--%>
-<%--                <select name="shiftSize" id="shiftSize" class="form-control col-sm-10">--%>
-<%--                    <option value="2" selected>2</option>--%>
-<%--                    <option value="3">3</option>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-<%--            <div class="form-group row">--%>
-<%--                <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>--%>
-<%--                <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">--%>
-<%--            </div>--%>
-<%--            <div class="form-group row">--%>
-<%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
-<%--                <select name="status" id="status" class="form-control col-sm-10">--%>
-<%--                    <c:forEach var="status" items="${statusArray}">--%>
-<%--                        <option value="${status}">${status}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-<%--            <div class="form-group row">--%>
-<%--                <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>--%>
-<%--                <select name="city" id="city" class="form-control col-sm-10">--%>
-<%--                    <c:forEach var="city" items="${cityList}">--%>
-<%--                        <option value="${city.name}">${city.name}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-
-
-
+            <%--            <div class="form-group row">--%>
+            <%--                <label for="regNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Reg. number</label>--%>
+            <%--                <input type="text" name="regNumber" id="regNumber" class="form-control col-sm-10">--%>
+            <%--            </div>--%>
+            <%--            <div class="form-group row">--%>
+            <%--                <label for="shiftSize" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Shift size</label>--%>
+            <%--                <select name="shiftSize" id="shiftSize" class="form-control col-sm-10">--%>
+            <%--                    <option value="2" selected>2</option>--%>
+            <%--                    <option value="3">3</option>--%>
+            <%--                </select>--%>
+            <%--            </div>--%>
+            <%--            <div class="form-group row">--%>
+            <%--                <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>--%>
+            <%--                <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">--%>
+            <%--            </div>--%>
+            <%--            <div class="form-group row">--%>
+            <%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
+            <%--                <select name="status" id="status" class="form-control col-sm-10">--%>
+            <%--                    <c:forEach var="status" items="${statusArray}">--%>
+            <%--                        <option value="${status}">${status}</option>--%>
+            <%--                    </c:forEach>--%>
+            <%--                </select>--%>
+            <%--            </div>--%>
+            <%--            <div class="form-group row">--%>
+            <%--                <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>--%>
+            <%--                <select name="city" id="city" class="form-control col-sm-10">--%>
+            <%--                    <c:forEach var="city" items="${cityList}">--%>
+            <%--                        <option value="${city.name}">${city.name}</option>--%>
+            <%--                    </c:forEach>--%>
+            <%--                </select>--%>
+            <%--            </div>--%>
 
 
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-success mlr10">${title}</button>
                 <a href="${contextPath}/officer/orders" class="btn btn-danger mlr10">Cancel</a>
-<%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
+                <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
             </div>
-
-
 
 
         </form>

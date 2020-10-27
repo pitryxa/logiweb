@@ -1,9 +1,6 @@
 package logiweb.service.api;
 
-import logiweb.calculating.Route;
-import logiweb.calculating.Waypoint;
 import logiweb.dto.*;
-import logiweb.entity.Distance;
 
 import java.util.List;
 
@@ -17,4 +14,6 @@ public interface WaypointService {
     void edit(WaypointDto waypointDto);
 
     WaypointDto getById(int id);
+
+    void doneWaypoint(int id, int orderId);
 }

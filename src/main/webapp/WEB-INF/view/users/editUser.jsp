@@ -19,18 +19,22 @@
 
         <form action="/admin/users/edit" method="post">
             <input type="hidden" name="id" value="${user.id}">
-<%--            <input type="hidden" name="password" value="${user.password}">--%>
+            <input type="hidden" name="currentRole" value="${user.role}">
+            <%--            <input type="hidden" name="password" value="${user.password}">--%>
             <div class="form-group row">
                 <label for="firstName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Firstname</label>
-                <input type="text" name="firstName" id="firstName" value="${user.firstName}" class="form-control col-sm-10">
+                <input type="text" name="firstName" id="firstName" value="${user.firstName}"
+                       class="form-control col-sm-10">
             </div>
             <div class="form-group row">
                 <label for="lastName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Lastname</label>
-                <input type="text" name="lastName" id="lastName" value="${user.lastName}" class="form-control col-sm-10">
+                <input type="text" name="lastName" id="lastName" value="${user.lastName}"
+                       class="form-control col-sm-10">
             </div>
             <div class="form-group row">
                 <label for="email" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Email</label>
-                <input type="text" name="email" id="email" value="${user.email}" class="form-control col-sm-10" readonly>
+                <input type="text" name="email" id="email" value="${user.email}" class="form-control col-sm-10"
+                       readonly>
             </div>
             <div class="form-group row">
                 <label for="role" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Role</label>

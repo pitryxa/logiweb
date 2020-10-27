@@ -43,11 +43,47 @@
             <div class="form-group row">
                 <label class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Route</label>
                 <div class="col-sm-10 p-0">
-                    <textarea class="form-control"
-                              rows="10"
-                              style="width: 100%; background-color: white;"
-                              readonly><c:forEach var="waypoint"
-                                                  items="${route.waypoints}">${waypoint.city.name}&#013;&#010;</c:forEach></textarea>
+                    <table class="table table-sm table-bordered" style="background-color: white">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>City</th>
+                            <th>Operation</th>
+                            <th>Cargo</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <c:forEach var="waypoint" items="${route.waypoints}" varStatus="counterOuter">
+                            <c:if test="${waypoint.cargoes.size() == 0}">
+                                <tr>
+                                    <td><c:out value="${counterOuter.count}"/></td>
+                                    <td colspan="3"><c:out value="${waypoint.city.name}"/></td>
+                                </tr>
+                            </c:if>
+
+                            <c:forEach var="cargo" items="${waypoint.cargoes}" varStatus="counterInner">
+                                <tr>
+                                    <c:if test="${counterInner.count == 1}">
+                                        <td rowspan="${waypoint.cargoes.size()}"><c:out
+                                                value="${counterOuter.count}"/></td>
+                                        <td rowspan="${waypoint.cargoes.size()}"><c:out
+                                                value="${waypoint.city.name}"/></td>
+                                    </c:if>
+                                    <td><c:out value="${cargo.value}"/></td>
+                                    <td><c:out value="${cargo.key.name}"/></td>
+                                </tr>
+                            </c:forEach>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+
+
+                    <%--                    <textarea class="form-control"--%>
+                    <%--                              rows="10"--%>
+                    <%--                              style="width: 100%; background-color: white;"--%>
+                    <%--                              readonly><c:forEach var="waypoint"--%>
+                    <%--                                                  items="${route.waypoints}">${waypoint.city.name}&#013;&#010;</c:forEach></textarea>--%>
                 </div>
             </div>
 

@@ -4,6 +4,7 @@ import logiweb.entity.enums.CargoStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "cargo")
 public class Cargo extends BaseEntity {
 

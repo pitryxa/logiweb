@@ -19,42 +19,59 @@
         <a href="${contextPath}/officer/trucks/add" class="lnk-color">Add truck</a>
         <br>
         <br>
-        <table class="table table-striped">
+        <table id="table"
+               data-toggle="table"
+               data-filter-control="true"
+               data-pagination = "true"
+               class="table table-striped">
             <%--    <caption>Cargo List</caption>--%>
             <thead class="thead-dark">
             <tr>
-                <th>ID</th>
-                <th>Reg. number</th>
-                <th>Shift size</th>
-                <th>Capacity</th>
-                <th>Condition status</th>
-                <th>Work status</th>
-                <th>City</th>
-                <th>Drivers</th>
-                <th>Action</th>
+                <th data-field="count" data-sortable="true">#</th>
+                <th data-field="regNumber" data-filter-control="input" data-sortable="true">Reg. number</th>
+                <th data-field="shiftSize" data-filter-control="select" data-sortable="true">Shift size</th>
+                <th data-field="capacity" data-filter-control="select" data-sortable="true">Capacity</th>
+                <th data-field="condition" data-filter-control="select" data-sortable="true">Condition status</th>
+                <th data-field="workStatus" data-filter-control="select" data-sortable="true">Work status</th>
+                <th data-field="city" data-filter-control="input" data-sortable="true">City</th>
+                <th data-field="order" data-filter-control="input" data-sortable="true">Order</th>
+                <th data-field="drivers" data-filter-control="input" data-sortable="true">Drivers</th>
+                <th data-field="action">Action</th>
             </tr>
             </thead>
 
-            <c:forEach var="truck" items="${trucks}">
+            <c:forEach var="truck" items="${trucks}" varStatus="counter">
                 <tr>
-                    <td>${truck.id}</td>
+                    <td>${counter.count}</td>
                     <td>${truck.regNumber}</td>
                     <td>${truck.shiftSize}</td>
                     <td>${truck.capacity}</td>
                     <td>${truck.conditionStatus}</td>
                     <td>${truck.workStatus}</td>
                     <td>${truck.city}</td>
-                    
+                    <td>
+                        <c:if test="${truck.orderId == null}">
+                            <c:out value="NONE"/>
+                        </c:if>
+                        <c:if test="${truck.orderId != null}">
+                            <a href="/officer/orders/${truck.orderId}" class="m-0">
+                                <c:out value="${truck.orderId}"/>
+                            </a>
+                        </c:if>
+                    </td>
+
                     <td>
                         <c:if test="${truck.drivers == null}">NONE</c:if>
                         <c:if test="${truck.drivers != null}">
                             <c:forEach var="driver" items="${truck.drivers}">
-                                <p class="m-0"><a href="/officer/drivers/${driver.id}">${driver.user.firstName} ${driver.user.lastName} (${driver.id})</a></p>
+                                <p class="m-0"><a
+                                        href="/officer/drivers/${driver.id}">${driver.user.firstName} ${driver.user.lastName}
+                                    (${driver.personalNumber})</a></p>
                             </c:forEach>
                         </c:if>
                     </td>
-                    
-                    
+
+
                     <td class="action">
                         <a href="/officer/trucks/edit/${truck.id}" class="text-decoration-none" title="edit">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square"

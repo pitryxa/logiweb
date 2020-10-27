@@ -17,4 +17,11 @@ public class CargoDto {
     private CargoStatus status;
     private String cityFrom;
     private String cityTo;
+    private Integer orderId;
+
+    @Override
+    public String toString() {
+        return "CargoDto{" + "id=" + id + ", name='" + name + '\'' + ", weight=" + weight + ", status=" + status +
+               ", cityFrom='" + cityFrom + '\'' + ", cityTo='" + cityTo + '\'' + '}';
+    }
 }

@@ -4,6 +4,7 @@ import logiweb.entity.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 @Table(name = "users")
 public class User extends BaseEntity {
     @Column(name = "firstname")

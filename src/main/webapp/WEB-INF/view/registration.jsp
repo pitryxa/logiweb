@@ -54,10 +54,12 @@
             </div>
         </spring:bind>
 
-        <button class="btn btn-lg btn-info btn-block btn-signin" type="submit">Registration</button>
+        <button class="btn btn-lg btn-info btn-block btn-signin" type="submit" onclick="return validate()">Registration</button>
         <h4 class="text-center lnk-color"><a href="${contextPath}/login">Sign In</a></h4>
     </form:form>
 
 </div>
+
+
 
 <jsp:include page="common/footer.jsp"/>
