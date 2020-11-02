@@ -19,13 +19,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if (roles.contains("ROLE_NONE")) {
-            httpServletResponse.sendRedirect("/hello");
+            httpServletResponse.sendRedirect("/logiweb/hello");
         } else if (roles.contains("ROLE_ADMIN")) {
-            httpServletResponse.sendRedirect("/admin/users");
+            httpServletResponse.sendRedirect("/logiweb/admin/users");
         } else if (roles.contains("ROLE_MANAGER")) {
-            httpServletResponse.sendRedirect("/officer/orders");
+            httpServletResponse.sendRedirect("/logiweb/officer/orders");
         } else if (roles.contains("ROLE_DRIVER")) {
-            httpServletResponse.sendRedirect("/driver");
+            httpServletResponse.sendRedirect("/logiweb/driver");
         }
 
     }

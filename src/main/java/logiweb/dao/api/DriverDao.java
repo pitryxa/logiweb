@@ -1,7 +1,6 @@
 package logiweb.dao.api;
 
 import logiweb.dao.generic.GenericDAO;
-import logiweb.entity.City;
 import logiweb.entity.Driver;
 import logiweb.entity.Order;
 
@@ -23,4 +22,8 @@ public interface DriverDao extends GenericDAO<Driver> {
     void disableByUserId(Integer userId);
 
     Order getOrderByDriver(Driver driver);
+
+    Integer getCountAllDrivers();
+
+    Integer getCountFreeDrivers();
 }

@@ -1,4 +1,4 @@
-function validate() {
+function validateRegistrationUser() {
     let firstName = document.getElementById("FirstName").value;
     let lastName = document.getElementById("LastName").value;
     let email = document.getElementById("Email").value;

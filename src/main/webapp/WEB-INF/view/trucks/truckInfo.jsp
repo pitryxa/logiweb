@@ -67,7 +67,7 @@
                 <p class="py-2 my-2">
                     <c:if test="${truck.orderId == null}">NONE</c:if>
                     <c:if test="${truck.orderId != null}">
-                        <a href="/officer/orders/${truck.orderId}" class="m-0">
+                        <a href="${contextPath}/officer/orders/${truck.orderId}" class="m-0">
                             <c:out value="${truck.orderId}"/>
                         </a>
                     </c:if>
@@ -86,7 +86,7 @@
                 <c:if test="${truck.drivers != null}">
                     <c:forEach var="driver" items="${truck.drivers}">
                         <p class="m-0">
-                            <a href="/officer/drivers/${driver.id}" class="m-0">
+                            <a href="${contextPath}/officer/drivers/${driver.id}" class="m-0">
                                 <c:out value="${driver.user.firstName} ${driver.user.lastName} (${driver.personalNumber})"/>
                             </a>
                         </p>
@@ -103,4 +103,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

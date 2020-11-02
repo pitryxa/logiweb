@@ -10,6 +10,7 @@ import logiweb.dto.DriverDto;
 import logiweb.dto.DriverEditDto;
 import logiweb.dto.OrderDto;
 import logiweb.dto.TruckDto;
+import logiweb.dto.rest.DriverRestDto;
 import logiweb.entity.Driver;
 import logiweb.entity.Order;
 import logiweb.entity.enums.DriverStatus;
@@ -275,6 +276,11 @@ public class DriverServiceImpl implements DriverService {
     public Integer getOrderId(Driver driver) {
         Order order = driverDao.getOrderByDriver(driver);
         return order == null ? null : order.getId();
+    }
+
+    @Override
+    public DriverRestDto getDriverRestDto() {
+        return new DriverRestDto(driverDao.getCountAllDrivers(), driverDao.getCountFreeDrivers());
     }
 
     private void addWorkTimeToDriver(Driver driver) {

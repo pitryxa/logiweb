@@ -31,7 +31,7 @@
             </div>
             <div class="col-sm-10">
                 <p class="py-2 my-2">
-                    <a href="/officer/trucks/${order.truck.id}" class="m-0">
+                    <a href=${contextPath}officer/trucks/${order.truck.id}" class="m-0">
                         <c:out value="${order.truck.regNumber}"/>
                     </a>
                 </p>
@@ -47,7 +47,7 @@
                     <c:forEach var="driver" items="${order.drivers}">
                         <tr>
                             <td>
-                                <a href="/officer/drivers/${driver.id}" class="m-0">
+                                <a href="${contextPath}/officer/drivers/${driver.id}" class="m-0">
                                     <c:out value="${driver.personalNumber}"/>
                                 </a>
                             </td>
@@ -108,7 +108,8 @@
 
     </section>
 
-    <%--    <h5 class="text-center text-success mt-3">No assigned orders now</h5>--%>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

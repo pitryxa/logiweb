@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/officer/trucks/add" method="post">
+        <form action="${contextPath}/officer/trucks/add" method="post">
             <div class="form-group row">
                 <label for="regNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Reg. number</label>
                 <input type="text" name="regNumber" id="regNumber" class="form-control col-sm-10">
@@ -33,14 +33,6 @@
                 <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>
                 <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">
             </div>
-<%--            <div class="form-group row">--%>
-<%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
-<%--                <select name="status" id="status" class="form-control col-sm-10">--%>
-<%--                    <c:forEach var="status" items="${statusArray}">--%>
-<%--                        <option value="${status}">${status}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </div>--%>
             <div class="form-group row">
                 <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
                 <select name="city" id="city" class="form-control col-sm-10">
@@ -57,4 +49,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

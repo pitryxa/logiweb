@@ -22,7 +22,7 @@
         <table id="table"
                data-toggle="table"
                data-filter-control="true"
-               data-pagination = "true"
+               data-pagination="true"
                class="table table-striped">
             <thead class="thead-dark">
             <tr>
@@ -52,7 +52,7 @@
                             <c:out value="NONE"/>
                         </c:if>
                         <c:if test="${driver.truck != null}">
-                            <a href="/officer/trucks/${driver.truck.id}" class="m-0">
+                            <a href="${contextPath}/officer/trucks/${driver.truck.id}" class="m-0">
                                 <c:out value="${driver.truck.regNumber}"/>
                             </a>
                         </c:if>
@@ -62,7 +62,7 @@
                             <c:out value="NONE"/>
                         </c:if>
                         <c:if test="${driver.orderId != null}">
-                            <a href="/officer/orders/${driver.orderId}" class="m-0">
+                            <a href="${contextPath}/officer/orders/${driver.orderId}" class="m-0">
                                 <c:out value="${driver.orderId}"/>
                             </a>
                         </c:if>
@@ -70,7 +70,7 @@
 
                     <td>${driver.city}</td>
                     <td class="action">
-                        <a href="/officer/drivers/edit/${driver.id}"
+                        <a href="${contextPath}/officer/drivers/edit/${driver.id}"
                            class="text-decoration-none" title="edit">
                             <svg width="1em" height="1em" viewBox="0 0 16 16"
                                  class="bi bi-pencil-square"
@@ -80,7 +80,8 @@
                                       d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
                         </a>
-                        <a href="/officer/drivers/delete/${driver.id}" class="text-decoration-none" title="delete">
+                        <a href="${contextPath}/officer/drivers/delete/${driver.id}" class="text-decoration-none"
+                           title="delete">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -93,8 +94,10 @@
             </c:forEach>
         </table>
 
-        <a href="/officer/drivers/add" class="lnk-color">Add driver</a>
+        <a href="${contextPath}/officer/drivers/add" class="lnk-color">Add driver</a>
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

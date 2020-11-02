@@ -2,6 +2,7 @@ package logiweb.service.api;
 
 import logiweb.calculating.Route;
 import logiweb.dto.*;
+import logiweb.dto.rest.DriverRestDto;
 import logiweb.entity.Driver;
 import logiweb.entity.enums.DriverStatus;
 
@@ -48,4 +49,6 @@ public interface DriverService {
     void changeStatus(Driver driver, DriverStatus newStatus);
 
     Integer getOrderId(Driver driver);
+
+    DriverRestDto getDriverRestDto();
 }

@@ -1,10 +1,8 @@
 package logiweb.service.api;
 
 import logiweb.calculating.Route;
-import logiweb.dto.CargoDto;
-import logiweb.dto.DriverDto;
-import logiweb.dto.OrderDto;
-import logiweb.dto.TruckDto;
+import logiweb.dto.*;
+import logiweb.dto.rest.OrderRestDto;
 
 import java.util.List;
 
@@ -22,4 +20,6 @@ public interface OrderService {
     OrderDto getById(int id);
 
     OrderDto getOrderByTruckId(Integer truckId);
+
+    List<OrderRestDto> getTenLast();
 }

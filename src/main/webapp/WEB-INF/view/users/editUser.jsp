@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/admin/users/edit" method="post">
+        <form action="${contextPath}/admin/users/edit" method="post">
             <input type="hidden" name="id" value="${user.id}">
             <input type="hidden" name="currentRole" value="${user.role}">
             <%--            <input type="hidden" name="password" value="${user.password}">--%>
@@ -55,4 +55,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

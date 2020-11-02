@@ -10,20 +10,12 @@
 </jsp:include>
 
 <main class="flex-shrink-0">
-<%--    <h4 class="text-center text-cadetblue mt-3">${title}</h4>--%>
-<%--    <h5 class="text-center text-success mt-3">No assigned orders now</h5>--%>
-
     <section class="container form-content" id="content">
         <div class="row" id="nameSection">
             <div class="col">
                 <h4 class="text-center text-cadetblue">${title}</h4>
             </div>
         </div>
-<%--        <div class="row border-bottom">--%>
-<%--            <div class="col">--%>
-<%--                <h5 class="text-center text-success pb-3">No assigned orders now</h5>--%>
-<%--            </div>--%>
-<%--        </div>--%>
 
         <div class="row border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
@@ -58,11 +50,9 @@
             </div>
         </div>
 
-
-
-
-
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

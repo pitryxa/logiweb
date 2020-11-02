@@ -78,12 +78,6 @@
                         </tbody>
                     </table>
 
-
-                    <%--                    <textarea class="form-control"--%>
-                    <%--                              rows="10"--%>
-                    <%--                              style="width: 100%; background-color: white;"--%>
-                    <%--                              readonly><c:forEach var="waypoint"--%>
-                    <%--                                                  items="${route.waypoints}">${waypoint.city.name}&#013;&#010;</c:forEach></textarea>--%>
                 </div>
             </div>
 
@@ -107,4 +101,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

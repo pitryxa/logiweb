@@ -26,7 +26,7 @@
         </c:if>
 
         <c:if test="${truck.workStatus == 'FREE'}">
-            <form action="/officer/trucks/edit" method="post">
+            <form action="${contextPath}/officer/trucks/edit" method="post">
                 <input type="hidden" name="id" value="${truck.id}">
                 <input type="hidden" name="workStatus" value="${truck.workStatus}">
 
@@ -93,4 +93,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

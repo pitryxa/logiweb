@@ -37,41 +37,9 @@
             </div>
         </form>
 
-        <%--        <div class="row border-bottom">--%>
-        <%--            <div class="col-3 font-weight-bold ml-auto ">--%>
-        <%--                <p class="py-2 pr-2 text-cadetblue my-2">Name</p>--%>
-        <%--            </div>--%>
-        <%--            <div class="col-6">--%>
-        <%--                <p class="py-2 my-2"><c:out value="${currentDriver.user.firstName} ${currentDriver.user.lastName}"/></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--        <div class="row border-bottom">--%>
-        <%--            <div class="col-3 font-weight-bold ml-auto ">--%>
-        <%--                <p class="py-2 pr-2 text-cadetblue my-2">Personal number</p>--%>
-        <%--            </div>--%>
-        <%--            <div class="col-6">--%>
-        <%--                <p class="py-2 my-2"><c:out value="${currentDriver.personalNumber}"/></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--        <div class="row border-bottom">--%>
-        <%--            <div class="col-3 font-weight-bold ml-auto ">--%>
-        <%--                <p class="py-2 pr-2 text-cadetblue my-2">Status</p>--%>
-        <%--            </div>--%>
-        <%--            <div class="col-6">--%>
-        <%--                <p class="py-2 my-2"><c:out value="${currentDriver.status}"/></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--        <div class="row border-bottom">--%>
-        <%--            <div class="col-3 font-weight-bold ml-auto ">--%>
-        <%--                <p class="py-2 pr-2 text-cadetblue my-2">Worked hours in current month</p>--%>
-        <%--            </div>--%>
-        <%--            <div class="col-6">--%>
-        <%--                <p class="py-2 my-2"><c:out value="${currentDriver.workHours}"/></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-
-
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

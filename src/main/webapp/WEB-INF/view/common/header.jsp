@@ -12,7 +12,7 @@
 <header class="container-fluid" id="header">
     <div class="row">
         <div class="col-4" id="logo">
-            <a href="/">Logistic company</a>
+            <a href="${param.contextPath}/">Logistic company</a>
         </div>
 
         <div class="col-6" id="menu">
@@ -56,8 +56,8 @@
 
         <div class="col-2" id="login">
 <%--            <a href="#">--%>
-            <sec:authorize access="!isAuthenticated()"><a href="/login" class="nav-link"></sec:authorize>
-            <sec:authorize access="isAuthenticated()"><a href="/logout" class="nav-link"></sec:authorize>
+            <sec:authorize access="!isAuthenticated()"><a href="${param.contextPath}/login" class="nav-link"></sec:authorize>
+            <sec:authorize access="isAuthenticated()"><a href="${param.contextPath}/logout" class="nav-link"></sec:authorize>
 
 
 

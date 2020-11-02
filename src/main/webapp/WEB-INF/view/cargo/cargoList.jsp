@@ -24,15 +24,15 @@
         <table id="table"
                data-toggle="table"
                data-filter-control="true"
-               data-pagination = "true"
-               data-page-list = "[10, 25, 50, 100, All]"
-<%--               data-page-size = "8"--%>
+               data-pagination="true"
+               data-page-list="[10, 25, 50, 100, All]"
+        <%--               data-page-size = "8"--%>
                class="table table-striped">
             <thead class="thead-dark">
             <tr>
                 <th data-field="count" data-sortable="true">#</th>
                 <th data-field="numberId" data-sortable="true">ID</th>
-                <th data-field="name" data-filter-control="input" data-sortable="true" >Name</th>
+                <th data-field="name" data-filter-control="input" data-sortable="true">Name</th>
                 <th data-field="weight" data-filter-control="input" data-sortable="true">Weight</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
                 <th data-field="cityFrom" data-filter-control="input" data-sortable="true">From</th>
@@ -53,7 +53,7 @@
                     <td>${cargo.cityTo}</td>
                     <td>
                         <c:if test="${cargo.orderId != null}">
-                            <a href="/officer/orders/${cargo.orderId}" class="m-0">
+                            <a href="${contextPath}/officer/orders/${cargo.orderId}" class="m-0">
                                 <c:out value="${cargo.orderId}"/>
                             </a>
                         </c:if>
@@ -90,5 +90,6 @@
 </main>
 
 
-
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

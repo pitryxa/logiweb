@@ -19,7 +19,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class DataSourceConfig {
-    @Resource
+    //@Resource
 
 
     @Bean
@@ -57,7 +57,9 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() throws NamingException {
         InitialContext cxt = new InitialContext();
-        DataSource dataSource = (DataSource) cxt.lookup("java:/comp/env/jdbc/logiweb");
+
+//        DataSource dataSource = (DataSource) cxt.lookup("java:/comp/env/jdbc/logiweb");
+        DataSource dataSource = (DataSource) cxt.lookup("java:/jdbc/logiweb");
 
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
 //        dataSource.setDriverClassName("org.postgresql.Driver");
@@ -66,6 +68,7 @@ public class DataSourceConfig {
 //        dataSource.setPassword("root");
 
         return dataSource;
+//        return null;
     }
 
     @Bean

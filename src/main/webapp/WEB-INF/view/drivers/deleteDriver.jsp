@@ -102,50 +102,6 @@
                     </div>
                 </div>
 
-
-                    <%--            <div class="form-group row">--%>
-                    <%--                <label for="firstname" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">First--%>
-                    <%--                    name</label>--%>
-                    <%--                <input type="text" name="firstName" id="firstname" value="${driver.user.firstName}"--%>
-                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="form-group row">--%>
-                    <%--                <label for="lastname" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Last name</label>--%>
-                    <%--                <input type="text" name="lastName" id="lastname" value="${driver.user.lastName}"--%>
-                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="form-group row">--%>
-                    <%--                <label for="workHours" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Hours--%>
-                    <%--                    worked</label>--%>
-                    <%--                <input type="text" name="workHours" id="workHours" value="${driver.workHours}"--%>
-                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="form-group row">--%>
-                    <%--                <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>--%>
-                    <%--                <input type="text" name="status" id="status" value="${driver.status}"--%>
-                    <%--                       class="form-control-plaintext col-sm-10" readonly>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="form-group row">--%>
-                    <%--                <label for="truck" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>--%>
-                    <%--                <c:if test="${driver.truck == null}">--%>
-                    <%--                    <input type="text" id="truck" value="NONE" class="form-control-plaintext col-sm-10" readonly>--%>
-                    <%--                </c:if>--%>
-                    <%--                <c:if test="${driver.truck != null}">--%>
-                    <%--                    <input type="text" id="truck" value="${driver.truck.regNumber} (${driver.truck.id})"--%>
-                    <%--                           class="form-control-plaintext col-sm-10" readonly>--%>
-                    <%--                </c:if>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="form-group row">--%>
-                    <%--                <label for="city" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>--%>
-                    <%--                <input type="text" name="city" id="city" value="${driver.city}" class="form-control-plaintext col-sm-10"--%>
-                    <%--                       readonly>--%>
-                    <%--            </div>--%>
-                    <%--            <div class="d-flex justify-content-center">--%>
-                    <%--                <button type="submit" class="btn btn-success mx-2">${title}</button>--%>
-                    <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Back</button>--%>
-                    <%--            </div>--%>
-
-
                 <div class="d-flex justify-content-center mt-3">
                     <button type="submit" class="btn btn-success mx-2">Delete</button>
                     <button type="button" onclick="history.back();" class="btn btn-danger mx-2">Cancel</button>
@@ -155,4 +111,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <form action="/city/delete" method="post">
+        <form action="${contextPath}/city/delete" method="post">
             <input type="hidden" name="id" value="${city.id}">
             <div class="form-group row">
                 <label for="name" class="col-form-label col-sm-2 col-xl-1">Name</label>
@@ -29,4 +29,6 @@
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

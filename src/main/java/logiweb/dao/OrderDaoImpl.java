@@ -60,4 +60,12 @@ public class OrderDaoImpl extends GenericDAOImpl<Order> implements OrderDao {
                      .executeUpdate();
     }
 
+    @Override
+    public List<Order> getTenLast() {
+        List<Order> list = entityManager.createQuery("SELECT e FROM Order e ORDER BY e.id desc", Order.class)
+                                        .setMaxResults(10)
+                                        .getResultList();
+        return list.isEmpty() ? new ArrayList<>() : list;
+    }
+
 }

@@ -8,6 +8,7 @@ import logiweb.entity.enums.DriverStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -80,10 +81,24 @@ public class DriverDaoImpl extends GenericDAOImpl<Driver> implements DriverDao {
 
     @Override
     public Order getOrderByDriver(Driver driver) {
-        List<Order> list = entityManager.createQuery("select o from Order o where o.truck = ?1")
+        List<Order> list = entityManager.createQuery("select o from Order o where o.truck = ?1", Order.class)
                                         .setParameter(1, driver.getTruck())
                                         .getResultList();
 
         return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
+    public Integer getCountAllDrivers() {
+        return (Integer) entityManager.createQuery("select count(d) from Driver d where d.status <> ?1")
+                                      .setParameter(1, DriverStatus.DISABLED)
+                                      .getSingleResult();
+    }
+
+    @Override
+    public Integer getCountFreeDrivers() {
+        return (Integer) entityManager.createQuery("select count(d) from Driver d where d.status = ?1")
+                                      .setParameter(1, DriverStatus.RECREATION)
+                                      .getSingleResult();
     }
 }

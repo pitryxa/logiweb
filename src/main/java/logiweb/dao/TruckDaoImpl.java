@@ -5,6 +5,7 @@ import logiweb.dao.generic.GenericDAOImpl;
 import logiweb.entity.City;
 import logiweb.entity.Order;
 import logiweb.entity.Truck;
+import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.OrderStatus;
 import logiweb.entity.enums.TruckConditionStatus;
 import logiweb.entity.enums.TruckWorkStatus;
@@ -61,5 +62,26 @@ public class TruckDaoImpl extends GenericDAOImpl<Truck> implements TruckDao {
                                         .collect(Collectors.toList());
 
         return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
+    public Integer getCountAllTrucks() {
+        return entityManager.createQuery("select count(t) from Truck t where t.conditionStatus <> ?1", Integer.class)
+                            .setParameter(1, TruckConditionStatus.DISABLED)
+                            .getSingleResult();
+    }
+
+    @Override
+    public Integer getCountFreeTrucks() {
+        return entityManager.createQuery("select count(t) from Truck t where t.workStatus = ?1", Integer.class)
+                            .setParameter(1, TruckWorkStatus.FREE)
+                            .getSingleResult();
+    }
+
+    @Override
+    public Integer getCountBrokenTrucks() {
+        return entityManager.createQuery("select count(t) from Truck t where t.conditionStatus = ?1", Integer.class)
+                            .setParameter(1, TruckConditionStatus.BROKEN)
+                            .getSingleResult();
     }
 }

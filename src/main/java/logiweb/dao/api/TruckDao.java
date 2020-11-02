@@ -16,4 +16,10 @@ public interface TruckDao extends GenericDAO<Truck> {
     List<Truck> getAllFreeTrucksInCities(Set<City> cities, int weight);
 
     Order getOrderByTruck(Truck truck);
+
+    Integer getCountAllTrucks();
+
+    Integer getCountFreeTrucks();
+
+    Integer getCountBrokenTrucks();
 }

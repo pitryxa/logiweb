@@ -16,17 +16,19 @@
                 <h1><span class="color">Access denied</span><br><span class="color">You don't have enough rights </span><br/>
                 </h1>
                 <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <h3><a href="<c:url value="/admin/users"/>">List of users</a></h3>
+                    <h3><a href="<c:url value="${contextPath}/admin/users"/>">List of users</a></h3>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_MANAGER')">
-                    <h3><a href="<c:url value="/officer/orders"/>">List of orders</a></h3>
+                    <h3><a href="<c:url value="${contextPath}/officer/orders"/>">List of orders</a></h3>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_DRIVER')">
-                    <h3><a href="<c:url value="/driver"/>">To the your account page</a></h3>
+                    <h3><a href="<c:url value="${contextPath}/driver"/>">To the your account page</a></h3>
                 </sec:authorize>
             </div>
         </div>
     </div>
 </section>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

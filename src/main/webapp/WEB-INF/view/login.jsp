@@ -31,4 +31,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js" type="text/javascript"></script>
 
-<jsp:include page="common/footer.jsp"/>
+<jsp:include page="common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

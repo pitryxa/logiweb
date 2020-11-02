@@ -20,4 +20,6 @@ public interface OrderDao extends GenericDAO<Order> {
     Truck getTruck(int orderId);
 
     void addToOrderDriversTable(int orderId, int driverId);
+
+    List<Order> getTenLast();
 }

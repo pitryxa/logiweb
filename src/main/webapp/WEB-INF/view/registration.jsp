@@ -54,12 +54,15 @@
             </div>
         </spring:bind>
 
-        <button class="btn btn-lg btn-info btn-block btn-signin" type="submit" onclick="return validate()">Registration</button>
+        <button class="btn btn-lg btn-info btn-block btn-signin" type="submit"
+                onclick="return validateRegistrationUser()">Registration
+        </button>
         <h4 class="text-center lnk-color"><a href="${contextPath}/login">Sign In</a></h4>
     </form:form>
 
 </div>
 
 
-
-<jsp:include page="common/footer.jsp"/>
+<jsp:include page="common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

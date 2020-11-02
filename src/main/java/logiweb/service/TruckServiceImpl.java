@@ -5,6 +5,7 @@ import logiweb.converter.TruckConverter;
 import logiweb.dao.api.TruckDao;
 import logiweb.dto.CargoDto;
 import logiweb.dto.TruckDto;
+import logiweb.dto.rest.TruckRestDto;
 import logiweb.entity.Cargo;
 import logiweb.entity.City;
 import logiweb.entity.Order;
@@ -75,6 +76,12 @@ public class TruckServiceImpl implements TruckService {
         Order order = truckDao.getOrderByTruck(truck);
         return order == null ? null : order.getId();
 
+    }
+
+    @Override
+    public TruckRestDto getTruckRestDto() {
+        return new TruckRestDto(truckDao.getCountAllTrucks(), truckDao.getCountFreeTrucks(),
+                                truckDao.getCountBrokenTrucks());
     }
 
     private Map<City, Integer> getStartCityAndSummaryWeightFromCargoes(List<CargoDto> cargoes){

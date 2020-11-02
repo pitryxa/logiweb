@@ -20,11 +20,11 @@ public class UserDto {
     private Integer id;
 
     @NotNull
-    @Size(min = 3, max = 30, message = "Field must be between 3 and 30 characters.")
+    @Size(min = 1, max = 30, message = "Field must be between 1 and 30 characters.")
     private String firstName;
 
     @NotNull
-    @Size(min = 3, max = 30, message = "Field must be between 3 and 30 characters.")
+    @Size(min = 1, max = 30, message = "Field must be between 1 and 30 characters.")
     private String lastName;
 
     private Role role;

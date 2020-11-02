@@ -28,11 +28,9 @@
                 </div>
             </div>
         </form>
-
-
     </section>
-
-    <%--    <h5 class="text-center text-success mt-3">No assigned orders now</h5>--%>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

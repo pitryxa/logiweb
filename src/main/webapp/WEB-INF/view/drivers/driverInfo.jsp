@@ -55,7 +55,7 @@
                 <p class="py-2 my-2">
                     <c:if test="${driver.truck == null}">NONE</c:if>
                     <c:if test="${driver.truck != null}">
-                        <a href="/officer/trucks/${driver.truck.id}" class="m-0">
+                        <a href="${contextPath}/officer/trucks/${driver.truck.id}" class="m-0">
                             <c:out value="${driver.truck.regNumber}"/>
                         </a>
                     </c:if>
@@ -70,7 +70,7 @@
                 <p class="py-2 my-2">
                     <c:if test="${driver.orderId == null}">NONE</c:if>
                     <c:if test="${driver.orderId != null}">
-                        <a href="/officer/orders/${driver.orderId}" class="m-0">
+                        <a href="${contextPath}/officer/orders/${driver.orderId}" class="m-0">
                             <c:out value="${driver.orderId}"/>
                         </a>
                     </c:if>
@@ -88,9 +88,10 @@
             <a href="${contextPath}/officer/drivers/edit/${driver.id}" class="btn btn-success mx-2">Edit</a>
             <a href="${contextPath}/officer/drivers/delete/${driver.id}" class="btn btn-danger mx-2">Delete</a>
             <button type="button" onclick="history.back();" class="btn btn-secondary mx-2">Back</button>
-            <%--            <a href="${contextPath}/officer/drivers" class="btn btn-secondary mx-2">To list</a>--%>
         </div>
     </section>
 </main>
 
-<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp">
+    <jsp:param name="contextPath" value="${contextPath}"/>
+</jsp:include>

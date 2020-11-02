@@ -5,12 +5,10 @@ import logiweb.calculating.Waypoint;
 import logiweb.converter.*;
 import logiweb.dao.api.*;
 import logiweb.dto.*;
+import logiweb.dto.rest.OrderRestDto;
 import logiweb.entity.*;
 import logiweb.entity.enums.*;
-import logiweb.service.api.CargoService;
-import logiweb.service.api.DriverService;
 import logiweb.service.api.OrderService;
-import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,15 +24,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderConverter orderConverter;
-
-    @Autowired
-    private TruckService truckService;
-
-    @Autowired
-    private CargoService cargoService;
-
-    @Autowired
-    private DriverService driverService;
 
     @Autowired
     private DriverConverter driverConverter;
@@ -60,17 +49,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getAll() {
         List<OrderDto> orderDtoList = orderConverter.toListDto(orderDao.getAllSorted());
+        return sortWaypointsInOrder(orderDtoList);
+    }
 
-        orderDtoList.stream()
-                    .peek(order -> order.setWaypoints(order.getWaypoints()
-                                                           .stream()
-                                                           .sorted(Comparator.comparingInt(
-                                                                   WaypointDto::getSequentialNumber))
-                                                           .collect(Collectors.toList())))
-                    .collect(Collectors.toList());
-
-
-        return orderDtoList;
+    private List<OrderDto> sortWaypointsInOrder(List<OrderDto> orderDtoList) {
+        return orderDtoList.stream()
+                           .peek(order -> order.setWaypoints(order.getWaypoints()
+                                                                  .stream()
+                                                                  .sorted(Comparator.comparingInt(
+                                                                          WaypointDto::getSequentialNumber))
+                                                                  .collect(Collectors.toList())))
+                           .collect(Collectors.toList());
     }
 
     @Override
@@ -105,12 +94,23 @@ public class OrderServiceImpl implements OrderService {
         return orderDto;
     }
 
+    @Override
+    public List<OrderRestDto> getTenLast() {
+        return orderConverter.toListRestDto(orderDao.getTenLast()
+                                                    .stream()
+                                                    .peek(order -> order.setWaypointEntities(order.getWaypointEntities()
+                                                                                                  .stream()
+                                                                                                  .sorted(Comparator.comparingInt(
+                                                                                                          WaypointEntity::getSequentialNumber))
+                                                                                                  .collect(
+                                                                                                          Collectors.toList())))
+                                                    .collect(Collectors.toList()));
+    }
+
     private List<WaypointDto> sortWaypointList(List<WaypointDto> list) {
-        return list
-                .stream()
-                .sorted(Comparator.comparingInt(
-                        WaypointDto::getSequentialNumber))
-                .collect(Collectors.toList());
+        return list.stream()
+                   .sorted(Comparator.comparingInt(WaypointDto::getSequentialNumber))
+                   .collect(Collectors.toList());
     }
 
     @Override
@@ -149,7 +149,6 @@ public class OrderServiceImpl implements OrderService {
             d.setStatus(DriverStatus.SECOND_DRIVER);
             orderDao.addToOrderDriversTable(orderId, d.getId());
         }).forEach(driver -> driverDao.update(driver));
-
 
 
     }
