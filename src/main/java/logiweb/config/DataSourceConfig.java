@@ -27,18 +27,13 @@ public class DataSourceConfig {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(dataSource());
 
-//        InitialContext cxt = new InitialContext();
-//        HibernateJpaVendorAdapter adapter = (HibernateJpaVendorAdapter) cxt.lookup("java:/comp/env/jpa/adapter");
-
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
-        adapter.setShowSql(true);
-//        adapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
+//        adapter.setShowSql(true);
 
         factoryBean.setJpaVendorAdapter(adapter);
         factoryBean.setPackagesToScan("logiweb.*");
 
         Properties jpaProp = new Properties();
-        //jpaProp.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         jpaProp.put("hibernate.connection.CharSet", "utf8");
         jpaProp.put("hibernate.connection.characterEncoding", "utf8");
         jpaProp.put("hibernate.connection.useUnicode", "true");
@@ -61,13 +56,11 @@ public class DataSourceConfig {
 
         /*DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/logiweb?charSet=UTF8");
         dataSource.setUrl("jdbc:postgresql://postgres:5432/logiweb?charSet=UTF8");
         dataSource.setUsername("postgres");
         dataSource.setPassword("root");*/
 
         return dataSource;
-//        return null;
     }
 
     @Bean
