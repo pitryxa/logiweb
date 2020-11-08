@@ -12,6 +12,7 @@ import logiweb.entity.City;
 import logiweb.entity.Order;
 import logiweb.entity.Truck;
 import logiweb.service.api.TruckService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.*;
 
 @Service
 public class TruckServiceImpl implements TruckService {
+    private static final Logger logger = Logger.getLogger(TruckServiceImpl.class);
 
     @Autowired
     private TruckDao truckDao;
@@ -41,6 +43,7 @@ public class TruckServiceImpl implements TruckService {
     public void add(TruckDto truckDto) {
         truckDto.toUpperCaseRegNumber();
         truckDao.create(truckConverter.toEntity(truckDto));
+        logger.info("Truck is added.");
     }
 
     @Override
@@ -48,6 +51,7 @@ public class TruckServiceImpl implements TruckService {
     @SendUpdate
     public void delete(TruckDto truckDto) {
         truckDao.delete(truckConverter.toEntity(truckDto));
+        logger.info("Truck is deleted.");
     }
 
     @Override
@@ -56,6 +60,7 @@ public class TruckServiceImpl implements TruckService {
     public void edit(TruckDto truckDto) {
         truckDto.toUpperCaseRegNumber();
         truckDao.update(truckConverter.toEntity(truckDto));
+        logger.info("Truck is updated.");
     }
 
     @Override
@@ -74,14 +79,20 @@ public class TruckServiceImpl implements TruckService {
 
         int maxWeight = Collections.max(cities.values());
 
-        return truckConverter.toListDto(truckDao.getAllFreeTrucksInCities(cities.keySet(), maxWeight));
+        List<Truck> freeTrucks = truckDao.getAllFreeTrucksInCities(cities.keySet(), maxWeight);
+
+        if (freeTrucks.isEmpty()) {
+            logger.info("No suitable trucks for order.");
+            return new ArrayList<>();
+        }
+
+        return truckConverter.toListDto(freeTrucks);
     }
 
     @Override
     public Integer getOrderByTruck(Truck truck) {
         Order order = truckDao.getOrderByTruck(truck);
         return order == null ? null : order.getId();
-
     }
 
     @Override
@@ -93,8 +104,12 @@ public class TruckServiceImpl implements TruckService {
     @Override
     public TruckDto getByRegNumber(String regNumber) {
         Truck truck = truckDao.getByRegNumber(regNumber);
-        return truck == null ? null : truckConverter.toDto(truck);
 
+        if (truck != null) {
+            logger.info(String.format("The truck with reg. number %s already exists.", regNumber));
+            return truckConverter.toDto(truck);
+        }
+        return null;
     }
 
     private Map<City, Integer> getStartCityAndSummaryWeightFromCargoes(List<CargoDto> cargoes){

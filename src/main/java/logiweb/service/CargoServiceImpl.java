@@ -6,6 +6,7 @@ import logiweb.dto.CargoDto;
 import logiweb.entity.Cargo;
 import logiweb.entity.Order;
 import logiweb.service.api.CargoService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Service
 public class CargoServiceImpl implements CargoService {
+    private static final Logger logger = Logger.getLogger(CargoServiceImpl.class);
 
     @Autowired
     private CargoDao cargoDao;
@@ -30,18 +32,21 @@ public class CargoServiceImpl implements CargoService {
     @Transactional
     public void add(CargoDto cargoDTO) {
         cargoDao.create(cargoConverter.toEntity(cargoDTO));
+        logger.info("Cargo is created.");
     }
 
     @Override
     @Transactional
     public void delete(CargoDto cargoDTO) {
         cargoDao.delete(cargoConverter.toEntity(cargoDTO));
+        logger.info("Cargo is deleted.");
     }
 
     @Override
     @Transactional
     public void edit(CargoDto cargoDTO) {
         cargoDao.update(cargoConverter.toEntity(cargoDTO));
+        logger.info("Cargo is updated.");
     }
 
     @Override
@@ -53,7 +58,12 @@ public class CargoServiceImpl implements CargoService {
     public List<CargoDto> getPreparedCargo() {
         List<Cargo> cargoList = cargoDao.getPreparedCargo();
 
-        return cargoList.isEmpty() ? null : cargoConverter.toListDto(cargoList);
+        if (cargoList.isEmpty()) {
+            logger.info("There is no prepared cargo.");
+            return null;
+        }
+
+        return cargoConverter.toListDto(cargoList);
     }
 
     @Override
@@ -64,7 +74,12 @@ public class CargoServiceImpl implements CargoService {
     @Override
     public Integer getOrderId(Cargo cargo) {
         Order order = cargoDao.getOrderByCargo(cargo);
-        return order == null ? null : order.getId();
 
+        if (order == null) {
+//            logger.info("The cargo not added to order.");
+            return null;
+        }
+
+        return order.getId();
     }
 }

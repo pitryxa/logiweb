@@ -10,6 +10,7 @@ import logiweb.dto.rest.OrderRestDto;
 import logiweb.entity.*;
 import logiweb.entity.enums.*;
 import logiweb.service.api.OrderService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    private static final Logger logger = Logger.getLogger(OrderServiceImpl.class);
 
     @Autowired
     private OrderDao orderDao;
@@ -68,6 +70,7 @@ public class OrderServiceImpl implements OrderService {
     @SendUpdate
     public void add(OrderDto orderDto) {
         orderDao.create(orderConverter.toEntity(orderDto));
+        logger.info("Order is created.");
     }
 
     @Override
@@ -75,6 +78,7 @@ public class OrderServiceImpl implements OrderService {
     @SendUpdate
     public void delete(OrderDto orderDto) {
         orderDao.delete(orderConverter.toEntity(orderDto));
+        logger.info("Order is deleted.");
     }
 
     @Override
@@ -82,6 +86,7 @@ public class OrderServiceImpl implements OrderService {
     @SendUpdate
     public void edit(OrderDto orderDto) {
         orderDao.update(orderConverter.toEntity(orderDto));
+        logger.info("Order is updated.");
     }
 
     @Override
@@ -155,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
             orderDao.addToOrderDriversTable(orderId, d.getId());
         }).forEach(driver -> driverDao.update(driver));
 
-
+        logger.info("Order is created.");
     }
 
     private WaypointEntity getWaypointEntityFromCargo(Waypoint w, Map.Entry<CargoDto, OperationTypeOnWaypoint> entry,

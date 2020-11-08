@@ -7,6 +7,7 @@ import logiweb.entity.User;
 import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.Role;
 import logiweb.service.api.UserService;
+import org.apache.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +19,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserDao userDao;
 
@@ -44,12 +47,7 @@ public class UserServiceImpl implements UserService {
         userDto.setPassword(encoder.encode(userDto.getPassword()));
         userDto.setRole(Role.ROLE_NONE);
         userDao.create(mapper.map(userDto, User.class));
-    }
-
-    @Override
-    @Transactional
-    public void delete(UserDto userDto) {
-
+        logger.info("User is added.");
     }
 
     @Override
@@ -57,17 +55,20 @@ public class UserServiceImpl implements UserService {
     public void edit(UserDto userDto, Role currentRole) {
         userDto.setPassword(getById(userDto.getId()).getPassword());
 
-        if (currentRole == Role.ROLE_DRIVER) {
+        if (currentRole == Role.ROLE_DRIVER && userDto.getRole() != currentRole) {
             driverDao.disableByUserId(userDto.getId());
+            logger.info("The driver is disabled.");
         }
 
         userDao.update(mapper.map(userDto, User.class));
+        logger.info("User is updated.");
     }
 
     @Override
     public void edit(UserDto userDto) {
         userDto.setPassword(getById(userDto.getId()).getPassword());
         userDao.update(mapper.map(userDto, User.class));
+        logger.info("User is updated.");
     }
 
     @Override
@@ -81,6 +82,7 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = null;
 
         if (user != null) {
+            logger.info(String.format("Successfully got user with login %s", user.getEmail()));
             userDto = mapper.map(user, UserDto.class);
         }
 

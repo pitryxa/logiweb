@@ -18,6 +18,7 @@ import logiweb.entity.enums.Role;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.OrderService;
 import logiweb.service.api.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class DriverServiceImpl implements DriverService {
+    private static final Logger logger = Logger.getLogger(DriverServiceImpl.class);
 
     final static int SECONDS_IN_HOUR = 3600;
 
@@ -79,6 +81,7 @@ public class DriverServiceImpl implements DriverService {
         driverDto.setTruck(null);
         driverDto.setTimeLastChangeStatus(LocalDateTime.now());
         driverDao.create(driverConverter.toEntity(driverDto));
+        logger.info("Driver is added.");
     }
 
     @Override
@@ -86,6 +89,7 @@ public class DriverServiceImpl implements DriverService {
     @SendUpdate
     public void delete(DriverDto driverDto) {
         driverDao.delete(driverConverter.toEntity(driverDto));
+        logger.info("Driver is deleted.");
     }
 
     @Override
@@ -93,6 +97,7 @@ public class DriverServiceImpl implements DriverService {
     @SendUpdate
     public void delete(DriverEditDto driverEditDto) {
         driverDao.delete(driverConverter.toEntity(driverEditDto));
+        logger.info("Driver is deleted.");
     }
 
     @Override
@@ -100,6 +105,7 @@ public class DriverServiceImpl implements DriverService {
     @SendUpdate
     public void edit(DriverDto driverDto) {
         driverDao.update(driverConverter.toEntity(driverDto));
+        logger.info("Driver is updated.");
     }
 
     @Override
@@ -107,6 +113,7 @@ public class DriverServiceImpl implements DriverService {
     @SendUpdate
     public void edit(DriverEditDto driverEditDto) {
         driverDao.update(driverConverter.toEntity(driverEditDto));
+        logger.info("Driver is updated.");
     }
 
     @Override
@@ -121,7 +128,12 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public boolean isNotEnoughDrivers(List<DriverDto> drivers, int shiftSize) {
-        return drivers.size() < shiftSize;
+        if (drivers.size() < shiftSize) {
+            logger.info("Not enough drivers for order.");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -150,6 +162,7 @@ public class DriverServiceImpl implements DriverService {
         if (isCurrentMonth(lastChange, currentDate)) {
             driver.setWorkHours(0.0);
             driverDao.update(driver);
+            logger.info("Hours worked by the driver in the current month have been updated.");
         }
     }
 
@@ -204,6 +217,7 @@ public class DriverServiceImpl implements DriverService {
 
         order.setStatus(OrderStatus.IN_PROGRESS);
         orderDao.update(order);
+        logger.info("The order is accepted for execution.");
     }
 
     @Override
@@ -289,12 +303,19 @@ public class DriverServiceImpl implements DriverService {
         driver.setTimeLastChangeStatus(now);
         driver.setStatus(newStatus);
         driverDao.update(driver);
+        String driverName = driver.getUser().getFirstName() + " " + driver.getUser().getLastName();
+        logger.info(String.format("Status of driver %s (%d) is updated.", driverName, driver.getPersonalNumber()));
     }
 
     @Override
     public Integer getOrderId(Driver driver) {
         Order order = driverDao.getOrderByDriver(driver);
-        return order == null ? null : order.getId();
+
+        if (order == null) {
+//            logger.info(String.format("The driver %s (%d) has no active orders."));
+            return null;
+        }
+        return order.getId();
     }
 
     @Override
@@ -317,12 +338,20 @@ public class DriverServiceImpl implements DriverService {
         userDao.update(user);
 
         edit(driverEditDto);
+
+        logger.info("Driver is disabled.");
     }
 
     @Override
     public DriverDto getByPersonalNumber(Long personalNumber) {
         Driver driver = driverDao.getByPersonalNumber(personalNumber);
-        return driver == null ? null : driverConverter.toDto(driver);
+
+        if (driver != null) {
+            logger.info(String.format("The driver with personal number %d already exists.", personalNumber));
+            return driverConverter.toDto(driver);
+        }
+
+        return null;
     }
 
     private void addWorkTimeToDriver(Driver driver) {

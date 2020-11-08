@@ -10,9 +10,8 @@ public interface UserService {
 
     void add(UserDto userDto);
 
-    void delete(UserDto userDto);
-
     void edit(UserDto userDto, Role currentRole);
+
     void edit(UserDto userDto);
 
     UserDto getById(int id);

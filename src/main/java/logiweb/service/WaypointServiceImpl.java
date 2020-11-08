@@ -16,6 +16,7 @@ import logiweb.entity.enums.TruckWorkStatus;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.TruckService;
 import logiweb.service.api.WaypointService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.*;
 
 @Service
 public class WaypointServiceImpl implements WaypointService {
+    private static final Logger logger = Logger.getLogger(WaypointServiceImpl.class);
 
     @Autowired
     private WaypointDao waypointDao;
@@ -52,18 +54,21 @@ public class WaypointServiceImpl implements WaypointService {
     @Transactional
     public void add(WaypointDto waypointDto) {
         waypointDao.create(waypointConverter.toEntity(waypointDto));
+        logger.info("Waypoint is created.");
     }
 
     @Override
     @Transactional
     public void delete(WaypointDto waypointDto) {
         waypointDao.delete(waypointConverter.toEntity(waypointDto));
+        logger.info("Waypoint is deleted.");
     }
 
     @Override
     @Transactional
     public void edit(WaypointDto waypointDto) {
         waypointDao.update(waypointConverter.toEntity(waypointDto));
+        logger.info("Waypoint is updated.");
     }
 
     @Override
@@ -95,5 +100,7 @@ public class WaypointServiceImpl implements WaypointService {
             truck.setWorkStatus(TruckWorkStatus.FREE);
             truckDao.update(truck);
         }
+
+        logger.info("Waypoint is complete.");
     }
 }
