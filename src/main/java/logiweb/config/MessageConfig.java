@@ -1,5 +1,6 @@
 package logiweb.config;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import java.util.Properties;
 
 @Configuration
 public class MessageConfig {
+    private static final Logger logger = Logger.getLogger(MessageConfig.class);
     private final String SEC_CRED_LOGIN = "root";
     private final String SEC_CRED_PASS = "root";
 
@@ -80,7 +82,7 @@ public class MessageConfig {
             topicConnection.start();
             topic = session.createTopic("Logiweb");
         }
-
+        logger.info("Connection to topic is established");
         return topic;
     }
 }
