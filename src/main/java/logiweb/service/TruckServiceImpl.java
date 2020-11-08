@@ -1,5 +1,6 @@
 package logiweb.service;
 
+import logiweb.aop.SendUpdate;
 import logiweb.converter.CargoConverter;
 import logiweb.converter.TruckConverter;
 import logiweb.dao.api.TruckDao;
@@ -36,19 +37,24 @@ public class TruckServiceImpl implements TruckService {
 
     @Override
     @Transactional
+    @SendUpdate
     public void add(TruckDto truckDto) {
+        truckDto.toUpperCaseRegNumber();
         truckDao.create(truckConverter.toEntity(truckDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void delete(TruckDto truckDto) {
         truckDao.delete(truckConverter.toEntity(truckDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void edit(TruckDto truckDto) {
+        truckDto.toUpperCaseRegNumber();
         truckDao.update(truckConverter.toEntity(truckDto));
     }
 
@@ -82,6 +88,13 @@ public class TruckServiceImpl implements TruckService {
     public TruckRestDto getTruckRestDto() {
         return new TruckRestDto(truckDao.getCountAllTrucks(), truckDao.getCountFreeTrucks(),
                                 truckDao.getCountBrokenTrucks());
+    }
+
+    @Override
+    public TruckDto getByRegNumber(String regNumber) {
+        Truck truck = truckDao.getByRegNumber(regNumber);
+        return truck == null ? null : truckConverter.toDto(truck);
+
     }
 
     private Map<City, Integer> getStartCityAndSummaryWeightFromCargoes(List<CargoDto> cargoes){

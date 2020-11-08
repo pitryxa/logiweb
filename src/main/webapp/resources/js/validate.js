@@ -32,3 +32,67 @@ function validateRegistrationUser() {
         return false;
     }
 }
+
+function isNotEmptyCargoesToOrder() {
+    // if ($('#cargo option:selected').length <= 0){
+    //     swal("Wrong!", "Please select a cargo");
+    //     return false;
+    // }
+}
+
+function validateDriver() {
+    let personalNumber = document.getElementById("personalNumber").value;
+
+    let regexpPersNum = /^\d{1,8}$/;
+
+    if (!regexpPersNum.test(String(personalNumber))) {
+        swal("Wrong!", "Personal number must contain from 1 to 8 digits");
+        return false;
+    }
+}
+
+function validateTruck() {
+    let regNumber = document.getElementById("regNumber").value;
+    // let capacity = document.getElementById("capacity").value;
+
+    let regexpRegNumber = /^[A-Za-z]{2}\d{5}$/;
+
+    if (!regexpRegNumber.test(String(regNumber))) {
+        swal("Wrong!", "Registration number must contain 2 latin letters and 5 digits");
+        return false;
+    }
+
+    // if (capacity === "") {
+    //     swal("Wrong!", "Enter capacity");
+    //     return false;
+    // }
+}
+
+function validateCargo() {
+    // let name = document.getElementById("name").value;
+    // let weight = document.getElementById("weight").value;
+    let cityFrom = document.getElementById("city-from").value;
+    let cityTo = document.getElementById("city-to").value;
+
+    // if (name === "") {
+    //     swal("Wrong!", "Enter the name of the cargo");
+    //     return false;
+    // }
+
+    // if (weight === "") {
+    //     swal("Wrong!", "Enter the weight of the cargo");
+    //     return false;
+    // }
+
+    if (cityFrom === cityTo) {
+        swal("Wrong!", "The city of departure and the city of delivery should not be the same");
+        return false;
+    }
+}
+
+function validateOrder(shift) {
+    if ($('#drivers option:selected').length != shift) {
+        swal("Wrong!", "Please select " + shift + " drivers");
+        return false;
+    }
+}

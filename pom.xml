@@ -201,6 +201,13 @@
             <version>2.15.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jms -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+            <version>${springVersion}</version>
+        </dependency>
+
 
 
 

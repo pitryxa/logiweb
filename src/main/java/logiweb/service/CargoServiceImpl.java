@@ -1,7 +1,6 @@
 package logiweb.service;
 
 import logiweb.converter.CargoConverter;
-import logiweb.converter.OrderConverter;
 import logiweb.dao.api.CargoDao;
 import logiweb.dto.CargoDto;
 import logiweb.entity.Cargo;
@@ -21,9 +20,6 @@ public class CargoServiceImpl implements CargoService {
 
     @Autowired
     private CargoConverter cargoConverter;
-
-    @Autowired
-    private OrderConverter orderConverter;
 
     @Override
     public List<CargoDto> getAll() {
@@ -55,7 +51,9 @@ public class CargoServiceImpl implements CargoService {
 
     @Override
     public List<CargoDto> getPreparedCargo() {
-        return cargoConverter.toListDto(cargoDao.getPreparedCargo());
+        List<Cargo> cargoList = cargoDao.getPreparedCargo();
+
+        return cargoList.isEmpty() ? null : cargoConverter.toListDto(cargoList);
     }
 
     @Override

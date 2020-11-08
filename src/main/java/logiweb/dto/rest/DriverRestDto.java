@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class DriverRestDto {
-    private Integer allDrivers;
-    private Integer freeDrivers;
+    private Integer all;
+    private Integer free;
 
     public DriverRestDto(Integer all, Integer free) {
-        allDrivers = all;
-        freeDrivers = free;
+        this.all = all;
+        this.free = free;
     }
 }

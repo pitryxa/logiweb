@@ -75,6 +75,7 @@ public class WaypointServiceImpl implements WaypointService {
     @Transactional
     public void doneWaypoint(int id, int orderId) {
         waypointDao.doneWaypoint(id);
+        driverService.changeDriversStatusesInOrder(DriverStatus.SECOND_DRIVER);
 
         if (waypointDao.isUnloadWaypoint(id)) {
             Cargo cargo = waypointDao.getCargoByWaypointId(id);

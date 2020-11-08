@@ -30,4 +30,8 @@ public class TruckDto {
     private List<SimpleDriverDto> drivers;
 
     private Integer orderId;
+
+    public void toUpperCaseRegNumber() {
+        regNumber = regNumber.toUpperCase();
+    }
 }

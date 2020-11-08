@@ -2,24 +2,26 @@ package logiweb.controller;
 
 import logiweb.dto.DriverDto;
 import logiweb.dto.DriverEditDto;
-import logiweb.dto.UserDto;
 import logiweb.entity.enums.DriverStatus;
-import logiweb.entity.enums.Role;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.UserService;
+import logiweb.validator.DriverValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/officer/drivers")
 public class DriverController {
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private DriverValidator driverValidator;
 
     @Autowired
     private CityService cityService;
@@ -49,7 +51,12 @@ public class DriverController {
 
     @PostMapping("/edit")
     public String editDriver(@ModelAttribute DriverEditDto driverEditDto) {
-        driverEditDto.setTimeLastChangeStatus(driverService.getById(driverEditDto.getId()).getTimeLastChangeStatus());
+        DriverDto oldDriver = driverService.getById(driverEditDto.getId());
+        driverEditDto.setTimeLastChangeStatus(oldDriver.getTimeLastChangeStatus());
+        if (!Objects.equals(oldDriver.getPersonalNumber(), driverEditDto.getPersonalNumber()) &&
+            !driverValidator.isValid(driverEditDto)) {
+            return "drivers/notValid";
+        }
 
         driverService.edit(driverEditDto);
         return "redirect:/officer/drivers";
@@ -59,19 +66,18 @@ public class DriverController {
     public String addDriver(Model model) {
         model.addAttribute("cityList", cityService.getAll());
         model.addAttribute("users", userService.getUsersWithRoleDriverWhoAreNotInListDrivers());
+        model.addAttribute("driver", new DriverDto());
         return "drivers/addDriver";
     }
 
     @PostMapping("/add")
     public String addDriver(@ModelAttribute DriverDto driverDto,
                             @RequestParam("user-id") int userId) {
-        driverDto.setUser(userService.getById(userId));
-        driverDto.setWorkHours(0.0);
-        driverDto.setStatus(DriverStatus.RECREATION);
-        driverDto.setTruck(null);
-        driverDto.setTimeLastChangeStatus(LocalDateTime.now());
+        if (!driverValidator.isValid(driverDto)) {
+            return "drivers/notValid";
+        }
 
-        driverService.add(driverDto);
+        driverService.add(driverDto, userId);
         return "redirect:/officer/drivers";
     }
 
@@ -83,16 +89,7 @@ public class DriverController {
 
     @PostMapping("/delete")
     public String deleteDriver(@ModelAttribute DriverEditDto driverEditDto) {
-//        driverDto.setUser(userService.getById(userId));
-//        driverDto.setTruck(null);
-        driverEditDto.setTimeLastChangeStatus(LocalDateTime.now());
-        driverEditDto.setStatus(DriverStatus.DISABLED);
-
-        UserDto userDto = userService.getById(driverEditDto.getUserId());
-        userDto.setRole(Role.ROLE_NONE);
-        userService.edit(userDto);
-
-        driverService.edit(driverEditDto);
+        driverService.disableDriver(driverEditDto);
         return "redirect:/officer/drivers";
     }
 }

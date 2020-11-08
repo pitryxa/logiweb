@@ -1,6 +1,5 @@
 package logiweb.dto;
 
-import logiweb.dto.simple.SimpleTruckDto;
 import logiweb.entity.enums.DriverStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

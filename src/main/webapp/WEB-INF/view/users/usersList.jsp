@@ -16,20 +16,27 @@
                 <h4 class="text-cadetblue">${title}</h4>
             </div>
         </div>
-        <table class="table table-striped">
+        <table id="table"
+               data-toggle="table"
+               data-filter-control="true"
+               data-pagination="true"
+               data-page-list="[10, 25, 50, 100, All]"
+               class="table table-striped">
             <thead class="thead-dark">
             <tr>
-                <th>ID</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th data-field="count" data-sortable="true">#</th>
+                <th data-field="numberId" data-sortable="true">ID</th>
+                <th data-field="firstname" data-filter-control="input" data-sortable="true">Firstname</th>
+                <th data-field="lastname" data-filter-control="input" data-sortable="true">Lastname</th>
+                <th data-field="email" data-filter-control="input" data-sortable="true">Email</th>
+                <th data-field="role" data-filter-control="select" data-sortable="true">Role</th>
                 <th>Action</th>
             </tr>
             </thead>
 
-            <c:forEach var="user" items="${usersList}">
+            <c:forEach var="user" items="${usersList}" varStatus="counter">
                 <tr>
+                    <td>${counter.count}</td>
                     <td>${user.id}</td>
                     <td>${user.firstName}</td>
                     <td>${user.lastName}</td>

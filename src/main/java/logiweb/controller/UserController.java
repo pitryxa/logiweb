@@ -22,8 +22,11 @@ public class UserController {
 
     @GetMapping("/edit/{id}")
     public String editUser(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.getById(id));
+        UserDto userDto = userService.getById(id);
+
+        model.addAttribute("user", userDto);
         model.addAttribute("roles", Role.values());
+        model.addAttribute("isRoleUnselectable", userService.isUserBusyDriver(userDto));
         return "users/editUser";
     }
 

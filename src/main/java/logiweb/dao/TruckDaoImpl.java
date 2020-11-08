@@ -11,6 +11,7 @@ import logiweb.entity.enums.TruckConditionStatus;
 import logiweb.entity.enums.TruckWorkStatus;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class TruckDaoImpl extends GenericDAOImpl<Truck> implements TruckDao {
     @Override
     public List<Truck> getAllSorted() {
         List<Truck> list =
-                entityManager.createQuery("select e from Truck e where e.conditionStatus <> 'DISABLED' order by e.id",
+                entityManager.createQuery("select e from Truck e where e.conditionStatus <> 'DISABLED' order by e.id desc",
                                           Truck.class).getResultList();
         return list.isEmpty() ? new ArrayList<>() : list;
     }
@@ -66,22 +67,42 @@ public class TruckDaoImpl extends GenericDAOImpl<Truck> implements TruckDao {
 
     @Override
     public Integer getCountAllTrucks() {
-        return entityManager.createQuery("select count(t) from Truck t where t.conditionStatus <> ?1", Integer.class)
-                            .setParameter(1, TruckConditionStatus.DISABLED)
-                            .getSingleResult();
+        Long result = (Long) entityManager.createQuery("select count(t) from Truck t where t.conditionStatus <> ?1")
+                                          .setParameter(1, TruckConditionStatus.DISABLED)
+                                          .getSingleResult();
+        return result.intValue();
     }
 
     @Override
     public Integer getCountFreeTrucks() {
-        return entityManager.createQuery("select count(t) from Truck t where t.workStatus = ?1", Integer.class)
-                            .setParameter(1, TruckWorkStatus.FREE)
-                            .getSingleResult();
+        Long result = (Long) entityManager.createQuery(
+                "select count(t) from Truck t where t.workStatus = ?1 and t.conditionStatus = ?2")
+                                          .setParameter(1, TruckWorkStatus.FREE)
+                                          .setParameter(2, TruckConditionStatus.OK)
+                                          .getSingleResult();
+        return result.intValue();
     }
 
     @Override
     public Integer getCountBrokenTrucks() {
-        return entityManager.createQuery("select count(t) from Truck t where t.conditionStatus = ?1", Integer.class)
-                            .setParameter(1, TruckConditionStatus.BROKEN)
-                            .getSingleResult();
+        Long result = (Long) entityManager.createQuery("select count(t) from Truck t where t.conditionStatus = ?1")
+                                          .setParameter(1, TruckConditionStatus.BROKEN)
+                                          .getSingleResult();
+        return result.intValue();
+    }
+
+    @Override
+    public Truck getByRegNumber(String regNumber) {
+        Truck truck;
+
+        try {
+            truck = entityManager.createQuery("select t from Truck t where t.regNumber = ?1", Truck.class)
+                                 .setParameter(1, regNumber)
+                                 .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+        return truck;
     }
 }

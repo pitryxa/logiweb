@@ -8,13 +8,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TruckRestDto {
-    private Integer allTrucks;
-    private Integer freeTrucks;
-    private Integer brokenTrucks;
+    private Integer all;
+    private Integer free;
+    private Integer broken;
 
-    public TruckRestDto(Integer allTrucks, Integer freeTrucks, Integer brokenTrucks) {
-        this.allTrucks = allTrucks;
-        this.freeTrucks = freeTrucks;
-        this.brokenTrucks = brokenTrucks;
+    public TruckRestDto(Integer all, Integer free, Integer broken) {
+        this.all = all;
+        this.free = free;
+        this.broken = broken;
     }
 }

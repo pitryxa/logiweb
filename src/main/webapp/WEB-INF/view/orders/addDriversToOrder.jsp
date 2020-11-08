@@ -83,7 +83,7 @@
 
             <div class="form-group row">
                 <label for="drivers" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Drivers</label>
-                <select name="drivers" id="drivers" multiple size="5" class="form-control col-sm-10">
+                <select name="drivers" id="drivers" multiple size="5" class="form-control col-sm-10" required>
                     <c:forEach var="driver" items="${drivers}">
                         <option value="${driver.id}">${driver.user.firstName} ${driver.user.lastName} (${driver.id})
                         </option>
@@ -92,7 +92,7 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mlr10">${title}</button>
+                <button type="submit" class="btn btn-success mlr10" onclick="return validateOrder(${truck.shiftSize})">${title}</button>
                 <a href="${contextPath}/officer/orders/add-truck" class="btn btn-danger mlr10">Cancel</a>
                 <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
             </div>

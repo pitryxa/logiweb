@@ -49,7 +49,7 @@
                                 <th>City</th>
                                 <th>Operation</th>
                                 <th>Cargo</th>
-                                <th>Weight</th>
+                                <th>Weight, kg</th>
                             </tr>
 
                             <tbody>
@@ -72,7 +72,7 @@
                                     <td><c:out value="${waypoint.cargo.name}"/></td>
                                     <td>
                                         <c:if test="${waypoint.operation != 'NONE'}">
-                                            <c:out value="${waypoint.cargo.weight} kg"/>
+                                            <c:out value="${waypoint.cargo.weight}"/>
                                         </c:if>
                                     </td>
                                 </tr>

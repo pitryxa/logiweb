@@ -12,21 +12,21 @@ import java.util.List;
 public class CityDaoImpl extends GenericDAOImpl<City> implements CityDao {
     @Override
     public List<City> getAllSortedByName() {
-        List<City> list = entityManager.createQuery("FROM City city ORDER BY city.name", City.class)
+        List<City> list = entityManager.createQuery("select city FROM City city ORDER BY city.name", City.class)
                                        .getResultList();
         return list.isEmpty() ? new ArrayList<>() : list;
     }
 
     @Override
     public List<City> getAllSortedById() {
-        List<City> list = entityManager.createQuery("FROM City city ORDER BY city.id", City.class)
+        List<City> list = entityManager.createQuery("select city FROM City city ORDER BY city.id", City.class)
                                        .getResultList();
         return list.isEmpty() ? new ArrayList<>() : list;
     }
 
     @Override
     public City getByName(String name) {
-        List<City> list = entityManager.createQuery("FROM City e WHERE e.name = :name", City.class)
+        List<City> list = entityManager.createQuery("select e FROM City e WHERE e.name = :name", City.class)
                                        .setParameter("name", name)
                                        .getResultList();
         return list.isEmpty() ? null : list.get(0);

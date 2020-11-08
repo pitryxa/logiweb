@@ -35,8 +35,8 @@
                 <th data-field="name" data-filter-control="input" data-sortable="true">Name</th>
                 <th data-field="weight" data-filter-control="input" data-sortable="true">Weight</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
-                <th data-field="cityFrom" data-filter-control="input" data-sortable="true">From</th>
-                <th data-field="cityTo" data-filter-control="input" data-sortable="true">To</th>
+                <th data-field="cityFrom" data-filter-control="select" data-sortable="true">From</th>
+                <th data-field="cityTo" data-filter-control="select" data-sortable="true">To</th>
                 <th data-field="order" data-filter-control="input" data-sortable="true">Order</th>
                 <th data-field="action">Action</th>
             </tr>

@@ -1,22 +1,23 @@
 package logiweb.service;
 
+import logiweb.aop.SendUpdate;
 import logiweb.calculating.DriversCalc;
 import logiweb.calculating.Route;
 import logiweb.converter.DriverConverter;
 import logiweb.dao.api.DriverDao;
 import logiweb.dao.api.OrderDao;
 import logiweb.dao.api.UserDao;
-import logiweb.dto.DriverDto;
-import logiweb.dto.DriverEditDto;
-import logiweb.dto.OrderDto;
-import logiweb.dto.TruckDto;
+import logiweb.dto.*;
 import logiweb.dto.rest.DriverRestDto;
 import logiweb.entity.Driver;
 import logiweb.entity.Order;
+import logiweb.entity.User;
 import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.OrderStatus;
+import logiweb.entity.enums.Role;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.OrderService;
+import logiweb.service.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,6 +51,9 @@ public class DriverServiceImpl implements DriverService {
     private OrderService orderService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private DriverConverter driverConverter;
 
     @Autowired
@@ -67,30 +71,40 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
-    public void add(DriverDto driverDto) {
+    @SendUpdate
+    public void add(DriverDto driverDto, int userId) {
+        driverDto.setUser(userService.getById(userId));
+        driverDto.setWorkHours(0.0);
+        driverDto.setStatus(DriverStatus.RECREATION);
+        driverDto.setTruck(null);
+        driverDto.setTimeLastChangeStatus(LocalDateTime.now());
         driverDao.create(driverConverter.toEntity(driverDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void delete(DriverDto driverDto) {
         driverDao.delete(driverConverter.toEntity(driverDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void delete(DriverEditDto driverEditDto) {
         driverDao.delete(driverConverter.toEntity(driverEditDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void edit(DriverDto driverDto) {
         driverDao.update(driverConverter.toEntity(driverDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void edit(DriverEditDto driverEditDto) {
         driverDao.update(driverConverter.toEntity(driverEditDto));
     }
@@ -117,6 +131,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
+    @SendUpdate
     public List<DriverDto> getDriversForOrder(TruckDto truck, Route route) {
         double workHoursForEveryDriver = driversCalc.getWorkHoursForEveryDriver(truck, route);
 
@@ -180,6 +195,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
+    @SendUpdate
     public void startExecuteOrder() {
         Driver driver = getCurrentDriverEntity();
         Order order = getOrderEntityByDriver(driver);
@@ -192,6 +208,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional
+    @SendUpdate
     public void changeDriversStatusesInOrder(DriverStatus newStatusCurrentDriver) {
         Driver currentDriver = getCurrentDriverEntity();
         List<Driver> otherDrivers = currentDriver.getTruck()
@@ -245,6 +262,8 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
+    @Transactional
+    @SendUpdate
     public void changeStatus(Driver driver, DriverStatus newStatus) {
         DriverStatus currentStatus = driver.getStatus();
         LocalDateTime now = LocalDateTime.now();
@@ -281,6 +300,29 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public DriverRestDto getDriverRestDto() {
         return new DriverRestDto(driverDao.getCountAllDrivers(), driverDao.getCountFreeDrivers());
+    }
+
+    @Override
+    @Transactional
+    public void disableDriver(DriverEditDto driverEditDto) {
+        driverEditDto.setTimeLastChangeStatus(LocalDateTime.now());
+        driverEditDto.setStatus(DriverStatus.DISABLED);
+
+//        UserDto userDto = userService.getById(driverEditDto.getUserId());
+//        userDto.setRole(Role.ROLE_NONE);
+//        userService.edit(userDto);
+
+        User user = userDao.getById(driverEditDto.getUserId());
+        user.setRole(Role.ROLE_NONE);
+        userDao.update(user);
+
+        edit(driverEditDto);
+    }
+
+    @Override
+    public DriverDto getByPersonalNumber(Long personalNumber) {
+        Driver driver = driverDao.getByPersonalNumber(personalNumber);
+        return driver == null ? null : driverConverter.toDto(driver);
     }
 
     private void addWorkTimeToDriver(Driver driver) {

@@ -236,9 +236,6 @@ public class RoutesCalc {
             w.sortCargoes();
         }
 
-//        waypointsForRoute.stream().peek(w -> {
-//
-//        })
         return waypointsForRoute;
 
 

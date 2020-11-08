@@ -14,7 +14,7 @@ public interface DriverService {
 
     List<DriverDto> getAllNotDisabled();
 
-    void add(DriverDto driverDto);
+    void add(DriverDto driverDto, int userId);
 
     void delete(DriverDto driverDto);
 
@@ -51,4 +51,8 @@ public interface DriverService {
     Integer getOrderId(Driver driver);
 
     DriverRestDto getDriverRestDto();
+
+    void disableDriver(DriverEditDto driverEditDto);
+
+    DriverDto getByPersonalNumber(Long personalNumber);
 }

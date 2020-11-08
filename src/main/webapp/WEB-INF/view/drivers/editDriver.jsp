@@ -33,7 +33,9 @@
                 <div class="form-group row">
                     <label for="personalNumber" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Personal
                         number</label>
-                    <input type="text" name="personalNumber" id="personalNumber" value="${driver.personalNumber}"
+                    <input type="number" step="1" min="1" max="99999999" name="personalNumber" id="personalNumber"
+                           required
+                           value="${driver.personalNumber}"
                            class="form-control col-sm-10">
                 </div>
                 <div class="form-group row">
@@ -51,8 +53,8 @@
                 <div class="form-group row">
                     <label for="workHours" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Work
                         hours</label>
-                    <input type="text" name="workHours" id="workHours" value="${driver.workHours}"
-                           class="form-control col-sm-10">
+                    <input type="number" step="0.01" min="0" max="176" name="workHours" id="workHours"
+                           value="${driver.workHours}" class="form-control col-sm-10" required>
                 </div>
                 <div class="form-group row">
                     <label for="truck" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Truck</label>
@@ -71,12 +73,19 @@
                 </div>
                 <div class="form-group row">
                     <label for="city" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
-                    <input type="text" name="city" id="city" value="${driver.city}" class="form-control col-sm-10"
-                           readonly>
+                    <select name="city" id="city" class="form-control col-sm-10">
+                        <c:forEach var="city" items="${cities}">
+                            <option value="${city.name}"
+                                    <c:if test="${city.name == driver.city}"><c:out value="selected"/></c:if>>
+                                    ${city.name}
+                            </option>
+                        </c:forEach>
+                    </select>
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success mlr10">${title}</button>
+                    <button type="submit" class="btn btn-success mlr10"
+                            onclick="return validateDriver()">${title}</button>
                     <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
                 </div>
             </form>

@@ -34,7 +34,7 @@
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
                 <th data-field="truck" data-filter-control="input" data-sortable="true">Truck</th>
                 <th data-field="order" data-filter-control="input" data-sortable="true">Order</th>
-                <th data-field="city" data-filter-control="input" data-sortable="true">City</th>
+                <th data-field="city" data-filter-control="select" data-sortable="true">City</th>
                 <th data-field="action">Action</th>
             </tr>
             </thead>

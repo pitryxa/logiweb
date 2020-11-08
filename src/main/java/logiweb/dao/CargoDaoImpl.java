@@ -15,7 +15,7 @@ import java.util.List;
 public class CargoDaoImpl extends GenericDAOImpl<Cargo> implements CargoDao {
     @Override
     public List<Cargo> getAllSorted() {
-        List<Cargo> list = entityManager.createQuery("select cargo from Cargo cargo order by cargo.id", Cargo.class)
+        List<Cargo> list = entityManager.createQuery("select cargo from Cargo cargo order by cargo.id desc", Cargo.class)
                                         .getResultList();
         return list.isEmpty() ? new ArrayList<>() : list;
     }

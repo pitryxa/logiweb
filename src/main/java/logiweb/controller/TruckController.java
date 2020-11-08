@@ -5,10 +5,13 @@ import logiweb.entity.enums.TruckConditionStatus;
 import logiweb.entity.enums.TruckWorkStatus;
 import logiweb.service.api.CityService;
 import logiweb.service.api.TruckService;
+import logiweb.validator.TruckValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/officer/trucks")
@@ -18,6 +21,9 @@ public class TruckController {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private TruckValidator truckValidator;
 
     @GetMapping
     public String allTrucks(Model model) {
@@ -41,6 +47,11 @@ public class TruckController {
 
     @PostMapping("/edit")
     public String editTruck(@ModelAttribute TruckDto truckDto) {
+        TruckDto oldTruck = truckService.getById(truckDto.getId());
+        if (!Objects.equals(oldTruck.getRegNumber(), truckDto.getRegNumber()) && !truckValidator.isValid(truckDto)) {
+            return "trucks/notValid";
+        }
+
         truckService.edit(truckDto);
         return "redirect:/officer/trucks";
     }
@@ -53,6 +64,10 @@ public class TruckController {
 
     @PostMapping("/add")
     public String addTruck(@ModelAttribute TruckDto truckDto) {
+        if (!truckValidator.isValid(truckDto)) {
+            return "trucks/notValid";
+        }
+
         truckDto.setWorkStatus(TruckWorkStatus.FREE);
         truckDto.setConditionStatus(TruckConditionStatus.OK);
         truckService.add(truckDto);

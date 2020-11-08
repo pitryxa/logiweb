@@ -33,7 +33,7 @@
                 <th data-field="capacity" data-filter-control="select" data-sortable="true">Capacity</th>
                 <th data-field="condition" data-filter-control="select" data-sortable="true">Condition status</th>
                 <th data-field="workStatus" data-filter-control="select" data-sortable="true">Work status</th>
-                <th data-field="city" data-filter-control="input" data-sortable="true">City</th>
+                <th data-field="city" data-filter-control="select" data-sortable="true">City</th>
                 <th data-field="order" data-filter-control="input" data-sortable="true">Order</th>
                 <th data-field="drivers" data-filter-control="input" data-sortable="true">Drivers</th>
                 <th data-field="action">Action</th>

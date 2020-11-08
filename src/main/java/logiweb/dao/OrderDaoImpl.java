@@ -16,14 +16,15 @@ import java.util.stream.Collectors;
 public class OrderDaoImpl extends GenericDAOImpl<Order> implements OrderDao {
     @Override
     public List<Order> getAllSorted() {
-        List<Order> list = entityManager.createQuery("SELECT e FROM Order e ORDER BY e.id").getResultList();
+        List<Order> list = entityManager.createQuery("SELECT e FROM Order e ORDER BY e.id DESC ").getResultList();
         return list.isEmpty() ? new ArrayList<>() : list;
     }
 
     @Override
     public Order getOrderByTruckId(Integer truckId) {
         List<Order> list =
-                entityManager.createNativeQuery("select * from orders where truck_id = " + truckId, Order.class)
+                entityManager.createNativeQuery("select * from orders where truck_id = :truckId and status <> 'DONE'", Order.class)
+                             .setParameter("truckId", truckId)
                              .getResultList();
         return list.isEmpty() ? null : list.get(0);
     }

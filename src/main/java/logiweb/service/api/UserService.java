@@ -22,4 +22,6 @@ public interface UserService {
     List<UserDto> getByRole(Role role);
 
     List<UserDto> getUsersWithRoleDriverWhoAreNotInListDrivers();
+
+    boolean isUserBusyDriver(UserDto userDto);
 }

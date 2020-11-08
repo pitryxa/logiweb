@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="title" value="Add driver"/>
@@ -17,11 +19,58 @@
             </div>
         </div>
 
+        <%--        <form:form method="POST" modelAttribute="driver">--%>
+        <%--            <spring:bind path="personalNumber">--%>
+        <%--                <div class="form-group row ${status.error ? 'has-error' : ''}">--%>
+        <%--                    <label for="personalNumber" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Personal--%>
+        <%--                        number</label>--%>
+        <%--                    <form:input id="personalNumber" type="text" path="personalNumber"--%>
+        <%--                                class="form-control col-sm-10"></form:input>--%>
+        <%--                        &lt;%&ndash;                    <input type="text" name="personalNumber" id="personalNumber" class="form-control col-sm-10">&ndash;%&gt;--%>
+        <%--                    <form:errors id="PersonalNumberVal" path="personalNumber"></form:errors>--%>
+        <%--                </div>--%>
+        <%--            </spring:bind>--%>
+        <%--            <div class="form-group row">--%>
+        <%--                <label for="user" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">User</label>--%>
+        <%--                <select name="user-id" id="user" class="form-control col-sm-10">--%>
+        <%--                    <c:forEach var="user" items="${users}">--%>
+        <%--                        <option value="${user.id}">${user.firstName} ${user.lastName} (${user.id})</option>--%>
+        <%--                    </c:forEach>--%>
+        <%--                </select>--%>
+        <%--            </div>--%>
+        <%--            <div class="form-group row">--%>
+        <%--                <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>--%>
+        <%--                <form:select path="city" id="city" cssClass="form-control col-sm-10">--%>
+        <%--                    <form:options itemValue="name" items="${cityList}" itemLabel="name"/>--%>
+
+        <%--                </form:select>--%>
+
+        <%--&lt;%&ndash;                <select name="city" id="city" class="form-control col-sm-10">&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                    <c:forEach var="city" items="${cityList}">&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                        <option value="${city.name}">${city.name}</option>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                    </c:forEach>&ndash;%&gt;--%>
+        <%--&lt;%&ndash;                </select>&ndash;%&gt;--%>
+        <%--            </div>--%>
+        <%--            <div class="d-flex justify-content-center">--%>
+        <%--                <button type="submit" class="btn btn-success mlr10">${title}</button>--%>
+        <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
+        <%--            </div>--%>
+
+        <%--        </form:form>--%>
+
         <form action="${contextPath}/officer/drivers/add" method="post">
+            <%--                    <spring:bind path="personalNumber">--%>
             <div class="form-group row">
-                <label for="personalNumber" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Personal number</label>
-                <input type="text" name="personalNumber" id="personalNumber" class="form-control col-sm-10">
+                <label for="personalNumber" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">Personal
+                    number</label>
+<%--                <input type="text" name="personalNumber" id="personalNumber" class="form-control col-sm-10">--%>
+                <input type="number" step="1" min="1" max="99999999" name="personalNumber" id="personalNumber" required
+                       value="${driver.personalNumber}"
+                       class="form-control col-sm-10">
+                <%--                            <form:errors id="PersonalNumberVal" path="personalNumber"></form:errors>--%>
             </div>
+            <%--                    </spring:bind>--%>
+
             <div class="form-group row">
                 <label for="user" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">User</label>
                 <select name="user-id" id="user" class="form-control col-sm-10">
@@ -39,10 +88,13 @@
                 </select>
             </div>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mlr10">${title}</button>
+                <button type="submit" class="btn btn-success mlr10"
+                        onclick="return validateDriver();">${title}</button>
                 <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
             </div>
         </form>
+
+
     </section>
 </main>
 

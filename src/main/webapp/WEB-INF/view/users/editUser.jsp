@@ -38,14 +38,20 @@
             </div>
             <div class="form-group row">
                 <label for="role" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Role</label>
-                <select name="role" id="role" class="form-control col-sm-10">
-                    <c:forEach var="role" items="${roles}">
-                        <option value="${role}"
-                                <c:if test="${role == user.role}"><c:out value="selected"/></c:if>>
-                                ${role}
-                        </option>
-                    </c:forEach>
-                </select>
+                <c:if test="${isRoleUnselectable}">
+                    <input type="text" name="role" id="role" value="${user.role}" class="form-control col-sm-10"
+                           readonly>
+                </c:if>
+                <c:if test="${!isRoleUnselectable}">
+                    <select name="role" id="role" class="form-control col-sm-10">
+                        <c:forEach var="role" items="${roles}">
+                            <option value="${role}"
+                                    <c:if test="${role == user.role}"><c:out value="selected"/></c:if>>
+                                    ${role}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </c:if>
             </div>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-success mlr10">${title}</button>

@@ -4,6 +4,7 @@ import logiweb.dao.api.DriverDao;
 import logiweb.dao.api.UserDao;
 import logiweb.dto.UserDto;
 import logiweb.entity.User;
+import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.Role;
 import logiweb.service.api.UserService;
 import org.modelmapper.ModelMapper;
@@ -100,5 +101,18 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .map(user -> mapper.map(user, UserDto.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isUserBusyDriver(UserDto userDto) {
+        if (userDto.getRole() != Role.ROLE_DRIVER) {
+            return false;
+        }
+
+        if (!driverDao.isUserAssignToOrder(userDto.getId())) {
+            return false;
+        }
+
+        return true;
     }
 }

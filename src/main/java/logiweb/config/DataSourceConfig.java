@@ -57,15 +57,14 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() throws NamingException {
         InitialContext cxt = new InitialContext();
-
-//        DataSource dataSource = (DataSource) cxt.lookup("java:/comp/env/jdbc/logiweb");
         DataSource dataSource = (DataSource) cxt.lookup("java:/jdbc/logiweb");
 
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
+        /*DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
 //        dataSource.setUrl("jdbc:postgresql://localhost:5432/logiweb?charSet=UTF8");
-//        dataSource.setUsername("postgres");
-//        dataSource.setPassword("root");
+        dataSource.setUrl("jdbc:postgresql://postgres:5432/logiweb?charSet=UTF8");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("root");*/
 
         return dataSource;
 //        return null;

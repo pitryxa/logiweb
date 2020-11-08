@@ -1,5 +1,6 @@
 package logiweb.service;
 
+import logiweb.aop.SendUpdate;
 import logiweb.calculating.Route;
 import logiweb.calculating.Waypoint;
 import logiweb.converter.*;
@@ -64,18 +65,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    @SendUpdate
     public void add(OrderDto orderDto) {
         orderDao.create(orderConverter.toEntity(orderDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void delete(OrderDto orderDto) {
         orderDao.delete(orderConverter.toEntity(orderDto));
     }
 
     @Override
     @Transactional
+    @SendUpdate
     public void edit(OrderDto orderDto) {
         orderDao.update(orderConverter.toEntity(orderDto));
     }
@@ -115,6 +119,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
+    @SendUpdate
     public void add(List<CargoDto> cargoes, TruckDto truck, Route route, List<DriverDto> drivers) {
         List<Driver> driversEntity = driverConverter.toListEntityFromDto(drivers);
         Deque<Waypoint> wpFromRoute = route.getWaypoints();
@@ -141,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
 
         }
         orderDao.create(order);
-        final int orderId = orderDao.getOrderByTruckId(truck.getId()).getId();
+        final int orderId = order.getId();
 
         //update drivers
         driversEntity.stream().peek(d -> {

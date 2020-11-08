@@ -31,7 +31,7 @@
             </div>
             <div class="col-sm-10">
                 <p class="py-2 my-2">
-                    <a href=${contextPath}officer/trucks/${order.truck.id}" class="m-0">
+                    <a href="${contextPath}/officer/trucks/${order.truck.id}" class="m-0">
                         <c:out value="${order.truck.regNumber}"/>
                     </a>
                 </p>

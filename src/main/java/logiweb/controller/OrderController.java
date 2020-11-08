@@ -42,7 +42,12 @@ public class OrderController {
 
     @GetMapping("/add-cargo")
     public String addCargoToOrder(Model model) {
-        model.addAttribute("cargoes", cargoService.getPreparedCargo());
+        List<CargoDto> cargoDtoList = cargoService.getPreparedCargo();
+        if (cargoDtoList == null) {
+            return "orders/noCargoes";
+        }
+
+        model.addAttribute("cargoes", cargoDtoList);
         return "orders/addCargoToOrder";
     }
 
@@ -63,8 +68,14 @@ public class OrderController {
         }
         List<CargoDto> cargoes = (List<CargoDto>) o;
 
+        List<TruckDto> trucks = truckService.getFreeTrucksByStartCityAndCapacityInCargoList(cargoes);
+
+        if (trucks.isEmpty()) {
+            return "orders/noSuitableTrucks";
+        }
+
         model.addAttribute("cargoes", cargoes);
-        model.addAttribute("trucks", truckService.getFreeTrucksByStartCityAndCapacityInCargoList(cargoes));
+        model.addAttribute("trucks", trucks);
 
         return "orders/addTruckToOrder";
     }

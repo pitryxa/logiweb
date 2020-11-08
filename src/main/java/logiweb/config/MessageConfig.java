@@ -1,7 +1,10 @@
 package logiweb.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
+import org.springframework.jms.core.JmsTemplate;
 
 import javax.jms.*;
 import javax.naming.Context;
@@ -26,7 +29,7 @@ public class MessageConfig {
     }
 
     @Bean
-    public JMSProducer jmsProducer(JMSContext context) {
+    public JMSProducer jmsProducer(@Qualifier("jmsContext") JMSContext context) {
         return context.createProducer();
     }
 
@@ -37,7 +40,22 @@ public class MessageConfig {
 
     @Bean
     public TopicConnectionFactory connectionFactory() throws NamingException {
-        return (TopicConnectionFactory) context().lookup("jms/RemoteConnectionFactory");
+        TopicConnectionFactory connectionFactory = (TopicConnectionFactory) context().lookup("jms/RemoteConnectionFactory");
+
+        UserCredentialsConnectionFactoryAdapter userCredentialsConnectionFactoryAdapter =
+                new UserCredentialsConnectionFactoryAdapter();
+        userCredentialsConnectionFactoryAdapter.setUsername(SEC_CRED_LOGIN);
+        userCredentialsConnectionFactoryAdapter.setPassword(SEC_CRED_PASS);
+        userCredentialsConnectionFactoryAdapter.setTargetConnectionFactory(connectionFactory);
+
+        return userCredentialsConnectionFactoryAdapter;
+    }
+
+    @Bean
+    public JmsTemplate jmsTemplate() throws NamingException {
+        JmsTemplate jmsTemplate = new JmsTemplate(connectionFactory());
+        jmsTemplate.setDefaultDestinationName("Logiweb");
+        return jmsTemplate;
     }
 
     @Bean
@@ -50,7 +68,8 @@ public class MessageConfig {
 //        props.put(Context.SECURITY_CREDENTIALS, SEC_CRED_PASS);
 //        Context context = new InitialContext(props);
 
-        TopicConnectionFactory factory = (TopicConnectionFactory) context().lookup("jms/RemoteConnectionFactory");
+//        TopicConnectionFactory factory = (TopicConnectionFactory) context().lookup("jms/RemoteConnectionFactory");
+        TopicConnectionFactory factory = connectionFactory();
 
 
 
@@ -59,7 +78,7 @@ public class MessageConfig {
         try (TopicConnection topicConnection = factory.createTopicConnection(SEC_CRED_LOGIN, SEC_CRED_PASS);
              TopicSession session = topicConnection.createTopicSession(false, Session.AUTO_ACKNOWLEDGE)) {
             topicConnection.start();
-            topic = session.createTopic("logiweb");
+            topic = session.createTopic("Logiweb");
         }
 
         return topic;

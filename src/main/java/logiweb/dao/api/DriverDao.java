@@ -1,6 +1,7 @@
 package logiweb.dao.api;
 
 import logiweb.dao.generic.GenericDAO;
+import logiweb.dto.DriverDto;
 import logiweb.entity.Driver;
 import logiweb.entity.Order;
 
@@ -26,4 +27,8 @@ public interface DriverDao extends GenericDAO<Driver> {
     Integer getCountAllDrivers();
 
     Integer getCountFreeDrivers();
+
+    boolean isUserAssignToOrder(Integer userId);
+
+    Driver getByPersonalNumber(Long personalNumber);
 }

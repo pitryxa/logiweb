@@ -31,7 +31,8 @@
             </div>
             <div class="form-group row">
                 <label for="capacity" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>
-                <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">
+<%--                <input type="text" name="capacity" id="capacity" class="form-control col-sm-10">--%>
+                <input type="number" step="1" min="1" name="capacity" id="capacity" class="form-control col-sm-10" required>
             </div>
             <div class="form-group row">
                 <label for="city" class=" text-cadetblue col-form-label col-sm-2 font-weight-bold">City</label>
@@ -42,7 +43,7 @@
                 </select>
             </div>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mlr10">${title}</button>
+                <button type="submit" class="btn btn-success mlr10" onclick="return validateTruck()">${title}</button>
                 <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
             </div>
         </form>

@@ -26,4 +26,6 @@ public interface TruckService {
     Integer getOrderByTruck(Truck truck);
 
     TruckRestDto getTruckRestDto();
+
+    TruckDto getByRegNumber(String regNumber);
 }

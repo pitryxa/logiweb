@@ -70,13 +70,15 @@ public class OrderConverter {
     }
 
     private String getCurrentWaypoint(List<WaypointEntity> waypoints) {
+        final String NONE = "NONE";
+
         for (WaypointEntity w : waypoints) {
             if (w.getStatus() == WaypointStatus.UNDONE) {
                 return w.getCity().getName();
             }
         }
 
-        return null;
+        return NONE;
     }
 
     private List<String> getDriversNames(List<Driver> drivers) {

@@ -32,11 +32,13 @@
                 <input type="hidden" name="id" value="${cargo.id}">
                 <div class="form-group row">
                     <label for="name" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Name</label>
-                    <input type="text" name="name" id="name" value="${cargo.name}" class="form-control col-sm-10">
+                    <input type="text" name="name" id="name" value="${cargo.name}" class="form-control col-sm-10"
+                           required>
                 </div>
                 <div class="form-group row">
                     <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight</label>
-                    <input type="text" name="weight" id="weight" value="${cargo.weight}" class="form-control col-sm-10">
+                    <input type="number" step="1" min="1" required name="weight" id="weight" value="${cargo.weight}"
+                           class="form-control col-sm-10">
                 </div>
                 <div class="form-group row">
                     <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
@@ -73,7 +75,8 @@
                     </select>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-success mlr10">${title}</button>
+                    <button type="submit" class="btn btn-success mlr10"
+                            onclick="return validateCargo()">${title}</button>
                     <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>
                 </div>
             </form>
