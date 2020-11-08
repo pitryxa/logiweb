@@ -16,4 +16,6 @@ public interface WaypointService {
     WaypointDto getById(int id);
 
     void doneWaypoint(int id, int orderId);
+
+    WaypointDto getCurrentWaypointFromOrder(OrderDto orderDto);
 }

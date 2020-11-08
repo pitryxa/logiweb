@@ -38,14 +38,12 @@ public class DriverPersonalController {
         }
 
         OrderDto orderDto = driverService.getOrderByDriver(currentDriver);
-        WaypointDto currentWaypoint = null;
-        for (WaypointDto w : orderDto.getWaypoints()) {
-            if (w.getStatus() == WaypointStatus.UNDONE) {
-                currentWaypoint = w;
-                break;
-            }
+
+        if (orderDto == null) {
+            throw new RuntimeException("Not found assigned order!");
         }
-        if (orderDto == null || currentWaypoint == null) {
+        WaypointDto currentWaypoint = waypointService.getCurrentWaypointFromOrder(orderDto);
+        if (currentWaypoint == null) {
             throw new RuntimeException("Not found assigned order!");
         }
         model.addAttribute("order", orderDto);
@@ -65,21 +63,9 @@ public class DriverPersonalController {
         return "redirect:/driver/order";
     }
 
-//    @GetMapping("/change-status")
-//    public String changeStatus(Model model) {
-//        DriverDto currentDriver = driverService.getCurrentDriver();
-//
-//        model.addAttribute("statuses", Arrays.stream(DriverStatus.values())
-//                                             .limit(3)
-//                                             .filter(status -> status != currentDriver.getStatus())
-//                                             .collect(Collectors.toList()));
-//        return "driverPersonal/changeStatus";
-//    }
-
     @PostMapping("/change-status")
     public String changeStatus(@RequestParam("status") DriverStatus status) {
         driverService.changeDriversStatusesInOrder(status);
-
         return "redirect:/driver/order";
     }
 
@@ -92,8 +78,6 @@ public class DriverPersonalController {
     @PostMapping("/done-waypoint")
     public String doneWaypointPost(@RequestParam("id") int id, @RequestParam("orderId") int orderId, Model model) {
         waypointService.doneWaypoint(id, orderId);
-
-
         return "redirect:/driver/order";
     }
 

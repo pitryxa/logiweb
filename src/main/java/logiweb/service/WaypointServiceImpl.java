@@ -9,10 +9,7 @@ import logiweb.dto.*;
 import logiweb.entity.Cargo;
 import logiweb.entity.Driver;
 import logiweb.entity.Truck;
-import logiweb.entity.enums.CargoStatus;
-import logiweb.entity.enums.DriverStatus;
-import logiweb.entity.enums.OrderStatus;
-import logiweb.entity.enums.TruckWorkStatus;
+import logiweb.entity.enums.*;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.TruckService;
 import logiweb.service.api.WaypointService;
@@ -102,5 +99,17 @@ public class WaypointServiceImpl implements WaypointService {
         }
 
         logger.info("Waypoint is complete.");
+    }
+
+    @Override
+    public WaypointDto getCurrentWaypointFromOrder(OrderDto orderDto) {
+        WaypointDto currentWaypoint = null;
+        for (WaypointDto w : orderDto.getWaypoints()) {
+            if (w.getStatus() == WaypointStatus.UNDONE) {
+                currentWaypoint = w;
+                break;
+            }
+        }
+        return null;
     }
 }

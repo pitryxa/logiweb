@@ -98,7 +98,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getOrderByTruckId(Integer truckId) {
-        OrderDto orderDto = orderConverter.toDto(orderDao.getOrderByTruckId(truckId));
+        Order order = orderDao.getOrderByTruckId(truckId);
+
+        if (order == null) {
+            return null;
+        }
+
+        OrderDto orderDto = orderConverter.toDto(order);
         orderDto.setWaypoints(sortWaypointList(orderDto.getWaypoints()));
         return orderDto;
     }
