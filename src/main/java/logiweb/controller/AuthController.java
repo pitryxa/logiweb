@@ -48,7 +48,6 @@ public class AuthController {
         if (error != null) {
             model.addAttribute("error", "Email or password is incorrect.");
         }
-
         return "login";
     }
 
