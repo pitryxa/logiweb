@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 public class Dijkstra {
-    @Autowired
-    private static CityService cityService;
 
     private static Map<Integer, Node> nodes;
     private static Graph graph;
@@ -78,8 +76,24 @@ public class Dijkstra {
         }
 
         for (DistanceDto distance : distances) {
-            int idFrom = cityService.getByName(distance.getCityFrom()).getId();
-            int idTo = cityService.getByName(distance.getCityTo()).getId();
+            String cityFrom = distance.getCityFrom();
+            String cityTo = distance.getCityTo();
+
+            int idFrom = 0;
+            int idTo = 0;
+
+            for (CityDto city : cities) {
+                if (city.getName().equals(cityFrom)) {
+                    idFrom = city.getId();
+                }
+                if (city.getName().equals(cityTo)) {
+                    idTo = city.getId();
+                }
+                if (idFrom > 0 && idTo > 0) {
+                    break;
+                }
+            }
+
             nodes.get(idFrom).addDestination(nodes.get(idTo), distance.getDistance());
         }
 

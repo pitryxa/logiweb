@@ -13,7 +13,6 @@ import javax.persistence.*;
 public abstract class BaseEntity {
     @Id
     @Column
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @ToString.Include
     private Integer id;
