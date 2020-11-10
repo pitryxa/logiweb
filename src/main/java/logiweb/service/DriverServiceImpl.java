@@ -325,10 +325,6 @@ public class DriverServiceImpl implements DriverService {
         driverEditDto.setTimeLastChangeStatus(LocalDateTime.now());
         driverEditDto.setStatus(DriverStatus.DISABLED);
 
-//        UserDto userDto = userService.getById(driverEditDto.getUserId());
-//        userDto.setRole(Role.ROLE_NONE);
-//        userService.edit(userDto);
-
         User user = userDao.getById(driverEditDto.getUserId());
         user.setRole(Role.ROLE_NONE);
         userDao.update(user);
@@ -348,6 +344,12 @@ public class DriverServiceImpl implements DriverService {
         }
 
         return null;
+    }
+
+    @Override
+    public void setStatusAllDriversInOrder(DriverStatus newStatus) {
+        List<Driver> drivers = getCurrentDriverEntity().getTruck().getDrivers();
+        drivers.forEach(driver -> changeStatus(driver, newStatus));
     }
 
     private void addWorkTimeToDriver(Driver driver) {
@@ -370,7 +372,7 @@ public class DriverServiceImpl implements DriverService {
         return orderDao.getOrderByTruckId(driver.getTruck().getId());
     }
 
-    private Driver getCurrentDriverEntity() {
+    public Driver getCurrentDriverEntity() {
         String currentUserName = getCurrentUserName();
         int userId = userDao.getUserIdByEmail(currentUserName);
 

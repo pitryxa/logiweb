@@ -91,7 +91,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getById(int id) {
-        OrderDto orderDto = orderConverter.toDto(orderDao.getById(id));
+        Order order = orderDao.getById(id);
+
+        if (order == null) {
+            return null;
+        }
+
+        OrderDto orderDto = orderConverter.toDto(order);
         orderDto.setWaypoints(sortWaypointList(orderDto.getWaypoints()));
         return orderDto;
     }
@@ -141,21 +147,7 @@ public class OrderServiceImpl implements OrderService {
         truckDao.update(truckEntity);
 
         //add order to db
-        Order order = createOrder(truckEntity, route.getDistance());
-        int count = 1;
-        for (Waypoint w : wpFromRoute) {
-            if (w.getCargoes().isEmpty()) {
-                order.getWaypointEntities().add(getWaypointEntityFromCargo(wpFromRoute.getLast(), null, count, order));
-                break;
-            }
-
-            for (Map.Entry<CargoDto, OperationTypeOnWaypoint> entry : w.getCargoes().entrySet()) {
-                WaypointEntity waypointEntity = getWaypointEntityFromCargo(w, entry, count, order);
-                order.getWaypointEntities().add(waypointEntity);
-                count++;
-            }
-
-        }
+        Order order = createOrder(truckEntity, route.getDistance(), wpFromRoute);
         orderDao.create(order);
         final int orderId = order.getId();
 
@@ -194,12 +186,28 @@ public class OrderServiceImpl implements OrderService {
         return waypointEntity;
     }
 
-    private Order createOrder(Truck truck, Integer distance) {
+    private Order createOrder(Truck truck, Integer distance, Deque<Waypoint> wpFromRoute) {
         Order order = new Order();
         order.setTruck(truck);
         order.setStatus(OrderStatus.PREPARED);
         order.setDistance(distance);
         order.setWaypointEntities(new LinkedList<>());
+
+        int count = 1;
+        for (Waypoint w : wpFromRoute) {
+            if (w.getCargoes().isEmpty()) {
+                order.getWaypointEntities().add(getWaypointEntityFromCargo(wpFromRoute.getLast(), null, count, order));
+                break;
+            }
+
+            for (Map.Entry<CargoDto, OperationTypeOnWaypoint> entry : w.getCargoes().entrySet()) {
+                WaypointEntity waypointEntity = getWaypointEntityFromCargo(w, entry, count, order);
+                order.getWaypointEntities().add(waypointEntity);
+                count++;
+            }
+
+        }
+
         return order;
     }
 }

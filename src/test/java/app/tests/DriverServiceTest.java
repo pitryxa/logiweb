@@ -7,6 +7,7 @@ import logiweb.dao.api.DriverDao;
 import logiweb.dao.api.OrderDao;
 import logiweb.dao.api.UserDao;
 import logiweb.dto.DriverDto;
+import logiweb.entity.enums.DriverStatus;
 import logiweb.service.DriverServiceImpl;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.OrderService;
@@ -16,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 
@@ -27,6 +29,7 @@ import static app.tests.DataInit.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,6 +58,7 @@ public class DriverServiceTest {
     @Mock
     private DriversCalc driversCalc;
 
+    @Spy
     @InjectMocks
     private DriverServiceImpl driverServiceTest;
 
@@ -90,6 +94,104 @@ public class DriverServiceTest {
         when(driverConverter.toListDto(argThat(list -> list.size() == 0))).thenReturn(new ArrayList<>());
         when(driversCalc.getWorkHoursForEveryDriver(any(), any())).thenReturn(80.0);
         assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 0);
+    }
+
+    @Test
+    public void testChangeDriversStatusesInOrder() {
+        doReturn(firstDriver).when(driverServiceTest).getCurrentDriverEntity();
+
+        firstDriver.setStatus(DriverStatus.SECOND_DRIVER);
+        driverServiceTest.changeDriversStatusesInOrder(DriverStatus.ACTIVE_DRIVER);
+        assertEquals(firstDriver.getStatus(), DriverStatus.ACTIVE_DRIVER);
+        assertEquals(secondDriver.getStatus(), DriverStatus.SECOND_DRIVER);
+
+        firstDriver.setStatus(DriverStatus.SECOND_DRIVER);
+        secondDriver.setStatus(DriverStatus.ACTIVE_DRIVER);
+        driverServiceTest.changeDriversStatusesInOrder(DriverStatus.LOAD_UNLOAD);
+        assertEquals(firstDriver.getStatus(), DriverStatus.LOAD_UNLOAD);
+        assertEquals(secondDriver.getStatus(), DriverStatus.SECOND_DRIVER);
+
+        firstDriver.setStatus(DriverStatus.SECOND_DRIVER);
+        secondDriver.setStatus(DriverStatus.LOAD_UNLOAD);
+        driverServiceTest.changeDriversStatusesInOrder(DriverStatus.LOAD_UNLOAD);
+        assertEquals(firstDriver.getStatus(), DriverStatus.LOAD_UNLOAD);
+        assertEquals(secondDriver.getStatus(), DriverStatus.LOAD_UNLOAD);
+
+        firstDriver.setStatus(DriverStatus.LOAD_UNLOAD);
+        secondDriver.setStatus(DriverStatus.ACTIVE_DRIVER);
+        driverServiceTest.changeDriversStatusesInOrder(DriverStatus.ACTIVE_DRIVER);
+        assertEquals(firstDriver.getStatus(), DriverStatus.ACTIVE_DRIVER);
+        assertEquals(secondDriver.getStatus(), DriverStatus.SECOND_DRIVER);
+    }
+
+    @Test
+    public void testChangeStatus() {
+        when(driversCalc.getWorkTime(any())).thenReturn(10.0);
+
+        firstDriver.setStatus(DriverStatus.ACTIVE_DRIVER);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.ACTIVE_DRIVER);
+        assertEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.ACTIVE_DRIVER);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.SECOND_DRIVER);
+        assertNotEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.ACTIVE_DRIVER);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.LOAD_UNLOAD);
+        assertNotEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.ACTIVE_DRIVER);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.RECREATION);
+        assertNotEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.LOAD_UNLOAD);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.ACTIVE_DRIVER);
+        assertNotEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.LOAD_UNLOAD);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.SECOND_DRIVER);
+        assertNotEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.LOAD_UNLOAD);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.RECREATION);
+        assertNotEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+
+        setUpFirstDriver();
+        firstDriver.setStatus(DriverStatus.SECOND_DRIVER);
+        driverServiceTest.changeStatus(firstDriver, DriverStatus.ACTIVE_DRIVER);
+        assertEquals(firstDriver.getWorkHours(), firstDriverDto.getWorkHours());
+    }
+
+    @Test
+    public void testGetOrderId() {
+        when(driverDao.getOrderByDriver(any())).thenReturn(order);
+        assertEquals(driverServiceTest.getOrderId(firstDriver), firstDriverDto.getId());
+    }
+
+    @Test
+    public void testGetOrderIdNull() {
+        when(driverDao.getOrderByDriver(any())).thenReturn(null);
+        assertNull(driverServiceTest.getOrderId(firstDriver));
+    }
+
+    @Test
+    public void testGetByPersonalNumber() {
+        when(driverDao.getByPersonalNumber(any())).thenReturn(firstDriver);
+        when(driverConverter.toDto(firstDriver)).thenReturn(firstDriverDto);
+        assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(), firstDriverDto.getId());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testGetByPersonalNumberNull() {
+        when(driverDao.getByPersonalNumber(any())).thenReturn(null);
+        when(driverConverter.toDto(firstDriver)).thenReturn(firstDriverDto);
+        assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(), firstDriverDto.getId());
     }
 
 

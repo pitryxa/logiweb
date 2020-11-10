@@ -65,7 +65,8 @@ public class TruckServiceImpl implements TruckService {
 
     @Override
     public TruckDto getById(int id) {
-        return truckConverter.toDto(truckDao.getById(id));
+        Truck truck = truckDao.getById(id);
+        return truck == null ? null : truckConverter.toDto(truck);
     }
 
     @Override
@@ -105,11 +106,11 @@ public class TruckServiceImpl implements TruckService {
     public TruckDto getByRegNumber(String regNumber) {
         Truck truck = truckDao.getByRegNumber(regNumber);
 
-        if (truck != null) {
-            logger.info(String.format("The truck with reg. number %s already exists.", regNumber));
-            return truckConverter.toDto(truck);
+        if (truck == null) {
+            return null;
         }
-        return null;
+        logger.info(String.format("The truck with reg. number %s exists.", regNumber));
+        return truckConverter.toDto(truck);
     }
 
     private Map<City, Integer> getStartCityAndSummaryWeightFromCargoes(List<CargoDto> cargoes){

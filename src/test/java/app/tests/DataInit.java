@@ -16,50 +16,50 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class DataInit {
-    static CargoDto cargoDto;
-    static CityDto cityDtoFrom;
-    static CityDto cityDtoTo;
-    static DistanceDto distanceDto;
-    static DriverDto firstDriverDto;
-    static DriverDto secondDriverDto;
-    static SimpleDriverDto firstSimpleDriverDto;
-    static SimpleDriverDto secondSimpleDriverDto;
-    static OrderDto orderDto;
-    static TruckDto truckDto;
-    static SimpleTruckDto simpleTruckDto;
-    static UserDto userDtoFirstDriver;
-    static UserDto userDtoSecondDriver;
-    static UserDto userDtoNew;
-    static UserDto userDtoFreeDriver;
-    static WaypointDto firstWaypointDto;
-    static WaypointDto secondWaypointDto;
-    static WaypointDto thirdWaypointDto;
+    static CargoDto cargoDto = new CargoDto();
+    static CityDto cityDtoFrom = new CityDto();
+    static CityDto cityDtoTo = new CityDto();
+    static DistanceDto distanceDto = new DistanceDto();
+    static DriverDto firstDriverDto = new DriverDto();
+    static DriverDto secondDriverDto = new DriverDto();
+    static SimpleDriverDto firstSimpleDriverDto = new SimpleDriverDto();
+    static SimpleDriverDto secondSimpleDriverDto = new SimpleDriverDto();
+    static OrderDto orderDto = new OrderDto();
+    static TruckDto truckDto = new TruckDto();
+    static SimpleTruckDto simpleTruckDto = new SimpleTruckDto();
+    static UserDto userDtoFirstDriver = new UserDto();
+    static UserDto userDtoSecondDriver = new UserDto();
+    static UserDto userDtoNew = new UserDto();
+    static UserDto userDtoFreeDriver = new UserDto();
+    static WaypointDto firstWaypointDto = new WaypointDto();
+    static WaypointDto secondWaypointDto = new WaypointDto();
+    static WaypointDto thirdWaypointDto = new WaypointDto();
 
-    static Cargo cargo;
-    static City cityFrom;
-    static City cityTo;
-    static Distance distance;
-    static Driver firstDriver;
-    static Driver secondDriver;
-    static Order order;
-    static Truck truck;
-    static User userFirstDriver;
-    static User userSecondDriver;
-    static User userNew;
-    static User userFreeDriver;
-    static WaypointEntity firstWaypointEntity;
-    static WaypointEntity secondWaypointEntity;
-    static WaypointEntity thirdWaypointEntity;
+    static Cargo cargo = new Cargo();
+    static City cityFrom = new City();
+    static City cityTo = new City();
+    static Distance distance = new Distance();
+    static Driver firstDriver = new Driver();
+    static Driver secondDriver = new Driver();
+    static Order order = new Order();
+    static Truck truck = new Truck();
+    static User userFirstDriver = new User();
+    static User userSecondDriver = new User();
+    static User userNew = new User();
+    static User userFreeDriver = new User();
+    static WaypointEntity firstWaypointEntity = new WaypointEntity();
+    static WaypointEntity secondWaypointEntity = new WaypointEntity();
+    static WaypointEntity thirdWaypointEntity = new WaypointEntity();
 
-    static DisplayRestDto displayRestDto;
-    static DriverRestDto driverRestDto;
-    static OrderRestDto orderRestDto;
-    static TruckRestDto truckRestDto;
+    static DisplayRestDto displayRestDto = new DisplayRestDto();
+    static DriverRestDto driverRestDto = new DriverRestDto();
+    static OrderRestDto orderRestDto = new OrderRestDto();
+    static TruckRestDto truckRestDto = new TruckRestDto();
 
-    static Route route;
-    static Waypoint waypointFirst;
-    static Waypoint waypointSecond;
-    static Waypoint waypointThird;
+    static Route route = new Route();
+    static Waypoint waypointFirst = new Waypoint();
+    static Waypoint waypointSecond = new Waypoint();
+    static Waypoint waypointThird = new Waypoint();
 
     public static void setUpAll() {
         setUpCityDtoFrom();
@@ -83,6 +83,8 @@ public class DataInit {
         setUpUserFreeDriver();
 
         setUpSimpleTruckDto();
+        setUpTruckDto();
+        setUpTruck();
 
         setUpFirstDriverDto();
         setUpFirstDriver();
@@ -91,16 +93,8 @@ public class DataInit {
         setUpSecondDriver();
         setUpSecondSimpleDriverDto();
 
-        setUpTruckDto();
-        setUpTruck();
-
         setUpOrder();
-
-
         setUpOrderDto();
-
-
-
 
         setUpFirstWaypointDto();
         setUpSecondWaypointDto();
@@ -108,9 +102,11 @@ public class DataInit {
         setUpFirstWaypoint();
         setUpSecondWaypoint();
         setUpThirdWaypoint();
+
         setUpDisplayRestDto();
         setUpDriverRestDto();
         setUpTruckRestDto();
+
         setUpRoute();
         setUpWaypointFirst();
         setUpWaypointSecond();
@@ -118,7 +114,6 @@ public class DataInit {
     }
 
     public static void setUpCargoDto() {
-        cargoDto = new CargoDto();
         cargoDto.setId(1000);
         cargoDto.setName("TestCargoName");
         cargoDto.setWeight(1234);
@@ -129,7 +124,6 @@ public class DataInit {
     }
 
     public static void setUpCargo() {
-        cargo = new Cargo();
         cargo.setId(1000);
         cargo.setName("TestCargoName");
         cargo.setWeight(1234);
@@ -139,31 +133,26 @@ public class DataInit {
     }
 
     public static void setUpCityDtoFrom() {
-        cityDtoFrom = new CityDto();
         cityDtoFrom.setId(1000);
         cityDtoFrom.setName("Moscow");
     }
 
     public static void setUpCityDtoTo() {
-        cityDtoTo = new CityDto();
         cityDtoTo.setId(1001);
         cityDtoTo.setName("Vologda");
     }
 
     public static void setUpCityFrom() {
-        cityFrom = new City();
         cityFrom.setId(1000);
         cityFrom.setName("Moscow");
     }
 
     public static void setUpCityTo() {
-        cityTo = new City();
         cityTo.setId(1001);
         cityTo.setName("Vologda");
     }
 
     public static void setUpDistanceDto() {
-        distanceDto = new DistanceDto();
         distanceDto.setId(1000);
         distanceDto.setCityFrom(cityDtoFrom.getName());
         distanceDto.setCityTo(cityDtoTo.getName());
@@ -171,7 +160,6 @@ public class DataInit {
     }
 
     public static void setUpDistance() {
-        distance = new Distance();
         distance.setId(1000);
         distance.setCityFrom(cityFrom);
         distance.setCityTo(cityTo);
@@ -179,7 +167,6 @@ public class DataInit {
     }
 
     public static void setUpFirstDriverDto() {
-        firstDriverDto = new DriverDto();
         firstDriverDto.setId(1000);
         firstDriverDto.setPersonalNumber(123456L);
         firstDriverDto.setUser(userDtoFirstDriver);
@@ -192,7 +179,6 @@ public class DataInit {
     }
 
     public static void setUpFirstDriver() {
-        firstDriver = new Driver();
         firstDriver.setId(1000);
         firstDriver.setPersonalNumber(123456L);
         firstDriver.setUser(userFirstDriver);
@@ -204,7 +190,6 @@ public class DataInit {
     }
 
     public static void setUpFirstSimpleDriverDto() {
-        firstSimpleDriverDto = new SimpleDriverDto();
         firstSimpleDriverDto.setId(1000);
         firstSimpleDriverDto.setPersonalNumber(123456L);
         firstSimpleDriverDto.setUser(userDtoFirstDriver);
@@ -212,7 +197,6 @@ public class DataInit {
     }
 
     public static void setUpSecondDriverDto() {
-        secondDriverDto = new DriverDto();
         secondDriverDto.setId(1001);
         secondDriverDto.setPersonalNumber(654321L);
         secondDriverDto.setUser(userDtoSecondDriver);
@@ -225,7 +209,6 @@ public class DataInit {
     }
 
     public static void setUpSecondDriver() {
-        secondDriver = new Driver();
         secondDriver.setId(1001);
         secondDriver.setPersonalNumber(654321L);
         secondDriver.setUser(userSecondDriver);
@@ -237,7 +220,6 @@ public class DataInit {
     }
 
     public static void setUpSecondSimpleDriverDto() {
-        secondSimpleDriverDto = new SimpleDriverDto();
         secondSimpleDriverDto.setId(1001);
         secondSimpleDriverDto.setPersonalNumber(654321L);
         secondSimpleDriverDto.setUser(userDtoSecondDriver);
@@ -245,7 +227,6 @@ public class DataInit {
     }
 
     public static void setUpOrderDto() {
-        orderDto = new OrderDto();
         orderDto.setId(1000);
         orderDto.setTruck(simpleTruckDto);
         orderDto.setDrivers(Arrays.asList(firstSimpleDriverDto, secondSimpleDriverDto));
@@ -254,18 +235,14 @@ public class DataInit {
     }
 
     public static void setUpOrder() {
-        order = new Order();
         order.setId(1000);
         order.setTruck(truck);
         order.setStatus(OrderStatus.PREPARED);
         order.setWaypointEntities(Arrays.asList(firstWaypointEntity, secondWaypointEntity, thirdWaypointEntity));
-//        order.setWaypointEntities(new ArrayList<WaypointEntity>(Stream.of(firstWaypointEntity, secondWaypointEntity, thirdWaypointEntity).collect(
-//                Collectors.toList())));
         order.setDistance(940);
     }
 
     public static void setUpTruckDto() {
-        truckDto = new TruckDto();
         truckDto.setId(1000);
         truckDto.setRegNumber("AB12345");
         truckDto.setShiftSize(2);
@@ -278,7 +255,6 @@ public class DataInit {
     }
 
     public static void setUpTruck() {
-        truck = new Truck();
         truck.setId(1000);
         truck.setRegNumber("AB12345");
         truck.setShiftSize(2);
@@ -290,13 +266,11 @@ public class DataInit {
     }
 
     public static void setUpSimpleTruckDto() {
-        simpleTruckDto = new SimpleTruckDto();
         simpleTruckDto.setId(1000);
         simpleTruckDto.setRegNumber("AB12345");
     }
 
     public static void setUpUserDtoFirstDriver() {
-        userDtoFirstDriver = new UserDto();
         userDtoFirstDriver.setId(1000);
         userDtoFirstDriver.setFirstName("Sergey");
         userDtoFirstDriver.setLastName("Esenin");
@@ -307,7 +281,6 @@ public class DataInit {
     }
 
     public static void setUpUserDtoSecondDriver() {
-        userDtoSecondDriver = new UserDto();
         userDtoSecondDriver.setId(1001);
         userDtoSecondDriver.setFirstName("Alexander");
         userDtoSecondDriver.setLastName("Block");
@@ -318,7 +291,6 @@ public class DataInit {
     }
 
     public static void setUpUserFirstDriver() {
-        userFirstDriver = new User();
         userFirstDriver.setId(1000);
         userFirstDriver.setFirstName("Sergey");
         userFirstDriver.setLastName("Esenin");
@@ -328,7 +300,6 @@ public class DataInit {
     }
 
     public static void setUpUserSecondDriver() {
-        userSecondDriver = new User();
         userSecondDriver.setId(1001);
         userSecondDriver.setFirstName("Alexander");
         userSecondDriver.setLastName("Block");
@@ -338,7 +309,6 @@ public class DataInit {
     }
 
     public static void setUpUserDtoNew() {
-        userDtoNew = new UserDto();
         userDtoNew.setId(1002);
         userDtoNew.setFirstName("Ivan");
         userDtoNew.setLastName("Ivanov");
@@ -349,7 +319,6 @@ public class DataInit {
     }
 
     public static void setUpUserNew() {
-        userNew = new User();
         userNew.setId(1002);
         userNew.setFirstName("Ivan");
         userNew.setLastName("Ivanov");
@@ -359,19 +328,16 @@ public class DataInit {
     }
 
     public static void setUpUserDtoFreeDriver() {
-        userDtoFreeDriver = new UserDto();
         userDtoFreeDriver.setId(1003);
         userDtoFreeDriver.setRole(Role.ROLE_DRIVER);
     }
 
     public static void setUpUserFreeDriver() {
-        userFreeDriver = new User();
         userFreeDriver.setId(1003);
         userFreeDriver.setRole(Role.ROLE_DRIVER);
     }
 
     public static void setUpFirstWaypointDto() {
-        firstWaypointDto = new WaypointDto();
         firstWaypointDto.setId(1000);
         firstWaypointDto.setOrderId(1000);
         firstWaypointDto.setCity("Moscow");
@@ -382,7 +348,6 @@ public class DataInit {
     }
 
     public static void setUpSecondWaypointDto() {
-        secondWaypointDto = new WaypointDto();
         secondWaypointDto.setId(1001);
         secondWaypointDto.setOrderId(1000);
         secondWaypointDto.setCity("Vologda");
@@ -393,7 +358,6 @@ public class DataInit {
     }
 
     public static void setUpThirdWaypointDto() {
-        thirdWaypointDto = new WaypointDto();
         thirdWaypointDto.setId(1002);
         thirdWaypointDto.setOrderId(1000);
         thirdWaypointDto.setCity("Moscow");
@@ -404,7 +368,6 @@ public class DataInit {
     }
 
     public static void setUpFirstWaypoint() {
-        firstWaypointEntity = new WaypointEntity();
         firstWaypointEntity.setId(1000);
         firstWaypointEntity.setOrder(order);
         firstWaypointEntity.setCity(cityFrom);
@@ -415,7 +378,6 @@ public class DataInit {
     }
 
     public static void setUpSecondWaypoint() {
-        secondWaypointEntity = new WaypointEntity();
         secondWaypointEntity.setId(1001);
         secondWaypointEntity.setOrder(order);
         secondWaypointEntity.setCity(cityTo);
@@ -426,7 +388,6 @@ public class DataInit {
     }
 
     public static void setUpThirdWaypoint() {
-        thirdWaypointEntity = new WaypointEntity();
         thirdWaypointEntity.setId(1002);
         thirdWaypointEntity.setOrder(order);
         thirdWaypointEntity.setCity(cityFrom);
@@ -437,27 +398,23 @@ public class DataInit {
     }
 
     public static void setUpDisplayRestDto() {
-        displayRestDto = new DisplayRestDto();
         displayRestDto.setOrders(Arrays.asList(orderRestDto));
         displayRestDto.setDrivers(driverRestDto);
         displayRestDto.setTrucks(truckRestDto);
     }
 
     public static void setUpDriverRestDto() {
-        driverRestDto = new DriverRestDto();
         driverRestDto.setAll(2);
         driverRestDto.setFree(0);
     }
 
     public static void setUpTruckRestDto() {
-        truckRestDto = new TruckRestDto();
         truckRestDto.setAll(1);
         truckRestDto.setBroken(0);
         truckRestDto.setFree(0);
     }
 
     public static void setUpRoute() {
-        route = new Route();
         route.setDistance(940);
         route.setWaypoints(new LinkedList<>(Arrays.asList(waypointFirst, waypointSecond, waypointThird)));
     }
@@ -466,7 +423,6 @@ public class DataInit {
         Map<CargoDto, OperationTypeOnWaypoint> cargoes = new LinkedHashMap<>();
         cargoes.put(cargoDto, OperationTypeOnWaypoint.LOAD);
 
-        waypointFirst = new Waypoint();
         waypointFirst.setCity(cityDtoFrom);
         waypointFirst.setCargoes(cargoes);
         waypointFirst.setSumWeight(1234);
@@ -477,7 +433,6 @@ public class DataInit {
         Map<CargoDto, OperationTypeOnWaypoint> cargoes = new LinkedHashMap<>();
         cargoes.put(cargoDto, OperationTypeOnWaypoint.UNLOAD);
 
-        waypointSecond = new Waypoint();
         waypointSecond.setCity(cityDtoTo);
         waypointSecond.setCargoes(cargoes);
         waypointSecond.setSumWeight(0);
@@ -485,7 +440,6 @@ public class DataInit {
     }
 
     public static void setUpWaypointThird() {
-        waypointThird = new Waypoint();
         waypointThird.setCity(cityDtoFrom);
         waypointThird.setCargoes(null);
         waypointThird.setSumWeight(0);

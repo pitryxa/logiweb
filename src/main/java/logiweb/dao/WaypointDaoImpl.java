@@ -37,10 +37,12 @@ public class WaypointDaoImpl extends GenericDAOImpl<WaypointEntity> implements W
 
     @Override
     public WaypointEntity getById(int id) {
-        List<WaypointEntity> list = entityManager.createQuery("select w from WaypointEntity w where w.id = ?1")
-                                                     .setParameter(1, id)
-                                                     .getResultList();
-        return list.isEmpty() ? new WaypointEntity() : list.get(0);
+//        List<WaypointEntity> list = entityManager.createQuery("select w from WaypointEntity w where w.id = ?1")
+//                                                     .setParameter(1, id)
+//                                                     .getResultList();
+//        return list.isEmpty() ? new WaypointEntity() : list.get(0);
+
+        return entityManager.find(WaypointEntity.class, id);
     }
 
     @Override

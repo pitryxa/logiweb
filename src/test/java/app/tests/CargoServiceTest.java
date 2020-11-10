@@ -28,10 +28,10 @@ public class CargoServiceTest {
         assertEquals(cargoService.getPreparedCargo().size(), 0);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testGetOrderIdByCargoNull() {
         when(cargoDao.getOrderByCargo(cargo)).thenReturn(null);
-        assertEquals(cargoService.getOrderId(cargo),orderDto.getId());
+        assertEquals(cargoService.getOrderId(cargo),null);
     }
 
 

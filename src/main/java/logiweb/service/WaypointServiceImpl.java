@@ -9,6 +9,7 @@ import logiweb.dto.*;
 import logiweb.entity.Cargo;
 import logiweb.entity.Driver;
 import logiweb.entity.Truck;
+import logiweb.entity.WaypointEntity;
 import logiweb.entity.enums.*;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.TruckService;
@@ -70,14 +71,16 @@ public class WaypointServiceImpl implements WaypointService {
 
     @Override
     public WaypointDto getById(int id) {
-        return waypointConverter.toDto(waypointDao.getById(id));
+        WaypointEntity waypointEntity = waypointDao.getById(id);
+        return waypointEntity == null ? null : waypointConverter.toDto(waypointEntity);
     }
 
     @Override
     @Transactional
     public void doneWaypoint(int id, int orderId) {
         waypointDao.doneWaypoint(id);
-        driverService.changeDriversStatusesInOrder(DriverStatus.SECOND_DRIVER);
+//        driverService.changeDriversStatusesInOrder(DriverStatus.SECOND_DRIVER);
+        driverService.setStatusAllDriversInOrder(DriverStatus.SECOND_DRIVER);
 
         if (waypointDao.isUnloadWaypoint(id)) {
             Cargo cargo = waypointDao.getCargoByWaypointId(id);
@@ -110,6 +113,6 @@ public class WaypointServiceImpl implements WaypointService {
                 break;
             }
         }
-        return null;
+        return currentWaypoint;
     }
 }

@@ -53,4 +53,6 @@ public interface DriverService {
     void disableDriver(DriverEditDto driverEditDto);
 
     DriverDto getByPersonalNumber(Long personalNumber);
+
+    void setStatusAllDriversInOrder(DriverStatus newStatus);
 }
