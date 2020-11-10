@@ -210,7 +210,7 @@ public class DriverServiceImpl implements DriverService {
         Driver driver = getCurrentDriverEntity();
         Order order = getOrderEntityByDriver(driver);
 
-        changeStatus(driver, DriverStatus.ACTIVE_DRIVER);
+        changeStatus(driver, DriverStatus.SECOND_DRIVER);
 
         order.setStatus(OrderStatus.IN_PROGRESS);
         orderDao.update(order);
