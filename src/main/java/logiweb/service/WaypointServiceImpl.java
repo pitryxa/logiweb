@@ -1,5 +1,6 @@
 package logiweb.service;
 
+import logiweb.aop.SendUpdate;
 import logiweb.converter.WaypointConverter;
 import logiweb.dao.api.CargoDao;
 import logiweb.dao.api.OrderDao;
@@ -77,6 +78,7 @@ public class WaypointServiceImpl implements WaypointService {
 
     @Override
     @Transactional
+    @SendUpdate
     public void doneWaypoint(int id, int orderId) {
         waypointDao.doneWaypoint(id);
 //        driverService.changeDriversStatusesInOrder(DriverStatus.SECOND_DRIVER);
