@@ -190,7 +190,6 @@ public class DriverServiceTest {
     @Test(expected = NullPointerException.class)
     public void testGetByPersonalNumberNull() {
         when(driverDao.getByPersonalNumber(any())).thenReturn(null);
-        when(driverConverter.toDto(firstDriver)).thenReturn(firstDriverDto);
         assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(), firstDriverDto.getId());
     }
 
