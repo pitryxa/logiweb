@@ -25,29 +25,29 @@ public class RoutesCalc {
 
     private List<DistanceDto> allDistances = new ArrayList<>();
 
-    public Integer[][] getMatrixOfDistances() {
-        int size = cityService.countOfCities().intValue();
-        Integer[][] distances = new Integer[size][size];
-
-        List<DistanceDto> distanceList = distanceService.getAll();
-
-        for (DistanceDto dist : distanceList) {
-            int from = dist.getCityFrom().getId();
-            int to = dist.getCityTo().getId();
-
-            distances[from - 1][to - 1] = dist.getDistance();
-        }
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (distances[i][j] == null) {
-                    distances[i][j] = Integer.MAX_VALUE;
-                }
-            }
-        }
-
-        return distances;
-    }
+//    public Integer[][] getMatrixOfDistances() {
+//        int size = cityService.countOfCities().intValue();
+//        Integer[][] distances = new Integer[size][size];
+//
+//        List<DistanceDto> distanceList = distanceService.getAll();
+//
+//        for (DistanceDto dist : distanceList) {
+//            int from = dist.getCityFrom().getId();
+//            int to = dist.getCityTo().getId();
+//
+//            distances[from - 1][to - 1] = dist.getDistance();
+//        }
+//
+//        for (int i = 0; i < size; i++) {
+//            for (int j = 0; j < size; j++) {
+//                if (distances[i][j] == null) {
+//                    distances[i][j] = Integer.MAX_VALUE;
+//                }
+//            }
+//        }
+//
+//        return distances;
+//    }
 
     public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
         allCities = cityService.getAll();
@@ -395,50 +395,50 @@ public class RoutesCalc {
         return findWaypoint;
     }
 
-    private List<Route> minRoutesBetweenCityAndCities(CityDto startCity, List<CityDto> endCities) {
-        Dijkstra.initGraph(allCities, allDistances);
-        Dijkstra.calculateShortestPathFromSource(startCity);
+//    private List<Route> minRoutesBetweenCityAndCities(CityDto startCity, List<CityDto> endCities) {
+//        Dijkstra.initGraph(allCities, allDistances);
+//        Dijkstra.calculateShortestPathFromSource(startCity);
+//
+//        List<Route> routes = new ArrayList<>();
+//
+//        for (CityDto endCity : endCities) {
+//            Node targetNode = Dijkstra.getGraph().getNodeByCity(endCity);
+//
+//            Route route = new Route();
+//            route.setDistance(targetNode.getDistance());
+//
+//            for (Node intermediateNode : targetNode.getShortestPath()) {
+//                route.addWaypoint(new Waypoint(intermediateNode.getCity()));
+//            }
+//            route.addWaypoint(new Waypoint(endCity));
+//
+//            routes.add(route);
+//        }
+//
+//        return routes;
+//    }
 
-        List<Route> routes = new ArrayList<>();
-
-        for (CityDto endCity : endCities) {
-            Node targetNode = Dijkstra.getGraph().getNodeByCity(endCity);
-
-            Route route = new Route();
-            route.setDistance(targetNode.getDistance());
-
-            for (Node intermediateNode : targetNode.getShortestPath()) {
-                route.addWaypoint(new Waypoint(intermediateNode.getCity()));
-            }
-            route.addWaypoint(new Waypoint(endCity));
-
-            routes.add(route);
-        }
-
-        return routes;
-    }
-
-    private Waypoint getWaypointWithMinDistanceToCity(Set<Waypoint> waypoints, CityDto cityDto) {
-        Integer minDistance = Integer.MAX_VALUE;
-        Waypoint waypoint = null;
-
-        List<Route> routes = minRoutesBetweenCityAndCities(cityDto, waypoints.stream()
-                                                                             .map(Waypoint::getCity)
-                                                                             .collect(Collectors.toList()));
-
-        for (Route route : routes) {
-            Integer distance = route.getDistance();
-            if (distance < minDistance) {
-                minDistance = distance;
-                waypoint = waypoints.stream()
-                                    .filter(waypoint1 -> waypoint1.getCity()
-                                                                  .equals(route.getWaypoints().getLast().getCity()))
-                                    .collect(Collectors.toList())
-                                    .get(0);
-                waypoint.setDistanceFromPrevWaypoint(distance);
-            }
-        }
-
-        return waypoint;
-    }
+//    private Waypoint getWaypointWithMinDistanceToCity(Set<Waypoint> waypoints, CityDto cityDto) {
+//        Integer minDistance = Integer.MAX_VALUE;
+//        Waypoint waypoint = null;
+//
+//        List<Route> routes = minRoutesBetweenCityAndCities(cityDto, waypoints.stream()
+//                                                                             .map(Waypoint::getCity)
+//                                                                             .collect(Collectors.toList()));
+//
+//        for (Route route : routes) {
+//            Integer distance = route.getDistance();
+//            if (distance < minDistance) {
+//                minDistance = distance;
+//                waypoint = waypoints.stream()
+//                                    .filter(waypoint1 -> waypoint1.getCity()
+//                                                                  .equals(route.getWaypoints().getLast().getCity()))
+//                                    .collect(Collectors.toList())
+//                                    .get(0);
+//                waypoint.setDistanceFromPrevWaypoint(distance);
+//            }
+//        }
+//
+//        return waypoint;
+//    }
 }

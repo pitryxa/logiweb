@@ -65,15 +65,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void edit(UserDto userDto) {
-        userDto.setPassword(getById(userDto.getId()).getPassword());
-        userDao.update(mapper.map(userDto, User.class));
-        logger.info("User is updated.");
-    }
-
-    @Override
     public UserDto getById(int id) {
-        return mapper.map(userDao.getById(id), UserDto.class);
+        User user = userDao.getById(id);
+
+        if (user == null) {
+            return null;
+        }
+
+        return mapper.map(user, UserDto.class);
     }
 
     @Override
@@ -116,5 +115,9 @@ public class UserServiceImpl implements UserService {
         }
 
         return true;
+    }
+
+    public void setMapper(ModelMapper mapper) {
+        this.mapper = mapper;
     }
 }

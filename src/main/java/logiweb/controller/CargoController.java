@@ -47,7 +47,6 @@ public class CargoController {
 
     @PostMapping("/add")
     public String addCargo(@ModelAttribute CargoDto cargoDTO) {
-        cargoDTO.setStatus(CargoStatus.PREPARED);
         cargoService.add(cargoDTO);
         return "redirect:/officer/cargo";
     }

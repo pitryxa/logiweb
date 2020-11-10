@@ -1,8 +1,6 @@
 package logiweb.converter;
 
-import logiweb.dto.CargoDto;
 import logiweb.dto.CityDto;
-import logiweb.entity.Cargo;
 import logiweb.entity.City;
 import org.springframework.stereotype.Component;
 

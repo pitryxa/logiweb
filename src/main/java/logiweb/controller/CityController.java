@@ -2,6 +2,7 @@ package logiweb.controller;
 
 import logiweb.dto.CityDto;
 import logiweb.service.api.CityService;
+import logiweb.validator.CityValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +16,28 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private CityValidator cityValidator;
+
     @GetMapping
     public String allCities(Model model) {
         List<CityDto> cities = cityService.getAll();
         model.addAttribute("cityList", cities);
-
-        //Long count = cityService.countOfCities();
-
-        //Route route = cityService.minRoute(cities.get(0), cities.get(18));
-
         return "city/cityList";
+    }
+
+    @GetMapping("/add")
+    public String addCity(Model model) {
+        return "city/addCity";
+    }
+
+    @PostMapping("/add")
+    public String addCity(@ModelAttribute CityDto cityDto) {
+        if (cityValidator.isExist(cityDto)) {
+            return "city/cityIsExists";
+        }
+        cityService.add(cityDto);
+        return "redirect:/admin/city";
     }
 
     @GetMapping("/delete/{id}")

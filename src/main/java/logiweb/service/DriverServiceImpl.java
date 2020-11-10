@@ -39,6 +39,7 @@ public class DriverServiceImpl implements DriverService {
     private static final Logger logger = Logger.getLogger(DriverServiceImpl.class);
 
     final static int SECONDS_IN_HOUR = 3600;
+    final static double MAX_WORK_HOURS = 176.0;
 
     @Autowired
     private DriverDao driverDao;
@@ -122,11 +123,6 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public LocalDateTime getTimeLastChangeStatusById(int id) {
-        return null;
-    }
-
-    @Override
     public boolean isNotEnoughDrivers(List<DriverDto> drivers, int shiftSize) {
         if (drivers.size() < shiftSize) {
             logger.info("Not enough drivers for order.");
@@ -149,17 +145,19 @@ public class DriverServiceImpl implements DriverService {
 
         List<Driver> drivers = driverDao.getDriversByCityAndStatus(truck.getCity());
 
-        return driverConverter.toListDto(drivers.stream()
-                                                .peek(this::updateDriverWorkHoursInCurrentMonth)
-                                                .filter(driver -> isAppropriateDriver(driver, workHoursForEveryDriver))
-                                                .collect(Collectors.toList()));
+        List<Driver> suitableDrivers = drivers.stream()
+                                              .peek(this::updateDriverWorkHoursInCurrentMonth)
+                                              .filter(driver -> isAppropriateDriver(driver, workHoursForEveryDriver))
+                                              .collect(Collectors.toList());
+
+        return driverConverter.toListDto(suitableDrivers);
     }
 
     private void updateDriverWorkHoursInCurrentMonth(Driver driver) {
         LocalDateTime lastChange = driver.getTimeLastChangeStatus();
         LocalDateTime currentDate = LocalDateTime.now();
 
-        if (isCurrentMonth(lastChange, currentDate)) {
+        if (!isCurrentMonth(lastChange, currentDate)) {
             driver.setWorkHours(0.0);
             driverDao.update(driver);
             logger.info("Hours worked by the driver in the current month have been updated.");
@@ -174,9 +172,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     private boolean isAppropriateDriver(Driver driver, double workHoursForEveryDriver) {
-        double maxWorkHours = 176.0;
-
-        return driver.getWorkHours() + workHoursForEveryDriver <= maxWorkHours;
+        return driver.getWorkHours() + workHoursForEveryDriver <= MAX_WORK_HOURS;
     }
 
     @Override

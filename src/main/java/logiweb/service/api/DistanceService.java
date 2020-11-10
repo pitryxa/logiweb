@@ -1,9 +1,7 @@
 package logiweb.service.api;
 
-import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface DistanceService {
@@ -16,4 +14,6 @@ public interface DistanceService {
     void edit(DistanceDto distanceDto);
 
     DistanceDto getById(int id);
+
+    DistanceDto getDistance(String cityFrom, String cityTo);
 }

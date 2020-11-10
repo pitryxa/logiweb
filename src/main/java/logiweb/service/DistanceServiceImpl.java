@@ -1,8 +1,11 @@
 package logiweb.service;
 
 import logiweb.converter.DistanceConverter;
+import logiweb.dao.api.CityDao;
 import logiweb.dao.api.DistanceDao;
 import logiweb.dto.DistanceDto;
+import logiweb.entity.Distance;
+import logiweb.service.api.CityService;
 import logiweb.service.api.DistanceService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class DistanceServiceImpl implements DistanceService {
     @Autowired
     private DistanceConverter distanceConverter;
 
+    @Autowired
+    private CityDao cityDao;
+
     @Override
     public List<DistanceDto> getAll() {
         return distanceConverter.toListDto(distanceDao.getAll());
@@ -29,7 +35,15 @@ public class DistanceServiceImpl implements DistanceService {
     @Override
     @Transactional
     public void add(DistanceDto distanceDto) {
-        distanceDao.create(distanceConverter.toEntity(distanceDto));
+        Distance distance1 = distanceConverter.toEntity(distanceDto);
+        distanceDao.create(distance1);
+
+        Distance distance2 = new Distance();
+        distance2.setCityFrom(distance1.getCityTo());
+        distance2.setCityTo(distance1.getCityFrom());
+        distance2.setDistance(distance1.getDistance());
+        distanceDao.create(distance2);
+
         logger.info("Distance is added.");
     }
 
@@ -50,5 +64,11 @@ public class DistanceServiceImpl implements DistanceService {
     @Override
     public DistanceDto getById(int id) {
         return distanceConverter.toDto(distanceDao.getById(id));
+    }
+
+    @Override
+    public DistanceDto getDistance(String cityFrom, String cityTo) {
+        Distance distance = distanceDao.get(cityFrom, cityTo);
+        return distance == null ? null : distanceConverter.toDto(distance);
     }
 }

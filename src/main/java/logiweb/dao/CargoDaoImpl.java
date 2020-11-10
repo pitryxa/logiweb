@@ -42,30 +42,10 @@ public class CargoDaoImpl extends GenericDAOImpl<Cargo> implements CargoDao {
 
     @Override
     public Order getOrderByCargo(Cargo cargo) {
-//        List<Order> list = entityManager.createQuery(
-//                "select o from Order o where o.id in (select w.order.id from WaypointEntity w where w.cargo.id = ?1)")
-//                                        .setParameter(1, cargoId)
-//                                        .getResultList();
         List<WaypointEntity> waypointEntityList =
                 entityManager.createQuery("select w from WaypointEntity w where w.cargo = :cargo", WaypointEntity.class)
                              .setParameter("cargo", cargo)
                              .getResultList();
-//        if (waypointEntityList.isEmpty()) {
-//            return null;
-//        }
-
         return waypointEntityList.isEmpty() ? null : waypointEntityList.get(0).getOrder();
-//
-//        int orderId = waypointEntityList.get(0).get;
-//
-//        List<Order> orderList = entityManager.createQuery("")
-//
-//
-//        List<Order> list = entityManager.createNativeQuery(
-//                "select * from orders where id in (select order_id from waypoints where cargo_id = ?1)", Order.class)
-//                     .setParameter(1, cargo)
-//                     .getResultList();
-//
-//        return list.isEmpty() ? null : list.get(0);
     }
 }

@@ -1,9 +1,11 @@
 package logiweb.converter;
 
+import logiweb.dao.api.CityDao;
 import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
 import logiweb.entity.City;
 import logiweb.entity.Distance;
+import logiweb.service.api.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +18,15 @@ public class DistanceConverter {
     @Autowired
     private CityConverter cityConverter;
 
+    @Autowired
+    private CityDao cityDao;
+
     public DistanceDto toDto(Distance distance) {
         DistanceDto distanceDto = new DistanceDto();
 
         distanceDto.setId(distance.getId());
-        distanceDto.setCityFrom(cityConverter.toDto(distance.getCityFrom()));
-        distanceDto.setCityTo(cityConverter.toDto(distance.getCityTo()));
+        distanceDto.setCityFrom(distance.getCityFrom().getName());
+        distanceDto.setCityTo(distance.getCityTo().getName());
         distanceDto.setDistance(distance.getDistance());
 
         return distanceDto;
@@ -31,8 +36,8 @@ public class DistanceConverter {
         Distance distance = new Distance();
 
         distance.setId(distanceDto.getId());
-        distance.setCityFrom(cityConverter.toEntity(distanceDto.getCityFrom()));
-        distance.setCityTo(cityConverter.toEntity(distanceDto.getCityTo()));
+        distance.setCityFrom(cityDao.getByName(distanceDto.getCityFrom()));
+        distance.setCityTo(cityDao.getByName(distanceDto.getCityTo()));
         distance.setDistance(distanceDto.getDistance());
 
         return distance;

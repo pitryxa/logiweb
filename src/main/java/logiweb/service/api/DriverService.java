@@ -26,8 +26,6 @@ public interface DriverService {
 
     DriverDto getById(int id);
 
-    LocalDateTime getTimeLastChangeStatusById(int id);
-
     List<DriverDto> getDriversForOrder(TruckDto truck, Route route);
 
     boolean isNotEnoughDrivers(List<DriverDto> drivers, int shiftSize);

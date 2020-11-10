@@ -5,6 +5,7 @@ import logiweb.dao.api.CargoDao;
 import logiweb.dto.CargoDto;
 import logiweb.entity.Cargo;
 import logiweb.entity.Order;
+import logiweb.entity.enums.CargoStatus;
 import logiweb.service.api.CargoService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class CargoServiceImpl implements CargoService {
     @Override
     @Transactional
     public void add(CargoDto cargoDTO) {
+        cargoDTO.setStatus(CargoStatus.PREPARED);
         cargoDao.create(cargoConverter.toEntity(cargoDTO));
         logger.info("Cargo is created.");
     }
@@ -81,5 +83,9 @@ public class CargoServiceImpl implements CargoService {
         }
 
         return order.getId();
+    }
+
+    public void setCargoConverter(CargoConverter cargoConverter) {
+        this.cargoConverter = cargoConverter;
     }
 }

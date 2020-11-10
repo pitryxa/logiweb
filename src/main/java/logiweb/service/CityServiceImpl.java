@@ -3,6 +3,7 @@ package logiweb.service;
 import logiweb.converter.CityConverter;
 import logiweb.dao.api.CityDao;
 import logiweb.dto.CityDto;
+import logiweb.entity.City;
 import logiweb.service.api.CityService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,13 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDto getByName(String name) {
-        return cityConverter.toDto(cityDao.getByName(name));
+        City city = cityDao.getByName(name);
+
+        if (city == null) {
+            return null;
+        }
+
+        return cityConverter.toDto(city);
     }
 
     @Override
@@ -66,7 +73,9 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDto getCityByNameFromList(List<CityDto> cities, String cityName) {
         List<CityDto> cityDtoList =
-                cities.stream().filter(cityDto -> cityDto.getName().equals(cityName)).collect(Collectors.toList());
+                cities.stream()
+                      .filter(cityDto -> cityDto.getName().equals(cityName))
+                      .collect(Collectors.toList());
 
         return cityDtoList.isEmpty() ? null : cityDtoList.get(0);
     }

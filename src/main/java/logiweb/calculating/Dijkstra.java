@@ -2,10 +2,15 @@ package logiweb.calculating;
 
 import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
+import logiweb.service.api.CityService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
 public class Dijkstra {
+    @Autowired
+    private static CityService cityService;
+
     private static Map<Integer, Node> nodes;
     private static Graph graph;
 
@@ -73,8 +78,8 @@ public class Dijkstra {
         }
 
         for (DistanceDto distance : distances) {
-            int idFrom = distance.getCityFrom().getId();
-            int idTo = distance.getCityTo().getId();
+            int idFrom = cityService.getByName(distance.getCityFrom()).getId();
+            int idTo = cityService.getByName(distance.getCityTo()).getId();
             nodes.get(idFrom).addDestination(nodes.get(idTo), distance.getDistance());
         }
 

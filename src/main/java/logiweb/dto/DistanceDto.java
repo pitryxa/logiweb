@@ -11,7 +11,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class DistanceDto {
     private Integer id;
-    private CityDto cityFrom;
-    private CityDto cityTo;
+    private String cityFrom;
+    private String cityTo;
     private Integer distance;
 }

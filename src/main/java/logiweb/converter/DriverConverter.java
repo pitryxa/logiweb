@@ -145,4 +145,8 @@ public class DriverConverter {
                 .map(this::toEntity)
                 .collect(Collectors.toList());
     }
+
+    public void setMapper(ModelMapper mapper) {
+        this.mapper = mapper;
+    }
 }

@@ -12,8 +12,6 @@ public interface UserService {
 
     void edit(UserDto userDto, Role currentRole);
 
-    void edit(UserDto userDto);
-
     UserDto getById(int id);
 
     UserDto getByEmail(String email);

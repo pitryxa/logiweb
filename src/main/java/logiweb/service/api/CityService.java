@@ -2,17 +2,16 @@ package logiweb.service.api;
 
 import logiweb.dto.CityDto;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface CityService {
     List<CityDto> getAll();
 
-    void add(CityDto cityDto) throws UnsupportedEncodingException;
+    void add(CityDto cityDto);
 
     void delete(CityDto cityDto);
 
-    void edit(CityDto cityDto) throws UnsupportedEncodingException;
+    void edit(CityDto cityDto);
 
     CityDto getById(int id);
 
