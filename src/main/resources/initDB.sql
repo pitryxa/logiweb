@@ -1,6 +1,7 @@
 -- CREATE DATABASE IF NOT EXISTS logiweb
 
 CREATE SCHEMA if not exists public;
+CREATE SEQUENCE hibernate_sequence START WITH 100 INCREMENT BY 1 NO CYCLE;
 
 create table if not exists city
 (
