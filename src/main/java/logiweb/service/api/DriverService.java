@@ -55,4 +55,6 @@ public interface DriverService {
     DriverDto getByPersonalNumber(Long personalNumber);
 
     void setStatusAllDriversInOrder(DriverStatus newStatus);
+
+    void enableDriver(int id);
 }

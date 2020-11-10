@@ -353,6 +353,14 @@ public class DriverServiceImpl implements DriverService {
         drivers.forEach(driver -> changeStatus(driver, newStatus));
     }
 
+    @Override
+    @Transactional
+    public void enableDriver(int id) {
+        Driver driver = driverDao.getById(id);
+        driver.setStatus(DriverStatus.RECREATION);
+        driverDao.update(driver);
+    }
+
     private void addWorkTimeToDriver(Driver driver) {
         LocalDateTime timeLastChange = driver.getTimeLastChangeStatus();
         double workTime = driversCalc.getWorkTime(timeLastChange);

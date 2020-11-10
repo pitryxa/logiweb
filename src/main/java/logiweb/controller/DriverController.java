@@ -2,6 +2,7 @@ package logiweb.controller;
 
 import logiweb.dto.DriverDto;
 import logiweb.dto.DriverEditDto;
+import logiweb.dto.UserDto;
 import logiweb.entity.enums.DriverStatus;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DriverService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -31,7 +33,8 @@ public class DriverController {
 
     @GetMapping
     public String allDrivers(Model model) {
-        model.addAttribute("driverList", driverService.getAllNotDisabled());
+        model.addAttribute("driverList", driverService.getAll());
+//        model.addAttribute("driverList", driverService.getAllNotDisabled());
         return "drivers/driverList";
     }
 
@@ -39,6 +42,15 @@ public class DriverController {
     public String driverInfo(@PathVariable("id") int id, Model model) {
         model.addAttribute("driver", driverService.getById(id));
         return "drivers/driverInfo";
+    }
+
+    @GetMapping("/enable/{id}")
+    public String enableDriver(@PathVariable("id") int id, Model model) {
+//        model.addAttribute("driver", driverService.getById(id));
+        driverService.enableDriver(id);
+
+
+        return "redirect:/officer/drivers";
     }
 
     @GetMapping("/edit/{id}")
@@ -64,8 +76,14 @@ public class DriverController {
 
     @GetMapping("/add")
     public String addDriver(Model model) {
+        List<UserDto> userDtoList = userService.getUsersWithRoleDriverWhoAreNotInListDrivers();
+
+        if (userDtoList.isEmpty()) {
+            return "drivers/notSuitableUsers";
+        }
+
         model.addAttribute("cityList", cityService.getAll());
-        model.addAttribute("users", userService.getUsersWithRoleDriverWhoAreNotInListDrivers());
+        model.addAttribute("users", userDtoList);
         model.addAttribute("driver", new DriverDto());
         return "drivers/addDriver";
     }

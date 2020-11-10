@@ -11,7 +11,7 @@
 
 <main class="flex-shrink-0">
     <section class="container form-content" id="content">
-        <div class="row border-bottom" id="nameSection">
+        <div class="row" id="nameSection">
             <div class="col">
                 <h4 class="text-center text-cadetblue">${title}</h4>
             </div>
