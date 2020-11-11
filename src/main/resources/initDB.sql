@@ -317,7 +317,7 @@ INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (10, '
 INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (5, 'Vasiliy', 'Semenov', 'ROLE_NONE', 'semenovv@logiweb.com', '$2a$11$XMCkxp.KYUomjL1Iw84vVexoA2rMwR4KCbQmTNqHiODr/ZRYqhdBG');
 INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (9, 'Maksim', 'Gorky', 'ROLE_DRIVER', 'gorkym@logiweb.com', '$2a$11$kSXjWn1k/AmEP72HqQ1Gou8riomGDMcbkIF/dPM8NkiympOh4rz0e');
 INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (12, 'Aleksander', 'Pushkin', 'ROLE_DRIVER', 'pushkina@logiweb.com', '$2a$11$f02Q2kuviD2CqmcJOq.HGO3p38fBlBYLCc.NTMzZvi5R9IL25kfPi');
-INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (16, 'ssdasd', 'asdasd', 'ROLE_MANAGER', 'email@com.com', '$2a$11$KyXS1rCMGWrc5BQQj6jLdOpNxz2DO3.dl.qE8i98/zChh2WAfunH.');
+-- INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (16, 'ssdasd', 'asdasd', 'ROLE_MANAGER', 'email@com.com', '$2a$11$KyXS1rCMGWrc5BQQj6jLdOpNxz2DO3.dl.qE8i98/zChh2WAfunH.');
 INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (15, 'Peter', 'Boldarev', 'ROLE_DRIVER', 'asdas@assad.ru', '$2a$11$I853xto70t.DxJMR4BW2tuFvTlv./EtgRutdby1ggbGUhKOC4FDtS');
 INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (18, 'Alexander', 'Block', 'ROLE_DRIVER', 'blocka@logiweb.com', '$2a$11$R84XGKkSg4SUMI8dbTCdUOsABeIGqrt2i5mbSbY8nw1dzBuWBbFAK');
 INSERT INTO users (id, firstname, lastname, role, email, password) VALUES (13, 'Mikhail', 'Lermontov', 'ROLE_DRIVER', 'lermontovm@logiweb.com', '$2a$11$1ijLCteopRSKk7E.cxS9JOEGqtOEIquXpqw4HefiBL16PHdCeZVKO');
@@ -380,9 +380,9 @@ INSERT INTO truck (id, reg_number, shift_size, capacity, condition_status, city_
 
 INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (8, 0.00, 'RECREATION', null, 11, 7, '1970-01-01 00:00:00.000000', 789123);
 INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (18, 0.00, 'RECREATION', null, 1, 18, '2020-11-03 15:57:20.801000', 234234234);
-INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (12, 0.00, 'DISABLED', 12, 1, 11, '2020-11-04 11:47:59.903000', 987321);
-INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (23, 0.00, 'DISABLED', null, 14, 11, '2020-11-05 14:10:58.636000', 12345678);
-INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (20, 0.00, 'DISABLED', null, 14, 11, '2020-11-05 14:11:06.879000', 549812);
+INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (12, 0.00, 'SECOND_DRIVER', 12, 1, 11, '2020-11-04 11:47:59.903000', 987321);
+-- INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (23, 0.00, 'DISABLED', null, 14, 11, '2020-11-05 14:10:58.636000', 12345678);
+-- INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (20, 0.00, 'DISABLED', null, 14, 11, '2020-11-05 14:11:06.879000', 549812);
 INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (13, 0.00, 'SECOND_DRIVER', 30, 3, 12, '2020-11-04 16:07:48.475000', 147258);
 INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (19, 0.00, 'SECOND_DRIVER', 30, 3, 15, '2020-11-04 16:07:48.472000', 555124);
 INSERT INTO driver (id, hours, status, truck_id, city_id, user_id, time_last_change_status, personal_number) VALUES (7, 0.01, 'SECOND_DRIVER', 3, 20, 6, '1970-01-01 00:00:00.000000', 123456);

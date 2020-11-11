@@ -16,7 +16,7 @@
                 <h4 class="text-cadetblue">${title}</h4>
             </div>
         </div>
-        <a href="${contextPath}/officer/cargo/add" class="lnk-color">Add cargo</a>
+        <a href="${contextPath}/officer/cargo/add" class="btn btn-info">Add cargo</a>
         <br>
         <br>
 
@@ -85,7 +85,7 @@
             </c:forEach>
         </table>
 
-        <a href="${contextPath}/officer/cargo/add" class="lnk-color">Add cargo</a>
+        <a href="${contextPath}/officer/cargo/add" class="btn btn-info">Add cargo</a>
     </div>
 </main>
 

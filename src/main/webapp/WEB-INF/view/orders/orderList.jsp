@@ -16,7 +16,7 @@
                 <h4 class="text-cadetblue">${title}</h4>
             </div>
         </div>
-        <a href="${contextPath}/officer/orders/add-cargo" class="lnk-color">Add order</a>
+        <a href="${contextPath}/officer/orders/add-cargo" class="btn btn-info">Add order</a>
         <br>
         <br>
         <table id="table"
@@ -31,6 +31,7 @@
                 <th data-field="count" data-sortable="true">#</th>
                 <th data-field="number" data-filter-control="input" data-sortable="true">Number</th>
                 <th data-field="status" data-filter-control="select" data-sortable="true">Status</th>
+                <th data-field="distance" data-sortable="true">Distance</th>
                 <th data-field="waypoints" data-filter-control="input" data-sortable="true">Waypoints</th>
                 <th data-field="truck" data-filter-control="input" data-sortable="true">Truck</th>
                 <th data-field="drivers" data-filter-control="input" data-sortable="true">Drivers</th>
@@ -42,6 +43,7 @@
                     <td>${counter.count}</td>
                     <td>${order.id}</td>
                     <td>${order.status}</td>
+                    <td>${order.distance}</td>
                     <td>
                         <table class="table table-sm table-nostriped">
                             <tr>
@@ -99,7 +101,7 @@
             </c:forEach>
         </table>
 
-        <a href="${contextPath}/officer/orders/add-cargo" class="lnk-color">Add order</a>
+        <a href="${contextPath}/officer/orders/add-cargo" class="btn btn-info">Add order</a>
     </section>
 </main>
 

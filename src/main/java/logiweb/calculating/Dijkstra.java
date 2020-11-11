@@ -79,8 +79,8 @@ public class Dijkstra {
             String cityFrom = distance.getCityFrom();
             String cityTo = distance.getCityTo();
 
-            int idFrom = 0;
-            int idTo = 0;
+            int idFrom = -1;
+            int idTo = -1;
 
             for (CityDto city : cities) {
                 if (city.getName().equals(cityFrom)) {

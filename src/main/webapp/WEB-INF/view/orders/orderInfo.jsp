@@ -27,6 +27,14 @@
         </div>
         <div class="row border-bottom">
             <div class="col-sm-2 font-weight-bold ml-auto ">
+                <p class="py-2 pr-2 text-cadetblue my-2">Distance</p>
+            </div>
+            <div class="col-sm-10">
+                <p class="py-2 my-2"><c:out value="${order.distance}"/></p>
+            </div>
+        </div>
+        <div class="row border-bottom">
+            <div class="col-sm-2 font-weight-bold ml-auto ">
                 <p class="py-2 pr-2 text-cadetblue my-2">Truck</p>
             </div>
             <div class="col-sm-10">

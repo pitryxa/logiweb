@@ -43,6 +43,8 @@
             <div class="form-group row">
                 <label class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Route</label>
                 <div class="col-sm-10 p-0">
+
+                    <p class="my-2">Distance: ${route.distance} km</p>
                     <table class="table table-sm table-bordered" style="background-color: white">
                         <thead>
                         <tr>

@@ -25,6 +25,8 @@ public class RoutesCalc {
 
     private List<DistanceDto> allDistances = new ArrayList<>();
 
+//    private int countRecursive = 0;
+
 //    public Integer[][] getMatrixOfDistances() {
 //        int size = cityService.countOfCities().intValue();
 //        Integer[][] distances = new Integer[size][size];
@@ -124,6 +126,8 @@ public class RoutesCalc {
 
     private Route depthFirstSearch(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
                                           Integer maxCapacity, Route bestRoute) {
+
+//        System.out.println(++countRecursive);
 
         Set<Waypoint> nextPotentialWaypoints =
                 getPotentialNextWaypoints(unorderedWaypoints, orderedWaypoints, maxCapacity);
@@ -310,6 +314,10 @@ public class RoutesCalc {
         Set<Waypoint> nextPotentialWaypoints = new HashSet<>();
 
         for (Waypoint unorderedWaypoint : unorderedWaypoints) {
+            if (unorderedWaypoint.getCity().getId().equals(orderedWaypoints.getLast().getCity().getId())) {
+                continue;
+            }
+
             Deque<Waypoint> currentWaypointList = new LinkedList<>(orderedWaypoints);
             currentWaypointList.add(unorderedWaypoint);
 
@@ -337,7 +345,8 @@ public class RoutesCalc {
 
                 if (entry.getValue() == OperationTypeOnWaypoint.LOAD &&
                     getWaypointByCity(new LinkedList<>(orderedWaypoints).subList(count, orderedWaypoints.size()),
-                                      targetCity) == null && getCurrentWeight(currentWaypointList) <= maxCapacity) {
+                                      targetCity) == null &&
+                    getCurrentWeight(currentWaypointList) <= maxCapacity) {
 
                     nextPotentialWaypoints.add(potentialWaypoint);
                 }

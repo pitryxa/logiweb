@@ -16,7 +16,7 @@
                 <h4 class="text-cadetblue">${title}</h4>
             </div>
         </div>
-        <a href="${contextPath}/officer/drivers/add" class="lnk-color">Add driver</a>
+        <a href="${contextPath}/officer/drivers/add" class="btn btn-info">Add driver</a>
         <br>
         <br>
         <table id="table"
@@ -111,7 +111,7 @@
             </c:forEach>
         </table>
 
-        <a href="${contextPath}/officer/drivers/add" class="lnk-color">Add driver</a>
+        <a href="${contextPath}/officer/drivers/add" class="btn btn-info">Add driver</a>
     </section>
 </main>
 

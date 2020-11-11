@@ -20,6 +20,7 @@ public class OrderDto {
     private List<SimpleDriverDto> drivers;
     private OrderStatus status;
     private List<WaypointDto> waypoints;
+    private Integer distance;
 //    private LocalDateTime timeCreatedOrder;
 
     @Override
