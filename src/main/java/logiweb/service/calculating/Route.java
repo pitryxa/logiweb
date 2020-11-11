@@ -1,4 +1,4 @@
-package logiweb.calculating;
+package logiweb.service.calculating;
 
 import lombok.Getter;
 import lombok.Setter;

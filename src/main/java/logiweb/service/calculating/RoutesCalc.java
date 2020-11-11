@@ -1,4 +1,4 @@
-package logiweb.calculating;
+package logiweb.service.calculating;
 
 import logiweb.dto.CargoDto;
 import logiweb.dto.CityDto;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class RoutesCalc {

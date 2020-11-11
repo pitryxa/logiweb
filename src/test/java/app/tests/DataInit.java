@@ -1,7 +1,7 @@
 package app.tests;
 
-import logiweb.calculating.Route;
-import logiweb.calculating.Waypoint;
+import logiweb.service.calculating.Route;
+import logiweb.service.calculating.Waypoint;
 import logiweb.dto.*;
 import logiweb.dto.rest.DisplayRestDto;
 import logiweb.dto.rest.DriverRestDto;

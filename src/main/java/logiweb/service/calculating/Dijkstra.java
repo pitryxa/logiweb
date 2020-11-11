@@ -1,9 +1,7 @@
-package logiweb.calculating;
+package logiweb.service.calculating;
 
 import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
-import logiweb.service.api.CityService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 

@@ -1,4 +1,4 @@
-package logiweb.calculating;
+package logiweb.service.calculating;
 
 import logiweb.dto.TruckDto;
 import org.springframework.stereotype.Component;

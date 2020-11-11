@@ -1,6 +1,6 @@
 package app.tests;
 
-import logiweb.calculating.DriversCalc;
+import logiweb.service.calculating.DriversCalc;
 import logiweb.converter.DriverConverter;
 import logiweb.converter.TruckConverter;
 import logiweb.dao.api.DriverDao;
@@ -9,7 +9,6 @@ import logiweb.dao.api.UserDao;
 import logiweb.dto.DriverDto;
 import logiweb.entity.enums.DriverStatus;
 import logiweb.service.DriverServiceImpl;
-import logiweb.service.api.DriverService;
 import logiweb.service.api.OrderService;
 import logiweb.service.api.UserService;
 import org.junit.Before;

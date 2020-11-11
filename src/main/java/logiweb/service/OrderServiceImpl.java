@@ -1,8 +1,8 @@
 package logiweb.service;
 
 import logiweb.aop.SendUpdate;
-import logiweb.calculating.Route;
-import logiweb.calculating.Waypoint;
+import logiweb.service.calculating.Route;
+import logiweb.service.calculating.Waypoint;
 import logiweb.converter.*;
 import logiweb.dao.api.*;
 import logiweb.dto.*;

@@ -1,4 +1,4 @@
-package logiweb.calculating;
+package logiweb.service.calculating;
 
 import logiweb.dto.CargoDto;
 import logiweb.dto.CityDto;
