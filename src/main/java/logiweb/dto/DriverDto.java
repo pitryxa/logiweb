@@ -8,12 +8,13 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class DriverDto {
+public class DriverDto implements Serializable {
     private Integer id;
 
     private Long personalNumber;

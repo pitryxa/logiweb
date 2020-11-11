@@ -192,5 +192,13 @@ public class DriverServiceTest {
         assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(), firstDriverDto.getId());
     }
 
+    @Test
+    public void testIsWrongAmountDrivers() {
+        List<DriverDto> drivers = Arrays.asList(firstDriverDto, secondDriverDto);
+        assertTrue(driverServiceTest.isWrongAmountDrivers(drivers, 1));
+        assertTrue(driverServiceTest.isWrongAmountDrivers(drivers, 3));
+        assertFalse(driverServiceTest.isWrongAmountDrivers(drivers, 2));
+    }
+
 
 }

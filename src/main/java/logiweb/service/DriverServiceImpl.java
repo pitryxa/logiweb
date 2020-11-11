@@ -146,8 +146,13 @@ public class DriverServiceImpl implements DriverService {
 
         List<Driver> drivers = driverDao.getDriversByCityAndStatus(truck.getCity());
 
+//        List<Driver> suitableDrivers = drivers.stream()
+//                                              .peek(this::updateDriverWorkHoursInCurrentMonth)
+//                                              .filter(driver -> isAppropriateDriver(driver, workHoursForEveryDriver))
+//                                              .collect(Collectors.toList());
+
+        drivers.forEach(this::updateDriverWorkHoursInCurrentMonth);
         List<Driver> suitableDrivers = drivers.stream()
-                                              .peek(this::updateDriverWorkHoursInCurrentMonth)
                                               .filter(driver -> isAppropriateDriver(driver, workHoursForEveryDriver))
                                               .collect(Collectors.toList());
 
@@ -348,6 +353,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
+    @Transactional
     public void setStatusAllDriversInOrder(DriverStatus newStatus) {
         List<Driver> drivers = getCurrentDriverEntity().getTruck().getDrivers();
         drivers.forEach(driver -> changeStatus(driver, newStatus));

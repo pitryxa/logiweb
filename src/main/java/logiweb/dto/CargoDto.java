@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class CargoDto {
+public class CargoDto implements Serializable {
     private Integer id;
     private String name;
     private Integer weight;

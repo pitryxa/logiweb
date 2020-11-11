@@ -26,6 +26,9 @@ public class Dijkstra {
 
         while (unsettledNodes.size() != 0){
             Node currentNode = getLowestDistanceNode(unsettledNodes);
+            if (currentNode == null) {
+                throw new RuntimeException("Error of graph calculating");
+            }
             unsettledNodes.remove(currentNode);
 
             for (Map.Entry<Node, Integer> adjacencyPair : currentNode.getAdjacentNodes().entrySet()) {
