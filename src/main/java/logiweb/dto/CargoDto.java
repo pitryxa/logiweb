@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 public class CargoDto implements Serializable {
     private Integer id;
     private String name;
@@ -25,5 +25,22 @@ public class CargoDto implements Serializable {
     public String toString() {
         return "CargoDto{" + "id=" + id + ", name='" + name + '\'' + ", weight=" + weight + ", status=" + status +
                ", cityFrom='" + cityFrom + '\'' + ", cityTo='" + cityTo + '\'' + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CargoDto cargoDto = (CargoDto) o;
+        return id.equals(cargoDto.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

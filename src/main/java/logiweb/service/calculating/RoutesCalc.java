@@ -24,6 +24,8 @@ public class RoutesCalc {
 
     private List<DistanceDto> allDistances = new ArrayList<>();
 
+    private int countRecursive = 0;
+
     public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
         allCities = cityService.getAll();
         allDistances = distanceService.getAll();
@@ -100,7 +102,7 @@ public class RoutesCalc {
     private Route depthFirstSearch(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
                                           Integer maxCapacity, Route bestRoute) {
 
-//        System.out.println(++countRecursive);
+        System.out.println(++countRecursive);
 
         Set<Waypoint> nextPotentialWaypoints =
                 getPotentialNextWaypoints(unorderedWaypoints, orderedWaypoints, maxCapacity);
@@ -115,6 +117,7 @@ public class RoutesCalc {
             Waypoint newNextWaypoint = new Waypoint(nextWaypoint);
 
             Waypoint prevWaypoint = tmpOrderedWaypoints.getLast();
+            //nextWaypoint.getCargoes().entrySet().removeIf(entry -> entry.getValue() == OperationTypeOnWaypoint.LOAD);
             tmpOrderedWaypoints.add(nextWaypoint);
             Waypoint lastWaypoint = tmpOrderedWaypoints.getLast();
             lastWaypoint.setSumWeight(getCurrentWeight(tmpOrderedWaypoints));
@@ -230,12 +233,12 @@ public class RoutesCalc {
                 Map.Entry<CargoDto, OperationTypeOnWaypoint> entry = iterator.next();
 
                 OperationTypeOnWaypoint op = entry.getValue();
+                CargoDto cargo = entry.getKey();
 
                 if (op == OperationTypeOnWaypoint.LOAD) {
                     iterator.remove();
-                } else if (op == OperationTypeOnWaypoint.UNLOAD) {
-                    CargoDto cargo = entry.getKey();
 
+                } else if (op == OperationTypeOnWaypoint.UNLOAD) {
                     for (Waypoint w : orderedWaypoints) {
                         if (!w.getCity().getName().equals(cargo.getCityTo()) && w.getCargoes().containsKey(cargo)) {
                             iterator.remove();
@@ -247,6 +250,8 @@ public class RoutesCalc {
 
             if (cargoMap.isEmpty()) {
                 unorderedWaypoints.remove(nextWaypoint);
+            } else {
+                unorderedWaypoints.set(unorderedWaypoints.indexOf(nextWaypoint), nextWaypoint);
             }
         }
     }
@@ -303,10 +308,16 @@ public class RoutesCalc {
 
         int count = 0;
         for (Waypoint orderedWaypoint : orderedWaypoints) {
+
             Map<CargoDto, OperationTypeOnWaypoint> cargoesInWaypoint = orderedWaypoint.getCargoes();
 
             for (Map.Entry<CargoDto, OperationTypeOnWaypoint> entry : cargoesInWaypoint.entrySet()) {
+
                 CityDto targetCity = cityService.getCityByNameFromList(allCities, entry.getKey().getCityTo());
+                if (targetCity.getId().equals(orderedWaypoints.getLast().getCity().getId())) {
+                    continue;
+                }
+
                 Deque<Waypoint> currentWaypointList = new LinkedList<>(orderedWaypoints);
                 Waypoint potentialWaypoint = getWaypointByCity(unorderedWaypoints, targetCity);
 
@@ -338,11 +349,12 @@ public class RoutesCalc {
         for (Waypoint waypoint : waypoints) {
             for (Map.Entry<CargoDto, OperationTypeOnWaypoint> entry : waypoint.getCargoes().entrySet()) {
                 OperationTypeOnWaypoint op = entry.getValue();
+                CargoDto cargo = entry.getKey();
 
                 if (op == OperationTypeOnWaypoint.LOAD) {
-                    sumWeight += entry.getKey().getWeight();
+                    sumWeight += cargo.getWeight();
                 } else if (op == OperationTypeOnWaypoint.UNLOAD) {
-                    CargoDto currentCargo = entry.getKey();
+                    CargoDto currentCargo = cargo;
                     if (getWaypointByCity(new LinkedList<>(waypoints).subList(0, count),
                                           cityService.getCityByNameFromList(allCities, currentCargo.getCityFrom())) !=
                         null) {
@@ -376,51 +388,4 @@ public class RoutesCalc {
 
         return findWaypoint;
     }
-
-//    private List<Route> minRoutesBetweenCityAndCities(CityDto startCity, List<CityDto> endCities) {
-//        Dijkstra.initGraph(allCities, allDistances);
-//        Dijkstra.calculateShortestPathFromSource(startCity);
-//
-//        List<Route> routes = new ArrayList<>();
-//
-//        for (CityDto endCity : endCities) {
-//            Node targetNode = Dijkstra.getGraph().getNodeByCity(endCity);
-//
-//            Route route = new Route();
-//            route.setDistance(targetNode.getDistance());
-//
-//            for (Node intermediateNode : targetNode.getShortestPath()) {
-//                route.addWaypoint(new Waypoint(intermediateNode.getCity()));
-//            }
-//            route.addWaypoint(new Waypoint(endCity));
-//
-//            routes.add(route);
-//        }
-//
-//        return routes;
-//    }
-
-//    private Waypoint getWaypointWithMinDistanceToCity(Set<Waypoint> waypoints, CityDto cityDto) {
-//        Integer minDistance = Integer.MAX_VALUE;
-//        Waypoint waypoint = null;
-//
-//        List<Route> routes = minRoutesBetweenCityAndCities(cityDto, waypoints.stream()
-//                                                                             .map(Waypoint::getCity)
-//                                                                             .collect(Collectors.toList()));
-//
-//        for (Route route : routes) {
-//            Integer distance = route.getDistance();
-//            if (distance < minDistance) {
-//                minDistance = distance;
-//                waypoint = waypoints.stream()
-//                                    .filter(waypoint1 -> waypoint1.getCity()
-//                                                                  .equals(route.getWaypoints().getLast().getCity()))
-//                                    .collect(Collectors.toList())
-//                                    .get(0);
-//                waypoint.setDistanceFromPrevWaypoint(distance);
-//            }
-//        }
-//
-//        return waypoint;
-//    }
 }
