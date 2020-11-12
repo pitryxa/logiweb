@@ -102,8 +102,6 @@ public class RoutesCalc {
     private Route depthFirstSearch(Deque<Waypoint> orderedWaypoints, List<Waypoint> unorderedWaypoints,
                                           Integer maxCapacity, Route bestRoute) {
 
-        System.out.println(++countRecursive);
-
         Set<Waypoint> nextPotentialWaypoints =
                 getPotentialNextWaypoints(unorderedWaypoints, orderedWaypoints, maxCapacity);
 
