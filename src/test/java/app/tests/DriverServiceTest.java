@@ -20,8 +20,10 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static app.tests.DataInit.*;
@@ -84,7 +86,14 @@ public class DriverServiceTest {
         when(driverDao.getDriversByCityAndStatus(any())).thenReturn(Arrays.asList(firstDriver, secondDriver));
         when(driverConverter.toListDto(argThat(list -> list.size() == 2))).thenReturn(
                 Arrays.asList(firstDriverDto, secondDriverDto));
+
         assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 2);
+//        when(driverConverter.toListDto(argThat(list1 -> list1.size() == 1))).thenReturn(
+//                Collections.singletonList(secondDriverDto));
+//        when(driverConverter.toListDto(argThat(list2 -> list2.size() == 0))).thenReturn(Collections.emptyList());
+//        firstDriver.setWorkHours(170.0);
+//        assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 1);
+
     }
 
     @Test
@@ -92,7 +101,10 @@ public class DriverServiceTest {
         when(driverDao.getDriversByCityAndStatus(any())).thenReturn(Arrays.asList(firstDriver, secondDriver));
         when(driverConverter.toListDto(argThat(list -> list.size() == 0))).thenReturn(new ArrayList<>());
         when(driversCalc.getWorkHoursForEveryDriver(any(), any())).thenReturn(80.0);
+
         assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 0);
+
+
     }
 
     @Test
@@ -183,13 +195,15 @@ public class DriverServiceTest {
     public void testGetByPersonalNumber() {
         when(driverDao.getByPersonalNumber(any())).thenReturn(firstDriver);
         when(driverConverter.toDto(firstDriver)).thenReturn(firstDriverDto);
-        assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(), firstDriverDto.getId());
+        assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(),
+                     firstDriverDto.getId());
     }
 
     @Test(expected = NullPointerException.class)
     public void testGetByPersonalNumberNull() {
         when(driverDao.getByPersonalNumber(any())).thenReturn(null);
-        assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(), firstDriverDto.getId());
+        assertEquals(driverServiceTest.getByPersonalNumber(firstDriver.getPersonalNumber()).getId(),
+                     firstDriverDto.getId());
     }
 
     @Test
@@ -199,6 +213,16 @@ public class DriverServiceTest {
         assertTrue(driverServiceTest.isWrongAmountDrivers(drivers, 3));
         assertFalse(driverServiceTest.isWrongAmountDrivers(drivers, 2));
     }
+
+//    @Test
+//    public void testUpdateDriverWorkHoursInCurrentMonth() {
+//
+//        firstDriver.setTimeLastChangeStatus(LocalDateTime.of(2020, 10, 9, 12, 10));
+//
+//        when(LocalDateTime.now()).thenReturn(LocalDateTime.of(2020, 10, 20, 12, 10));
+//        driverServiceTest.updateDriverWorkHoursInCurrentMonth(firstDriver);
+//
+//    }
 
 
 }

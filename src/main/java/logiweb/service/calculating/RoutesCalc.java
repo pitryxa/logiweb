@@ -24,32 +24,6 @@ public class RoutesCalc {
 
     private List<DistanceDto> allDistances = new ArrayList<>();
 
-//    private int countRecursive = 0;
-
-//    public Integer[][] getMatrixOfDistances() {
-//        int size = cityService.countOfCities().intValue();
-//        Integer[][] distances = new Integer[size][size];
-//
-//        List<DistanceDto> distanceList = distanceService.getAll();
-//
-//        for (DistanceDto dist : distanceList) {
-//            int from = dist.getCityFrom().getId();
-//            int to = dist.getCityTo().getId();
-//
-//            distances[from - 1][to - 1] = dist.getDistance();
-//        }
-//
-//        for (int i = 0; i < size; i++) {
-//            for (int j = 0; j < size; j++) {
-//                if (distances[i][j] == null) {
-//                    distances[i][j] = Integer.MAX_VALUE;
-//                }
-//            }
-//        }
-//
-//        return distances;
-//    }
-
     public Route minRouteByCargoes(List<CargoDto> cargoes, TruckDto truck) {
         allCities = cityService.getAll();
         allDistances = distanceService.getAll();

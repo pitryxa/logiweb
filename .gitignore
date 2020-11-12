@@ -121,3 +121,4 @@ buildNumber.properties
 
 ### User settings ###
 .idea/
+**/resources/log/

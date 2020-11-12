@@ -154,7 +154,7 @@ public class DriverServiceImpl implements DriverService {
         return driverConverter.toListDto(suitableDrivers);
     }
 
-    private void updateDriverWorkHoursInCurrentMonth(Driver driver) {
+    public void updateDriverWorkHoursInCurrentMonth(Driver driver) {
         LocalDateTime lastChange = driver.getTimeLastChangeStatus();
         LocalDateTime currentDate = LocalDateTime.now();
 
