@@ -36,7 +36,7 @@
                            readonly>
                 </div>
                 <div class="form-group row">
-                    <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight</label>
+                    <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight (kg)</label>
                     <input type="text" name="weight" id="weight" value="${cargo.weight}"
                            class="form-control-plaintext col-sm-10" readonly>
                 </div>

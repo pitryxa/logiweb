@@ -20,7 +20,6 @@
         <form action="${contextPath}/admin/users/edit" method="post">
             <input type="hidden" name="id" value="${user.id}">
             <input type="hidden" name="currentRole" value="${user.role}">
-            <%--            <input type="hidden" name="password" value="${user.password}">--%>
             <div class="form-group row">
                 <label for="firstName" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Firstname</label>
                 <input type="text" name="firstName" id="firstName" value="${user.firstName}"

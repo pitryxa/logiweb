@@ -14,11 +14,6 @@
         <div class="row" id="nameSection">
             <div class="col">
                 <h4 class="text-center text-danger pb-3">${title} for order!</h4>
-
-                <%--                <p class="text-center text-cadetblue"><a href="${contextPath}/officer/orders/add-truck"--%>
-                <%--                                                          class="btn btn-info">Back to TRUCK choice</a></p>--%>
-<%--                <p class="text-center text-cadetblue"><a href="${contextPath}/officer/orders/add-cargo"--%>
-<%--                                                         class="btn btn-info">Back to CARGO choice</a></p>--%>
             </div>
         </div>
     </section>

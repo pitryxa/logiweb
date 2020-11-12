@@ -4,7 +4,6 @@ import logiweb.dao.api.CityDao;
 import logiweb.dto.TruckDto;
 import logiweb.dto.simple.SimpleTruckDto;
 import logiweb.entity.Truck;
-import logiweb.service.api.CityService;
 import logiweb.service.api.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

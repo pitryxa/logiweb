@@ -70,11 +70,6 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    public List<TruckDto> getAllFreeTrucksInCity(City city) {
-        return truckConverter.toListDto(truckDao.getAllFreeTrucksInCity(city));
-    }
-
-    @Override
     public List<TruckDto> getFreeTrucksByStartCityAndCapacityInCargoList(List<CargoDto> cargoes) {
         Map<City, Integer> cities = getStartCityAndSummaryWeightFromCargoes(cargoes);
 

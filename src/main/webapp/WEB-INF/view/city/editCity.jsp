@@ -81,8 +81,6 @@
                 </div>
             </form>
         </c:if>
-
-
     </section>
 </main>
 

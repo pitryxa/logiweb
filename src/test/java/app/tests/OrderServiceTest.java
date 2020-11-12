@@ -1,10 +1,7 @@
 package app.tests;
 
 import logiweb.converter.*;
-import logiweb.dao.api.CargoDao;
-import logiweb.dao.api.DriverDao;
 import logiweb.dao.api.OrderDao;
-import logiweb.dao.api.TruckDao;
 import logiweb.service.OrderServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

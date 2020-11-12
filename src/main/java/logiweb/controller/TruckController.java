@@ -84,7 +84,6 @@ public class TruckController {
     public String deleteTruck(@ModelAttribute TruckDto truckDto) {
         truckDto.setConditionStatus(TruckConditionStatus.DISABLED);
         truckService.edit(truckDto);
-        //truckService.delete(truckDto);
         return "redirect:/officer/trucks";
     }
 }

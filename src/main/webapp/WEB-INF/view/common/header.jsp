@@ -2,9 +2,11 @@
 <html lang="en" class="h-100">
 <head>
     <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap-table.min.css" type="text/css">
-    <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap-table-filter-control.min.css" type="text/css">
+    <link rel="stylesheet" href="${param.contextPath}/resources/css/bootstrap-table-filter-control.min.css"
+          type="text/css">
     <link rel="stylesheet" href="${param.contextPath}/resources/css/common.css" type="text/css">
     <title>${param.title}</title>
 </head>
@@ -55,11 +57,10 @@
         </div>
 
         <div class="col-2" id="login">
-<%--            <a href="#">--%>
-            <sec:authorize access="!isAuthenticated()"><a href="${param.contextPath}/login" class="nav-link"></sec:authorize>
-            <sec:authorize access="isAuthenticated()"><a href="${param.contextPath}/logout" class="nav-link"></sec:authorize>
-
-
+            <sec:authorize access="!isAuthenticated()"><a href="${param.contextPath}/login"
+                                                          class="nav-link"></sec:authorize>
+            <sec:authorize access="isAuthenticated()"><a href="${param.contextPath}/logout"
+                                                         class="nav-link"></sec:authorize>
 
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor"
                      xmlns="http://www.w3.org/2000/svg">

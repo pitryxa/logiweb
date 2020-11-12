@@ -104,8 +104,6 @@
                                 </svg>
                             </a>
                         </c:if>
-
-
                     </td>
                 </tr>
             </c:forEach>

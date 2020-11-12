@@ -42,7 +42,6 @@ public class OrderConverter {
         orderDto.setWaypoints(waypointConverter.toListDto(order.getWaypointEntities()));
         orderDto.setDrivers(driverConverter.toListSimpleDto(driverDao.getByOrderId(order.getId())));
         orderDto.setDistance(order.getDistance());
-//        orderDto.setTimeCreatedOrder(order.getTimeCreatedOrder());
 
         return orderDto;
     }

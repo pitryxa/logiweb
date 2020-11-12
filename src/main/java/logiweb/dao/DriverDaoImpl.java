@@ -124,13 +124,6 @@ public class DriverDaoImpl extends GenericDAOImpl<Driver> implements DriverDao {
                              .setParameter(2, orderIds)
                              .getResultList();
 
-
-//                entityManager.createNativeQuery("select * from orders where (status <> ?1) /*and (id in ?1)*/",
-//                                                Order.class)
-//                             .setParameter(1, OrderStatus.DONE)
-//                             .setParameter(2, orderIds)
-//                             .getResultList();
-
         return !orderList.isEmpty();
     }
 

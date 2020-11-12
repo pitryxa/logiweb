@@ -69,15 +69,10 @@
                                         class="btn btn-danger btn-sm mx-2">Stop load/unload
                                 </button>
                             </c:if>
-
-
-                                <%--                            <a href="${contextPath}/driver/change-status" class="btn btn-sm btn-info ml-3">Change</a>--%>
                         </p>
                     </div>
                 </div>
             </form>
-
-
         </c:if>
 
         <div class="row border-bottom">
@@ -136,11 +131,9 @@
                             </c:if>
                         </c:if>
 
-
                         <tr class="${trClass}">
                             <td class="align-middle"><c:out value="${waypoint.sequentialNumber}"/></td>
                             <td class="align-middle"><c:out value="${waypoint.city}"/></td>
-                                <%--                                    <td><c:out value="${waypoint.status}"/></td>--%>
                             <td class="align-middle"><c:out value="${waypoint.operation}"/></td>
                             <td class="align-middle"><c:out value="${waypoint.cargo.name}"/></td>
                             <td class="align-middle">
@@ -163,8 +156,6 @@
                 </table>
             </div>
         </div>
-
-
     </section>
 </main>
 

@@ -34,7 +34,6 @@ public class DriverController {
     @GetMapping
     public String allDrivers(Model model) {
         model.addAttribute("driverList", driverService.getAll());
-//        model.addAttribute("driverList", driverService.getAllNotDisabled());
         return "drivers/driverList";
     }
 
@@ -46,7 +45,6 @@ public class DriverController {
 
     @GetMapping("/enable/{id}")
     public String enableDriver(@PathVariable("id") int id, Model model) {
-//        model.addAttribute("driver", driverService.getById(id));
         driverService.enableDriver(id);
 
 

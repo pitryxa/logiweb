@@ -33,7 +33,6 @@
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-success mlr10">${title}</button>
                 <a href="${contextPath}/officer/orders" class="btn btn-danger mlr10">Cancel</a>
-                <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
             </div>
 
 

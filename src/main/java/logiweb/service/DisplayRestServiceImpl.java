@@ -1,8 +1,6 @@
 package logiweb.service;
 
 import logiweb.dto.rest.DisplayRestDto;
-import logiweb.dto.rest.DriverRestDto;
-import logiweb.dto.rest.TruckRestDto;
 import logiweb.service.api.DisplayRestService;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.OrderService;

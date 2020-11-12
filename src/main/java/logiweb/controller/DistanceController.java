@@ -1,10 +1,8 @@
 package logiweb.controller;
 
-import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
 import logiweb.service.api.CityService;
 import logiweb.service.api.DistanceService;
-import logiweb.validator.CityValidator;
 import logiweb.validator.DistanceValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

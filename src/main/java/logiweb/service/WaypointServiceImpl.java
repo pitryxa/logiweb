@@ -8,12 +8,10 @@ import logiweb.dao.api.TruckDao;
 import logiweb.dao.api.WaypointDao;
 import logiweb.dto.*;
 import logiweb.entity.Cargo;
-import logiweb.entity.Driver;
 import logiweb.entity.Truck;
 import logiweb.entity.WaypointEntity;
 import logiweb.entity.enums.*;
 import logiweb.service.api.DriverService;
-import logiweb.service.api.TruckService;
 import logiweb.service.api.WaypointService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +79,6 @@ public class WaypointServiceImpl implements WaypointService {
     @SendUpdate
     public void doneWaypoint(int id, int orderId) {
         waypointDao.doneWaypoint(id);
-//        driverService.changeDriversStatusesInOrder(DriverStatus.SECOND_DRIVER);
         driverService.setStatusAllDriversInOrder(DriverStatus.SECOND_DRIVER);
 
         if (waypointDao.isUnloadWaypoint(id)) {

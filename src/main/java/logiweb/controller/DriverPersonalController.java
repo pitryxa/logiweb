@@ -4,7 +4,6 @@ import logiweb.dto.DriverDto;
 import logiweb.dto.OrderDto;
 import logiweb.dto.WaypointDto;
 import logiweb.entity.enums.DriverStatus;
-import logiweb.entity.enums.WaypointStatus;
 import logiweb.service.api.DriverService;
 import logiweb.service.api.WaypointService;
 import org.springframework.beans.factory.annotation.Autowired;

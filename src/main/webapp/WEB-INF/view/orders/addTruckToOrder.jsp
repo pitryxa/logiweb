@@ -41,8 +41,6 @@
                 <button type="submit" class="btn btn-success mlr10">${title}</button>
                 <a href="${contextPath}/officer/orders/add-cargo" class="btn btn-danger mlr10">Cancel</a>
             </div>
-
-
         </form>
     </section>
 </main>

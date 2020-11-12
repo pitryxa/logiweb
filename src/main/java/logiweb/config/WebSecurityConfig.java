@@ -42,8 +42,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -51,8 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(encoder());
         return authProvider;
     }
-
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -63,7 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String loginPage = "/login";
         http.authorizeRequests()
-                //.antMatchers("/").denyAll()
                 .antMatchers("/hello").authenticated()
                 .antMatchers(loginPage, "/registration").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -72,7 +67,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage(loginPage)
-//                .loginProcessingUrl(loginPage)
                 .loginProcessingUrl(loginPage)
                 .usernameParameter("email")
                 .passwordParameter("password")

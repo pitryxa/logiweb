@@ -79,7 +79,6 @@ public class DriversCalc {
         double timeExecOrderInMinutes = timeExecOrderInHours * MINUTES_IN_HOUR;
 
         LocalDateTime now = LocalDateTime.now();
-        //now = LocalDateTime.of(2020, Month.OCTOBER, 30, 10, 0);
 
         Month monthBeforeOrder = now.getMonth();
         Month monthAfterOrder = now.plusMinutes((long) (timeExecOrderInMinutes)).getMonth();

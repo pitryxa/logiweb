@@ -1,14 +1,10 @@
 package logiweb.dto;
 
-import logiweb.dto.simple.SimpleTruckDto;
-import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.OperationTypeOnWaypoint;
 import logiweb.entity.enums.WaypointStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter

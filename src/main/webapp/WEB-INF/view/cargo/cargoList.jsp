@@ -26,7 +26,6 @@
                data-filter-control="true"
                data-pagination="true"
                data-page-list="[10, 25, 50, 100, All]"
-        <%--               data-page-size = "8"--%>
                class="table table-striped">
             <thead class="thead-dark">
             <tr>

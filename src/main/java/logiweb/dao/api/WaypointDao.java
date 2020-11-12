@@ -14,5 +14,4 @@ public interface WaypointDao extends GenericDAO<WaypointEntity> {
     WaypointEntity getById(int id);
 
     Cargo getCargoByWaypointId(int id);
-    //List<Waypoint> getAllSorted();
 }

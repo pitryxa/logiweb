@@ -59,9 +59,7 @@
         </button>
         <h4 class="text-center lnk-color"><a href="${contextPath}/login">Sign In</a></h4>
     </form:form>
-
 </div>
-
 
 <jsp:include page="common/footer.jsp">
     <jsp:param name="contextPath" value="${contextPath}"/>

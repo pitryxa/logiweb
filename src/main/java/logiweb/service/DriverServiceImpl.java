@@ -309,7 +309,6 @@ public class DriverServiceImpl implements DriverService {
         Order order = driverDao.getOrderByDriver(driver);
 
         if (order == null) {
-//            logger.info(String.format("The driver %s (%d) has no active orders."));
             return null;
         }
         return order.getId();

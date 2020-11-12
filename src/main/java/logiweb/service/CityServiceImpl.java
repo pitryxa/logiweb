@@ -66,11 +66,6 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public Long countOfCities() {
-        return cityDao.countOfCities();
-    }
-
-    @Override
     public CityDto getCityByNameFromList(List<CityDto> cities, String cityName) {
         List<CityDto> cityDtoList =
                 cities.stream()

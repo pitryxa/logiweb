@@ -5,7 +5,6 @@ import logiweb.dao.generic.GenericDAOImpl;
 import logiweb.entity.City;
 import logiweb.entity.Order;
 import logiweb.entity.Truck;
-import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.OrderStatus;
 import logiweb.entity.enums.TruckConditionStatus;
 import logiweb.entity.enums.TruckWorkStatus;

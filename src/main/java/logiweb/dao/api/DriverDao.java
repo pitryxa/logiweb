@@ -1,7 +1,6 @@
 package logiweb.dao.api;
 
 import logiweb.dao.generic.GenericDAO;
-import logiweb.dto.DriverDto;
 import logiweb.entity.Driver;
 import logiweb.entity.Order;
 

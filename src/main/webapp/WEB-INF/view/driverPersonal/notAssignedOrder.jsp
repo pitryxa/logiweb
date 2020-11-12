@@ -10,9 +10,6 @@
 </jsp:include>
 
 <main class="flex-shrink-0">
-<%--    <h4 class="text-center text-cadetblue mt-3">${title}</h4>--%>
-<%--    <h5 class="text-center text-success mt-3">No assigned orders now</h5>--%>
-
     <section class="container form-content" id="content">
         <div class="row" id="nameSection">
             <div class="col">
@@ -24,7 +21,6 @@
                 <h5 class="text-center text-success pb-3">No assigned orders now</h5>
             </div>
         </div>
-
     </section>
 </main>
 

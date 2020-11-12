@@ -24,13 +24,12 @@
                data-filter-control="true"
                data-pagination = "true"
                class="table table-striped">
-            <%--    <caption>Cargo List</caption>--%>
             <thead class="thead-dark">
             <tr>
                 <th data-field="count" data-sortable="true">#</th>
                 <th data-field="regNumber" data-filter-control="input" data-sortable="true">Reg. number</th>
                 <th data-field="shiftSize" data-filter-control="select" data-sortable="true">Shift size</th>
-                <th data-field="capacity" data-filter-control="select" data-sortable="true">Capacity</th>
+                <th data-field="capacity" data-filter-control="select" data-sortable="true">Capacity (t)</th>
                 <th data-field="condition" data-filter-control="select" data-sortable="true">Condition status</th>
                 <th data-field="workStatus" data-filter-control="select" data-sortable="true">Work status</th>
                 <th data-field="city" data-filter-control="select" data-sortable="true">City</th>
@@ -70,7 +69,6 @@
                             </c:forEach>
                         </c:if>
                     </td>
-
 
                     <td class="action">
                         <a href="${contextPath}/officer/trucks/edit/${truck.id}" class="text-decoration-none" title="edit">

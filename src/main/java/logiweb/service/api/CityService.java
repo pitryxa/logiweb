@@ -17,7 +17,5 @@ public interface CityService {
 
     CityDto getByName(String name);
 
-    Long countOfCities();
-
     CityDto getCityByNameFromList(List<CityDto> cities, String cityName);
 }

@@ -35,7 +35,7 @@
                 </select>
             </div>
             <div class="form-group row">
-                <label for="distance" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Distance</label>
+                <label for="distance" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Distance (km)</label>
                 <input type="number" step="1" min="1" name="distance" id="distance" class="form-control col-sm-10"
                        required>
             </div>

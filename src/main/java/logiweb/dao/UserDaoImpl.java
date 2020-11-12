@@ -2,7 +2,6 @@ package logiweb.dao;
 
 import logiweb.dao.api.UserDao;
 import logiweb.dao.generic.GenericDAOImpl;
-import logiweb.entity.Driver;
 import logiweb.entity.User;
 import logiweb.entity.enums.Role;
 import org.springframework.stereotype.Repository;

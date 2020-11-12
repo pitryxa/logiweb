@@ -27,7 +27,7 @@
         </div>
         <div class="row border-bottom">
             <div class="col-sm-2 font-weight-bold ml-auto ">
-                <p class="py-2 pr-2 text-cadetblue my-2">Distance</p>
+                <p class="py-2 pr-2 text-cadetblue my-2">Distance (km)</p>
             </div>
             <div class="col-sm-10">
                 <p class="py-2 my-2"><c:out value="${order.distance}"/></p>
@@ -94,7 +94,6 @@
                         <tr class="${trClass}">
                             <td class="align-middle"><c:out value="${waypoint.sequentialNumber}"/></td>
                             <td class="align-middle"><c:out value="${waypoint.city}"/></td>
-                                <%--                                    <td><c:out value="${waypoint.status}"/></td>--%>
                             <td class="align-middle"><c:out value="${waypoint.operation}"/></td>
                             <td class="align-middle"><c:out value="${waypoint.cargo.name}"/></td>
                             <td class="align-middle">
@@ -112,10 +111,7 @@
         <div class="d-flex justify-content-center mt-3">
             <button type="button" onclick="history.back();" class="btn btn-secondary mx-2">Back</button>
         </div>
-
-
     </section>
-
 </main>
 
 <jsp:include page="../common/footer.jsp">

@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="capacity"
-                           class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity</label>
+                           class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Capacity (t)</label>
                     <input type="number" step="1" min="1" name="capacity" id="capacity" value="${truck.capacity}"
                            class="form-control col-sm-10" required>
                 </div>

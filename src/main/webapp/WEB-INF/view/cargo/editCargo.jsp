@@ -36,7 +36,7 @@
                            required>
                 </div>
                 <div class="form-group row">
-                    <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight</label>
+                    <label for="weight" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Weight (kg)</label>
                     <input type="number" step="1" min="1" required name="weight" id="weight" value="${cargo.weight}"
                            class="form-control col-sm-10">
                 </div>
@@ -81,8 +81,6 @@
                 </div>
             </form>
         </c:if>
-
-
     </section>
 </main>
 

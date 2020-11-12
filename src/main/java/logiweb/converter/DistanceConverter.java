@@ -1,11 +1,8 @@
 package logiweb.converter;
 
 import logiweb.dao.api.CityDao;
-import logiweb.dto.CityDto;
 import logiweb.dto.DistanceDto;
-import logiweb.entity.City;
 import logiweb.entity.Distance;
-import logiweb.service.api.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +11,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class DistanceConverter {
-
-    @Autowired
-    private CityConverter cityConverter;
 
     @Autowired
     private CityDao cityDao;

@@ -5,7 +5,6 @@ import logiweb.dao.api.CityDao;
 import logiweb.dao.api.DistanceDao;
 import logiweb.dto.DistanceDto;
 import logiweb.entity.Distance;
-import logiweb.service.api.CityService;
 import logiweb.service.api.DistanceService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ public class DistanceServiceImpl implements DistanceService {
 
     @Autowired
     private DistanceConverter distanceConverter;
-
-    @Autowired
-    private CityDao cityDao;
 
     @Override
     public List<DistanceDto> getAll() {

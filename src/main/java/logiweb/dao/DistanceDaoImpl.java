@@ -2,7 +2,6 @@ package logiweb.dao;
 
 import logiweb.dao.api.DistanceDao;
 import logiweb.dao.generic.GenericDAOImpl;
-import logiweb.entity.City;
 import logiweb.entity.Distance;
 import org.springframework.stereotype.Repository;
 

@@ -37,7 +37,7 @@
         </div>
         <div class="row  border-bottom">
             <div class="col-3 font-weight-bold ml-auto ">
-                <p class="text-right py-2 pr-2 text-cadetblue my-2">Capacity</p>
+                <p class="text-right py-2 pr-2 text-cadetblue my-2">Capacity (t)</p>
             </div>
             <div class="col-6"><p class="py-2 my-2">${truck.capacity}</p></div>
         </div>

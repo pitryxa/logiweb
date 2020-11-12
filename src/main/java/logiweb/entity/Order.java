@@ -9,7 +9,6 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -37,7 +36,4 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<WaypointEntity> waypointEntities;
-
-//    @Column(name = "time_created_order")
-//    private LocalDateTime timeCreatedOrder;
 }

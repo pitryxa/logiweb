@@ -174,7 +174,6 @@ public class OrderServiceImpl implements OrderService {
             waypointEntity.setCargo(cargo);
             waypointEntity.setOperation(entry.getValue());
         } else {
-            //waypointEntity.setCargo(null);
             waypointEntity.setOperation(OperationTypeOnWaypoint.NONE);
         }
 

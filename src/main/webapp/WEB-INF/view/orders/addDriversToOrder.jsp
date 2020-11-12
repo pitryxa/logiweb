@@ -94,9 +94,9 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-success mlr10" onclick="return validateOrder(${truck.shiftSize})">${title}</button>
+                <button type="submit" class="btn btn-success mlr10"
+                        onclick="return validateOrder(${truck.shiftSize})">${title}</button>
                 <a href="${contextPath}/officer/orders/add-truck" class="btn btn-danger mlr10">Cancel</a>
-                <%--                <button type="button" onclick="history.back();" class="btn btn-danger mlr10">Cancel</button>--%>
             </div>
 
         </form>

@@ -1,7 +1,6 @@
 package logiweb.entity;
 
 import logiweb.entity.enums.OperationTypeOnWaypoint;
-import logiweb.entity.enums.OrderStatus;
 import logiweb.entity.enums.WaypointStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter

@@ -14,10 +14,6 @@ import java.util.Map;
 public class Graph {
     private Map<Integer, Node> nodes = new HashMap<>();
 
-    public void addNode(Node node) {
-        nodes.put(node.getCity().getId(), node);
-    }
-
     public void addNode(Integer id, Node node) {
         nodes.put(id, node);
     }

@@ -78,7 +78,6 @@ public class CargoServiceImpl implements CargoService {
         Order order = cargoDao.getOrderByCargo(cargo);
 
         if (order == null) {
-//            logger.info("The cargo not added to order.");
             return null;
         }
 

@@ -66,7 +66,7 @@ function validateCargo() {
 }
 
 function validateOrder(shift) {
-    if ($('#drivers option:selected').length != shift) {
+    if ($('#drivers option:selected').length !== shift) {
         swal("Wrong!", "Please select " + shift + " drivers");
         return false;
     }

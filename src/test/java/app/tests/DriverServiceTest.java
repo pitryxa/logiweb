@@ -20,10 +20,8 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static app.tests.DataInit.*;
@@ -37,21 +35,6 @@ import static org.mockito.Mockito.when;
 public class DriverServiceTest {
     @Mock
     private DriverDao driverDao;
-
-    @Mock
-    private UserDao userDao;
-
-    @Mock
-    private OrderDao orderDao;
-
-    @Mock
-    private OrderService orderService;
-
-    @Mock
-    private UserService userService;
-
-    @Mock
-    private TruckConverter truckConverter;
 
     @Mock
     private DriverConverter driverConverter;
@@ -88,12 +71,6 @@ public class DriverServiceTest {
                 Arrays.asList(firstDriverDto, secondDriverDto));
 
         assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 2);
-//        when(driverConverter.toListDto(argThat(list1 -> list1.size() == 1))).thenReturn(
-//                Collections.singletonList(secondDriverDto));
-//        when(driverConverter.toListDto(argThat(list2 -> list2.size() == 0))).thenReturn(Collections.emptyList());
-//        firstDriver.setWorkHours(170.0);
-//        assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 1);
-
     }
 
     @Test
@@ -103,8 +80,6 @@ public class DriverServiceTest {
         when(driversCalc.getWorkHoursForEveryDriver(any(), any())).thenReturn(80.0);
 
         assertEquals(driverServiceTest.getDriversForOrder(truckDto, route).size(), 0);
-
-
     }
 
     @Test
@@ -213,16 +188,4 @@ public class DriverServiceTest {
         assertTrue(driverServiceTest.isWrongAmountDrivers(drivers, 3));
         assertFalse(driverServiceTest.isWrongAmountDrivers(drivers, 2));
     }
-
-//    @Test
-//    public void testUpdateDriverWorkHoursInCurrentMonth() {
-//
-//        firstDriver.setTimeLastChangeStatus(LocalDateTime.of(2020, 10, 9, 12, 10));
-//
-//        when(LocalDateTime.now()).thenReturn(LocalDateTime.of(2020, 10, 20, 12, 10));
-//        driverServiceTest.updateDriverWorkHoursInCurrentMonth(firstDriver);
-//
-//    }
-
-
 }

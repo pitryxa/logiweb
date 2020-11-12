@@ -4,7 +4,6 @@ import logiweb.dao.api.DriverDao;
 import logiweb.dao.api.UserDao;
 import logiweb.dto.UserDto;
 import logiweb.entity.User;
-import logiweb.entity.enums.DriverStatus;
 import logiweb.entity.enums.Role;
 import logiweb.service.api.UserService;
 import org.apache.log4j.Logger;

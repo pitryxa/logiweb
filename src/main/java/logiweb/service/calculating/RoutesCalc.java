@@ -117,7 +117,6 @@ public class RoutesCalc {
             Waypoint newNextWaypoint = new Waypoint(nextWaypoint);
 
             Waypoint prevWaypoint = tmpOrderedWaypoints.getLast();
-            //nextWaypoint.getCargoes().entrySet().removeIf(entry -> entry.getValue() == OperationTypeOnWaypoint.LOAD);
             tmpOrderedWaypoints.add(nextWaypoint);
             Waypoint lastWaypoint = tmpOrderedWaypoints.getLast();
             lastWaypoint.setSumWeight(getCurrentWeight(tmpOrderedWaypoints));
@@ -179,7 +178,6 @@ public class RoutesCalc {
 
         route.setDistance(getFullDistance(orderedWaypoints));
         route.setWaypoints(new LinkedList<>(waypointsForRoute));
-        //route.getWaypoints().stream().peek(Waypoint::sortCargoes);
 
         return route;
     }
