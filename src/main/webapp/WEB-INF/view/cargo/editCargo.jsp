@@ -30,6 +30,7 @@
         <c:if test="${cargo.status == 'PREPARED'}">
             <form action="${contextPath}/officer/cargo/edit" method="post">
                 <input type="hidden" name="id" value="${cargo.id}">
+                <input type="hidden" name="status" value="${cargo.status}">
                 <div class="form-group row">
                     <label for="name" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Name</label>
                     <input type="text" name="name" id="name" value="${cargo.name}" class="form-control col-sm-10"
@@ -40,18 +41,6 @@
                     <input type="number" step="1" min="1" required name="weight" id="weight" value="${cargo.weight}"
                            class="form-control col-sm-10">
                 </div>
-                <div class="form-group row">
-                    <label for="status" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">Status</label>
-                    <select name="status" id="status" class="form-control col-sm-10">
-                        <c:forEach var="status" items="${statusArray}">
-                            <option value="${status}"
-                                    <c:if test="${status == cargo.status}"><c:out value="selected"/></c:if>>
-                                    ${status}
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-
                 <div class="form-group row">
                     <label for="city-from" class="text-cadetblue col-form-label col-sm-2 font-weight-bold">From</label>
                     <select name="cityFrom" id="city-from" class="form-control col-sm-10">
