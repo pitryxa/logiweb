@@ -138,6 +138,10 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @SendUpdate
     public void add(List<CargoDto> cargoes, TruckDto truck, Route route, List<DriverDto> drivers) {
+        if (!isExistAllItemsForOrder(cargoes, truck, drivers)) {
+            throw new RuntimeException("Something went wrong! Try to create the order again.");
+        }
+
         List<Driver> driversEntity = driverConverter.toListEntityFromDto(drivers);
         Deque<Waypoint> wpFromRoute = route.getWaypoints();
 
@@ -159,6 +163,28 @@ public class OrderServiceImpl implements OrderService {
         }).forEach(driver -> driverDao.update(driver));
 
         logger.info("Order is created.");
+    }
+
+    private boolean isExistAllItemsForOrder(List<CargoDto> cargoes, TruckDto truck, List<DriverDto> drivers) {
+        List<Integer> cargoIds = cargoes.stream().map(CargoDto::getId).collect(Collectors.toList());
+        for (Integer id : cargoIds) {
+            if (cargoDao.getById(id) == null) {
+                return false;
+            }
+        }
+
+        if (truckDao.getById(truck.getId()) == null) {
+            return false;
+        }
+
+        List<Integer> driverIds = drivers.stream().map(DriverDto::getId).collect(Collectors.toList());
+        for (Integer id : driverIds) {
+            if (driverDao.getFreeDriverById(id) == null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private WaypointEntity getWaypointEntityFromCargo(Waypoint w, Map.Entry<CargoDto, OperationTypeOnWaypoint> entry,

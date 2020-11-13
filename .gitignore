@@ -121,4 +121,4 @@ buildNumber.properties
 
 ### User settings ###
 .idea/
-**/resources/log/
+src/main/resources/log/

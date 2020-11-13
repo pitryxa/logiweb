@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/officer/orders")
@@ -132,10 +133,16 @@ public class OrderController {
         if (cargoList == null || truckForOrder == null || routeForOrder == null || suitableDrivers == null) {
             return "redirect:/officer/orders";
         }
+
         List<CargoDto> cargoes = (List<CargoDto>) cargoList;
         Route route = (Route) routeForOrder;
         TruckDto truck = (TruckDto) truckForOrder;
-        List<DriverDto> selectedDrivers = driverService.getByIdFromList((List<DriverDto>) suitableDrivers, driversIds);
+        List<DriverDto> drivers = (List<DriverDto>) suitableDrivers;
+
+        //List<DriverDto> selectedDrivers = driverService.getByIdFromList((List<DriverDto>) suitableDrivers, driversIds);
+        List<DriverDto> selectedDrivers = drivers.stream()
+                                                 .filter(d -> driversIds.contains(d.getId()))
+                                                 .collect(Collectors.toList());
 
         if (driverService.isWrongAmountDrivers(selectedDrivers, truck.getShiftSize())) {
             model.addAttribute("shiftSize", truck.getShiftSize());
@@ -143,7 +150,6 @@ public class OrderController {
         }
 
         orderService.add(cargoes, truck, route, selectedDrivers);
-
 
         return "redirect:/officer/orders";
     }

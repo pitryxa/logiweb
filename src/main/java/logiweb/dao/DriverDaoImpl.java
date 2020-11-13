@@ -143,6 +143,20 @@ public class DriverDaoImpl extends GenericDAOImpl<Driver> implements DriverDao {
     }
 
     @Override
+    public Driver getFreeDriverById(Integer id) {
+        Driver driver;
+
+        try {
+            driver = entityManager.createQuery("select d from Driver d where d.id = ?1 and d.status = 'RECREATION'",
+                                               Driver.class).setParameter(1, id).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
+        return driver;
+    }
+
+    @Override
     public Integer getCountAllDrivers() {
         Long result = entityManager.createQuery("select count(d) from Driver d where d.status <> ?1", Long.class)
                                    .setParameter(1, DriverStatus.DISABLED)

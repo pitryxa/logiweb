@@ -30,4 +30,6 @@ public interface DriverDao extends GenericDAO<Driver> {
     boolean isUserAssignToOrder(Integer userId);
 
     Driver getByPersonalNumber(Long personalNumber);
+
+    Driver getFreeDriverById(Integer id);
 }
