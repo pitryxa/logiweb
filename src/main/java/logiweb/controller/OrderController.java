@@ -139,7 +139,6 @@ public class OrderController {
         TruckDto truck = (TruckDto) truckForOrder;
         List<DriverDto> drivers = (List<DriverDto>) suitableDrivers;
 
-        //List<DriverDto> selectedDrivers = driverService.getByIdFromList((List<DriverDto>) suitableDrivers, driversIds);
         List<DriverDto> selectedDrivers = drivers.stream()
                                                  .filter(d -> driversIds.contains(d.getId()))
                                                  .collect(Collectors.toList());
