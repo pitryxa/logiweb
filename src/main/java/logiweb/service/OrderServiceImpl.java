@@ -139,6 +139,7 @@ public class OrderServiceImpl implements OrderService {
     @SendUpdate
     public void add(List<CargoDto> cargoes, TruckDto truck, Route route, List<DriverDto> drivers) {
         if (!isExistAllItemsForOrder(cargoes, truck, drivers)) {
+            logger.info("Order is not created. Something went wrong.");
             throw new RuntimeException("Something went wrong! Try to create the order again.");
         }
 
@@ -168,12 +169,12 @@ public class OrderServiceImpl implements OrderService {
     private boolean isExistAllItemsForOrder(List<CargoDto> cargoes, TruckDto truck, List<DriverDto> drivers) {
         List<Integer> cargoIds = cargoes.stream().map(CargoDto::getId).collect(Collectors.toList());
         for (Integer id : cargoIds) {
-            if (cargoDao.getById(id) == null) {
+            if (cargoDao.getPreparedCargoById(id) == null) {
                 return false;
             }
         }
 
-        if (truckDao.getById(truck.getId()) == null) {
+        if (truckDao.getFreeTruckById(truck.getId()) == null) {
             return false;
         }
 

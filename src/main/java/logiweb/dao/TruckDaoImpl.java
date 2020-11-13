@@ -104,4 +104,17 @@ public class TruckDaoImpl extends GenericDAOImpl<Truck> implements TruckDao {
 
         return truck;
     }
+
+    @Override
+    public Truck getFreeTruckById(Integer id) {
+        Truck truck;
+        try {
+            truck = entityManager.createQuery("select t from Truck t where t.id = ?1 and t.workStatus = 'FREE' and t.conditionStatus = 'OK'", Truck.class)
+                                 .setParameter(1, id)
+                                 .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+        return truck;
+    }
 }

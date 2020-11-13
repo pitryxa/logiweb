@@ -24,4 +24,6 @@ public interface TruckDao extends GenericDAO<Truck> {
     Integer getCountBrokenTrucks();
 
     Truck getByRegNumber(String regNumber);
+
+    Truck getFreeTruckById(Integer id);
 }

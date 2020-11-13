@@ -14,4 +14,6 @@ public interface CargoDao extends GenericDAO<Cargo> {
     List<Cargo> getByListId(List<Integer> ids);
 
     Order getOrderByCargo(Cargo cargo);
+
+    Cargo getPreparedCargoById(Integer id);
 }
