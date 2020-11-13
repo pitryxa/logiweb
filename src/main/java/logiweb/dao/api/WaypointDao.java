@@ -4,6 +4,8 @@ import logiweb.dao.generic.GenericDAO;
 import logiweb.entity.Cargo;
 import logiweb.entity.WaypointEntity;
 
+import java.util.List;
+
 public interface WaypointDao extends GenericDAO<WaypointEntity> {
     void doneWaypoint(int id);
 
@@ -14,4 +16,6 @@ public interface WaypointDao extends GenericDAO<WaypointEntity> {
     WaypointEntity getById(int id);
 
     Cargo getCargoByWaypointId(int id);
+
+    List<WaypointEntity> getAllByOrderId(Integer orderId);
 }

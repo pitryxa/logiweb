@@ -1,10 +1,8 @@
 package logiweb.controller;
 
+import logiweb.dto.*;
 import logiweb.service.calculating.Route;
 import logiweb.service.calculating.RoutesCalc;
-import logiweb.dto.CargoDto;
-import logiweb.dto.DriverDto;
-import logiweb.dto.TruckDto;
 import logiweb.service.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -157,6 +155,19 @@ public class OrderController {
     public String orderInfo(@PathVariable("id") int id, Model model) {
         model.addAttribute("order", orderService.getById(id));
         return "orders/orderInfo";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String orderDelete(@PathVariable("id") int id, Model model) {
+        model.addAttribute("order", orderService.getById(id));
+        return "orders/orderDelete";
+    }
+
+    @PostMapping("/delete")
+    public String orderDelete(@ModelAttribute OrderDto orderDto) {
+        orderService.deleteById(orderDto.getId());
+
+        return "redirect:/officer/orders";
     }
 
 }

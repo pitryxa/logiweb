@@ -69,4 +69,13 @@ public class OrderDaoImpl extends GenericDAOImpl<Order> implements OrderDao {
         return list.isEmpty() ? new ArrayList<>() : list;
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        entityManager.createNativeQuery("delete from order_drivers where order_id = ?1")
+                     .setParameter(1, id)
+                     .executeUpdate();
+        Order order = entityManager.find(Order.class, id);
+        entityManager.remove(order);
+    }
+
 }

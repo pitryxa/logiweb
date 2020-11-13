@@ -22,4 +22,6 @@ public interface OrderService {
     OrderDto getOrderByTruckId(Integer truckId);
 
     List<OrderRestDto> getTenLast();
+
+    void deleteById(Integer id);
 }

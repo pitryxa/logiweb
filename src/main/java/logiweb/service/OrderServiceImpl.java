@@ -49,6 +49,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private TruckDao truckDao;
 
+    @Autowired
+    private WaypointDao waypointDao;
+
     @Override
     public List<OrderDto> getAll() {
         List<OrderDto> orderDtoList = orderConverter.toListDto(orderDao.getAllSorted());
@@ -126,6 +129,41 @@ public class OrderServiceImpl implements OrderService {
                                                                                                   .collect(
                                                                                                           Collectors.toList())))
                                                     .collect(Collectors.toList()));
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Integer id) {
+        if (orderDao.getById(id) == null) {
+            logger.info("Order is not deleted. This order is no exists.");
+            throw new RuntimeException("This order is no exists.");
+        }
+
+        List<WaypointEntity> waypoints = waypointDao.getAllByOrderId(id);
+        Set<Cargo> cargoes = waypoints.stream().map(w -> w.getCargo()).collect(Collectors.toSet());
+        Truck truck = orderDao.getTruck(id);
+        List<Driver> drivers = driverDao.getByOrderId(id);
+
+        truck.setWorkStatus(TruckWorkStatus.FREE);
+        truckDao.update(truck);
+
+        for (Driver d : drivers) {
+            d.setTruck(null);
+            d.setStatus(DriverStatus.RECREATION);
+            driverDao.update(d);
+        }
+
+        for (Cargo c : cargoes) {
+            if (c == null) {
+                continue;
+            }
+
+            c.setStatus(CargoStatus.PREPARED);
+            cargoDao.update(c);
+        }
+
+        orderDao.deleteById(id);
+        logger.info("Order is deleted");
     }
 
     private List<WaypointDto> sortWaypointList(List<WaypointDto> list) {

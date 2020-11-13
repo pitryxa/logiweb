@@ -40,6 +40,10 @@ public class CargoServiceImpl implements CargoService {
     @Override
     @Transactional
     public void delete(CargoDto cargoDTO) {
+        if (cargoDao.getById(cargoDTO.getId()) == null) {
+            logger.info("The cargo is not deleted. This cargo is not exist.");
+            throw new RuntimeException("This cargo is not exist.");
+        }
         cargoDao.delete(cargoConverter.toEntity(cargoDTO));
         logger.info("Cargo is deleted.");
     }
@@ -47,6 +51,10 @@ public class CargoServiceImpl implements CargoService {
     @Override
     @Transactional
     public void edit(CargoDto cargoDTO) {
+        if (cargoDao.getById(cargoDTO.getId()) == null) {
+            logger.info("The cargo is not updated. This cargo is not exist.");
+            throw new RuntimeException("This cargo is not exist.");
+        }
         cargoDao.update(cargoConverter.toEntity(cargoDTO));
         logger.info("Cargo is updated.");
     }

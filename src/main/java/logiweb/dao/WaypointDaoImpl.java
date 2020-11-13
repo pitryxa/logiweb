@@ -8,6 +8,7 @@ import logiweb.entity.enums.OperationTypeOnWaypoint;
 import logiweb.entity.enums.WaypointStatus;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -46,5 +47,14 @@ public class WaypointDaoImpl extends GenericDAOImpl<WaypointEntity> implements W
                                                  .setParameter(1, id)
                                                  .getResultList();
         return list.isEmpty() ? new Cargo() : list.get(0);
+    }
+
+    @Override
+    public List<WaypointEntity> getAllByOrderId(Integer orderId) {
+        List<WaypointEntity> list =
+                entityManager.createQuery("select w from WaypointEntity w where w.order.id = ?1", WaypointEntity.class)
+                             .setParameter(1, orderId)
+                             .getResultList();
+        return list.isEmpty() ? new ArrayList<>() : list;
     }
 }
